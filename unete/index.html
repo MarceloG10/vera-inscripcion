@@ -51,7 +51,12 @@
   .msg { margin-top:16px; font-size:17px; line-height:1.4; }
   .ok { color:#007a45; } .err { color:#b3261e; }
   .pie { border-top:2px solid var(--tinta); padding:24px 60px 32px; font-family:var(--sans); font-size:11px; color:var(--gris); line-height:1.7; text-transform:uppercase; letter-spacing:.3px; text-align:center; }
-  @media (max-width:480px) { .cab,.bloque,.form,.pie { padding-left:22px; padding-right:22px; } .logo { font-size:48px; } .bloque p { font-size:19px; } }
+  .listo { margin:0 -60px; }
+  .listo .etq { font-family:var(--sans); font-size:12px; font-weight:bold; text-transform:uppercase; letter-spacing:.3px; margin-bottom:8px; }
+  .listo .titulo { font-size:42px; line-height:.98; margin:0 0 20px; }
+  .listo p { font-size:22px; line-height:1.25; margin:0 0 14px; }
+  .pill-out { display:inline-block; font-family:var(--sans); font-size:12px; line-height:14px; text-transform:uppercase; letter-spacing:.5px; color:var(--azul); border:2px solid var(--azul); border-radius:4px; padding:5px 10px; margin:0 6px 6px 0; }
+  @media (max-width:480px) { .cab,.bloque,.form,.pie { padding-left:22px; padding-right:22px; } .logo { font-size:48px; } .bloque p { font-size:19px; } .listo { margin:0 -22px; } .listo .titulo { font-size:32px; } }
 </style>
 </head>
 <body>
@@ -142,9 +147,19 @@ document.getElementById("f").addEventListener("submit", async (ev) => {
     msg.textContent = /duplicate|unique/i.test(error.message) ? "Ese correo ya está inscrito. Si quieres cambiar tus temas, responde a cualquier correo de Vera con «temas»." : "No pudimos guardar tu inscripción. Intenta de nuevo o escríbenos.";
     return;
   }
-  msg.className = "msg ok";
-  msg.innerHTML = `<b>Listo, ${nombre.split(" ")[0]}.</b> Tu primera edición de Vera te llega al correo cuando arranque la prueba. Tus temas: ${subs.map(s => document.querySelector(`input[value="${s}"]`).parentElement.textContent.trim()).join(" · ")}.`;
-  document.getElementById("f").querySelectorAll("input,button").forEach(i => i.disabled = true);
+  // Confirmación: reemplaza el formulario por un bloque en el mismo lenguaje visual (píldora + azul)
+  const pills = subs.map(s => `<span class="pill-out">${document.querySelector(`input[value="${s}"]`).parentElement.textContent.trim()}</span>`).join("");
+  const ok = document.createElement("div");
+  ok.className = "bloque listo";
+  ok.innerHTML = `<div class="centro"><span class="pill">Inscripción lista</span></div>
+    <div class="etq">${ciudad ? ciudad : "Bienvenida/o"}</div>
+    <div class="titulo">Listo, ${nombre.split(" ")[0]}.</div>
+    <p>Tu primera edición de Vera te llega a <b>${email}</b> cuando arranque la prueba. Un correo al día, de lunes a viernes.</p>
+    <p class="hint">Tus temas</p><div class="pills">${pills}</div>
+    <p class="hint" style="margin-top:18px">Para cambiar tus temas o darte de baja, responde cualquier correo de Vera con «temas» o «baja».</p>`;
+  const form = document.getElementById("f");
+  form.parentElement.replaceChild(ok, form);
+  ok.scrollIntoView({ block: "start", behavior: "smooth" });
 });
 </script>
 </body>
