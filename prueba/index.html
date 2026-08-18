@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vera — Tu resumen diario de las noticias más importantes.</title>
+<meta name="description" content="Un correo diario y breve con las noticias más relevantes de Chile y el mundo, más una selección sobre tus temas. Prueba de 2 semanas.">
+<meta name="robots" content="noindex">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Vera">
+<meta property="og:title" content="Vera — Tu resumen diario de las noticias más importantes.">
+<meta property="og:description" content="Un correo diario y breve con las noticias más relevantes de Chile y el mundo, más una selección sobre tus temas. Prueba de 2 semanas.">
+<meta property="og:url" content="https://marcelog10.github.io/vera-inscripcion/prueba/">
+<meta property="og:image" content="https://marcelog10.github.io/vera-inscripcion/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Vera — edición diaria">
+<meta property="og:locale" content="es_CL">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Vera — Tu resumen diario de las noticias más importantes.">
+<meta name="twitter:description" content="Un correo diario y breve con las noticias más relevantes de Chile y el mundo, más tus temas.">
+<meta name="twitter:image" content="https://marcelog10.github.io/vera-inscripcion/og.png">
+<style>
+  :root { --azul:#0047ff; --tinte:#e6edff; --tinta:#1a1a1a; --gris:#737373; --papel:#fff; --bg:#f2f2f2; --serif:Georgia,'Times New Roman',Times,serif; --sans:Helvetica,Arial,sans-serif; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); font-family:var(--serif); color:var(--tinta); }
+  .wrap { max-width:600px; margin:24px auto; background:var(--papel); }
+  .cab { text-align:center; padding:34px 40px 36px; }
+  .logo { font-size:60px; line-height:1.1; letter-spacing:-0.5px; color:#000; }
+  .lema { font-size:22px; line-height:1.2; margin:18px auto 0; max-width:300px; }
+  .fecha { font-size:22px; line-height:1.2; color:var(--gris); margin-top:36px; }
+  .bloque { background:var(--tinte); border-top:2px solid var(--azul); padding:30px 60px 36px; color:var(--azul); }
+  .pill { display:inline-block; font-family:var(--sans); font-size:14px; line-height:18px; font-weight:bold; text-transform:uppercase; letter-spacing:.5px; color:#fff; background:var(--azul); border-radius:5px; padding:7px 18px; }
+  .centro { text-align:center; margin-bottom:22px; }
+  .bloque p { font-size:22px; line-height:1.25; margin:0 0 16px; }
+  .bloque p.hint, .hint { font-family:var(--sans); font-size:12px; line-height:1.5; text-transform:uppercase; letter-spacing:.3px; color:inherit; }
+  .form { padding:26px 60px 36px; }
+  h2 { font-family:var(--sans); font-size:14px; font-weight:bold; text-transform:uppercase; letter-spacing:.5px; color:var(--azul); margin:22px 0 10px; }
+  label.f { display:block; font-family:var(--sans); font-size:11px; font-weight:bold; text-transform:uppercase; letter-spacing:.3px; color:var(--azul); margin:16px 0 6px; }
+  label.f .hint { text-transform:none; letter-spacing:0; font-weight:normal; color:var(--gris); }
+  input[type=text], input[type=email] { width:100%; font:inherit; font-size:18px; padding:9px 12px; border:2px solid var(--azul); border-radius:4px; color:var(--tinta); background:#fff; }
+  input:focus { outline:none; box-shadow:0 0 0 3px var(--tinte); }
+  .cat { margin:16px 0 8px; font-family:var(--sans); font-size:11px; letter-spacing:.3px; text-transform:uppercase; color:var(--gris); font-weight:bold; }
+  .subs label { display:inline-block; margin:0 6px 6px 0; font-family:var(--sans); font-size:12px; line-height:14px; text-transform:uppercase; letter-spacing:.5px; color:var(--azul); border:2px solid var(--azul); border-radius:4px; padding:5px 10px; cursor:pointer; user-select:none; }
+  .subs input { position:absolute; opacity:0; width:0; height:0; }
+  .subs label:has(input:checked) { background:var(--azul); color:#fff; font-weight:bold; }
+  .subs label:has(input:disabled:not(:checked)) { opacity:.4; cursor:default; }
+  .p-hint { font-size:17px; line-height:1.3; color:var(--tinta); margin:0 0 6px; }
+  button { margin-top:24px; font-family:var(--sans); font-size:14px; font-weight:bold; text-transform:uppercase; letter-spacing:.5px; background:var(--azul); color:#fff; border:2px solid var(--azul); padding:10px 22px; border-radius:5px; cursor:pointer; }
+  button:disabled { opacity:.5; cursor:default; }
+  .msg { margin-top:16px; font-size:17px; line-height:1.4; }
+  .ok { color:#007a45; } .err { color:#b3261e; }
+  .pie { border-top:2px solid var(--tinta); padding:24px 60px 32px; font-family:var(--sans); font-size:11px; color:var(--gris); line-height:1.7; text-transform:uppercase; letter-spacing:.3px; text-align:center; }
+  @media (max-width:480px) { .cab,.bloque,.form,.pie { padding-left:22px; padding-right:22px; } .logo { font-size:48px; } .bloque p { font-size:19px; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="cab">
+    <div class="logo">vera</div>
+    <div class="lema">Tu resumen diario de las noticias más importantes.</div>
+    <div class="fecha">Inscripción a la prueba</div>
+  </div>
+
+  <div class="bloque">
+    <div class="centro"><span class="pill">Qué es</span></div>
+    <p>Estamos probando <b>Vera</b>, un correo diario y breve con las noticias más relevantes de Chile y el mundo, además de una selección sobre <b>tus temas de interés</b>.</p>
+    <p>Cada noticia está contada en pocas líneas y contrastada a partir de medios que consideramos confiables, y siempre puedes consultar la fuente original.</p>
+    <p>Estamos comenzando con un grupo pequeño de personas interesadas en mantenerse informadas sobre el acontecer nacional e internacional.</p>
+    <p class="hint">Pruébala durante dos semanas. Después te preguntaremos qué te pareció y qué podemos mejorar. Puedes darte de baja en cualquier momento respondiendo cualquier correo con «baja».</p>
+  </div>
+
+  <div class="form">
+  <form id="f" novalidate>
+    <h2>Tus datos</h2>
+    <label class="f" for="nombre">Nombre</label>
+    <input type="text" id="nombre" name="nombre" required autocomplete="name">
+    <label class="f" for="email">Correo (ahí te llega Vera)</label>
+    <input type="email" id="email" name="email" required autocomplete="email">
+    <label class="f" for="ciudad">Ciudad donde vives <span class="hint">(para la noticia local)</span></label>
+    <input type="text" id="ciudad" name="ciudad" placeholder="Concepción, Santiago, Barcelona…" autocomplete="address-level2">
+
+    <h2>Tus temas</h2>
+    <p class="p-hint">Elige <b>2 o 3</b> subtemas. Ocupan la mitad de tu sección personalizada; la otra mitad la elegimos nosotros.</p>
+    <div class="subs" id="subs"></div>
+
+    <label class="f" for="comentario">¿Algo que quieras decirnos? <span class="hint">(opcional)</span></label>
+    <input type="text" id="comentario" name="comentario" placeholder="Qué esperas, qué te carga de las noticias…">
+
+    <button type="submit" id="btn">Inscribirme</button>
+    <div class="msg" id="msg"></div>
+  </form>
+  </div>
+
+  <div class="pie">Vera es un editor: seleccionamos y resumimos noticias de fuentes confiables y las linkeamos. No escribimos artículos ni opinamos. Tu correo solo se usa para enviarte la edición diaria durante la prueba.</div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<script>
+// Config pública (anon key: solo permite INSERT en subscribers por RLS).
+const SUPABASE_URL = "https://vahnmlibwwaxddeafdzt.supabase.co";
+const SUPABASE_ANON = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZhaG5tbGlid3dheGRkZWFmZHp0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODY5ODY0NzIsImV4cCI6MjEwMjU2MjQ3Mn0.FSH9rc3HUBlKsqFmswOp50j_bGlj2UYhjIY0_2c8xN4";
+const CATS = {
+  "Política y Sociedad": [["geopolitica_conflictos", "Geopolítica y conflictos"], ["derechos_justicia", "Derechos y justicia social"], ["sociedad_tendencias", "Sociedad y tendencias"]],
+  "Economía y Negocios": [["mercados_finanzas", "Mercados y finanzas"], ["empresas_negocios", "Empresas y negocios"], ["empresas_emprendimiento", "Emprendimiento e innovación"]],
+  "Ciencia, Medicina y Tecnología": [["tecnologia_futuro", "Innovación y futuro"], ["inteligencia_artificial", "Inteligencia artificial"], ["medio_ambiente_clima", "Medio ambiente y clima"], ["investigacion_medica", "Avances médicos"], ["salud_bienestar", "Salud y bienestar"]],
+  "Cultura": [["artes_creatividad", "Artes y creatividad"], ["libros_pensamiento", "Literatura y pensamiento"]],
+  "Deportes": [["deporte_nacional", "Deporte nacional"], ["deporte_internacional", "Deporte internacional"], ["chilenos_exterior", "Chilenos en el deporte mundial"]],
+};
+const cont = document.getElementById("subs");
+for (const [cat, subs] of Object.entries(CATS)) {
+  const h = document.createElement("div"); h.className = "cat"; h.textContent = cat; cont.appendChild(h);
+  const row = document.createElement("div");
+  for (const [k, lbl] of subs) {
+    const l = document.createElement("label");
+    l.innerHTML = `<input type="checkbox" name="sub" value="${k}"> ${lbl}`;
+    row.appendChild(l);
+  }
+  cont.appendChild(row);
+}
+cont.addEventListener("change", () => {
+  const n = cont.querySelectorAll("input:checked").length;
+  cont.querySelectorAll("input:not(:checked)").forEach(i => i.disabled = n >= 3);
+});
+const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
+document.getElementById("f").addEventListener("submit", async (ev) => {
+  ev.preventDefault();
+  const msg = document.getElementById("msg"), btn = document.getElementById("btn");
+  const nombre = document.getElementById("nombre").value.trim();
+  const email = document.getElementById("email").value.trim().toLowerCase();
+  const ciudad = document.getElementById("ciudad").value.trim();
+  const comentario = document.getElementById("comentario").value.trim();
+  const subs = [...cont.querySelectorAll("input:checked")].map(i => i.value);
+  msg.className = "msg"; msg.textContent = "";
+  if (!nombre) { msg.className = "msg err"; msg.textContent = "Falta tu nombre."; return; }
+  if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) { msg.className = "msg err"; msg.textContent = "Ese correo no se ve bien."; return; }
+  if (subs.length < 2 || subs.length > 3) { msg.className = "msg err"; msg.textContent = "Elige 2 o 3 subtemas."; return; }
+  btn.disabled = true; msg.textContent = "Guardando…";
+  const { error } = await sb.from("subscribers").insert({ nombre, email, ciudad: ciudad || null, subcategorias: subs, comentario: comentario || null, origen: "form" });
+  if (error) {
+    btn.disabled = false; msg.className = "msg err";
+    msg.textContent = /duplicate|unique/i.test(error.message) ? "Ese correo ya está inscrito. Si quieres cambiar tus temas, responde a cualquier correo de Vera con «temas»." : "No pudimos guardar tu inscripción. Intenta de nuevo o escríbenos.";
+    return;
+  }
+  msg.className = "msg ok";
+  msg.innerHTML = `<b>Listo, ${nombre.split(" ")[0]}.</b> Tu primera edición de Vera te llega al correo cuando arranque la prueba. Tus temas: ${subs.map(s => document.querySelector(`input[value="${s}"]`).parentElement.textContent.trim()).join(" · ")}.`;
+  document.getElementById("f").querySelectorAll("input,button").forEach(i => i.disabled = true);
+});
+</script>
+</body>
+</html>
