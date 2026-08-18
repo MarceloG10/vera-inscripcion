@@ -81,12 +81,11 @@
 const SUPABASE_URL = "https://vahnmlibwwaxddeafdzt.supabase.co";
 const SUPABASE_ANON = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZhaG5tbGlid3dheGRkZWFmZHp0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODY5ODY0NzIsImV4cCI6MjEwMjU2MjQ3Mn0.FSH9rc3HUBlKsqFmswOp50j_bGlj2UYhjIY0_2c8xN4";
 const CATS = {
-  "Ciencia y Tecnología": [["ia_software", "IA y tecnología"], ["espacio", "Espacio y ciencia"], ["medio_ambiente_clima", "Medio ambiente y clima"]],
-  "Economía y Negocios": [["economia_chile", "Economía Chile"], ["mercados_finanzas_personales", "Mercados y finanzas personales"], ["empresas_startups", "Empresas y startups"]],
-  "Deportes": [["futbol_chileno", "Fútbol chileno"], ["futbol_internacional", "Fútbol internacional"], ["tenis", "Tenis"], ["otros_deportes", "Otros deportes"]],
-  "Cultura y Entretenimiento": [["cine_series", "Cine y series"], ["musica", "Música"], ["libros_arte", "Libros, arte y videojuegos"]],
-  "Salud y Bienestar": [["medicina_avances", "Medicina y avances"], ["salud_mental", "Salud mental"], ["nutricion_fitness", "Nutrición y fitness"]],
-  "Estilo de vida": [["viajes", "Viajes"], ["gastronomia", "Gastronomía"], ["diseno_moda", "Diseño, moda y ciudad"]],
+  "Política y Sociedad": [["geopolitica_conflictos", "Geopolítica y conflictos"], ["derechos_justicia", "Derechos y justicia social"], ["sociedad_tendencias", "Sociedad y tendencias"]],
+  "Economía y Negocios": [["mercados_finanzas", "Mercados y finanzas"], ["empresas_emprendimiento", "Empresas y emprendimiento"]],
+  "Ciencia, Medicina y Tecnología": [["tecnologia_futuro", "Tecnología y futuro"], ["inteligencia_artificial", "Inteligencia artificial"], ["medio_ambiente_clima", "Medio ambiente y clima"], ["investigacion_medica", "Investigación médica"], ["salud_bienestar", "Salud y bienestar"]],
+  "Cultura": [["artes_creatividad", "Artes y creatividad"], ["libros_pensamiento", "Libros y pensamiento"]],
+  "Deportes": [["deporte_nacional", "Deporte nacional"], ["deporte_internacional", "Deporte internacional"], ["chilenos_exterior", "Chilenos en el exterior"]],
 };
 const cont = document.getElementById("subs");
 for (const [cat, subs] of Object.entries(CATS)) {
