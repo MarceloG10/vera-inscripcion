@@ -21,39 +21,56 @@
 <meta name="twitter:description" content="Un correo diario, breve y sin opinión, con las noticias más relevantes de Chile y el mundo, más tus temas.">
 <meta name="twitter:image" content="https://marcelog10.github.io/vera-inscripcion/og.png">
 <style>
-  :root { --tinta:#111; --gris:#555; --gris2:#777; --hair:#ddd; --link:#0b57d0; --bg:#f2f2f2; --papel:#fff; }
+  :root { --azul:#0047ff; --tinte:#e6edff; --tinta:#1a1a1a; --gris:#737373; --papel:#fff; --bg:#f2f2f2; --serif:Georgia,'Times New Roman',Times,serif; --sans:Helvetica,Arial,sans-serif; }
   * { box-sizing:border-box; }
-  body { margin:0; background:var(--bg); font-family:Helvetica,Arial,sans-serif; color:var(--tinta); }
-  .wrap { max-width:600px; margin:24px auto; background:var(--papel); padding:28px 32px 36px; }
-  .logo { text-align:center; font-weight:bold; font-size:30px; letter-spacing:6px; }
-  .sub { text-align:center; font-size:12px; letter-spacing:2px; text-transform:uppercase; color:var(--gris); margin-top:8px; }
-  .fecha { font-size:14px; color:var(--gris); border-top:1px solid var(--hair); border-bottom:1px solid var(--hair); padding:8px 0; margin:14px 0 18px; }
-  p { font-size:15px; line-height:1.55; color:#222; margin:0 0 14px; }
-  h2 { font-size:22px; border-bottom:2px solid var(--tinta); padding-bottom:6px; margin:26px 0 12px; }
-  label.f { display:block; font-size:14px; font-weight:bold; margin:14px 0 6px; }
-  input[type=text], input[type=email] { width:100%; font:inherit; font-size:15px; padding:9px 10px; border:1px solid #bbb; border-radius:3px; }
-  .cat { margin:12px 0 4px; font-size:13px; letter-spacing:1px; text-transform:uppercase; color:var(--gris2); font-weight:bold; }
-  .subs label { display:inline-block; margin:4px 10px 4px 0; font-size:15px; }
-  .subs input { margin-right:5px; }
-  .hint { font-size:13px; color:var(--gris); }
-  button { margin-top:20px; font:inherit; font-size:16px; font-weight:bold; background:var(--tinta); color:#fff; border:0; padding:12px 22px; border-radius:3px; cursor:pointer; }
+  body { margin:0; background:var(--bg); font-family:var(--serif); color:var(--tinta); }
+  .wrap { max-width:600px; margin:24px auto; background:var(--papel); }
+  .cab { text-align:center; padding:34px 40px 36px; }
+  .logo { font-size:60px; line-height:1.1; letter-spacing:-0.5px; color:#000; }
+  .lema { font-size:22px; line-height:1.2; margin:18px auto 0; max-width:300px; }
+  .fecha { font-size:22px; line-height:1.2; color:var(--gris); margin-top:36px; }
+  .bloque { background:var(--tinte); border-top:2px solid var(--azul); padding:30px 60px 36px; color:var(--azul); }
+  .pill { display:inline-block; font-family:var(--sans); font-size:14px; line-height:18px; font-weight:bold; text-transform:uppercase; letter-spacing:.5px; color:#fff; background:var(--azul); border-radius:5px; padding:7px 18px; }
+  .centro { text-align:center; margin-bottom:22px; }
+  .bloque p { font-size:22px; line-height:1.25; margin:0 0 16px; }
+  .bloque p.hint, .hint { font-family:var(--sans); font-size:12px; line-height:1.5; text-transform:uppercase; letter-spacing:.3px; color:inherit; }
+  .form { padding:26px 60px 36px; }
+  h2 { font-family:var(--sans); font-size:14px; font-weight:bold; text-transform:uppercase; letter-spacing:.5px; color:var(--azul); margin:22px 0 10px; }
+  label.f { display:block; font-family:var(--sans); font-size:11px; font-weight:bold; text-transform:uppercase; letter-spacing:.3px; color:var(--azul); margin:16px 0 6px; }
+  label.f .hint { text-transform:none; letter-spacing:0; font-weight:normal; color:var(--gris); }
+  input[type=text], input[type=email] { width:100%; font:inherit; font-size:18px; padding:9px 12px; border:2px solid var(--azul); border-radius:4px; color:var(--tinta); background:#fff; }
+  input:focus { outline:none; box-shadow:0 0 0 3px var(--tinte); }
+  .cat { margin:16px 0 8px; font-family:var(--sans); font-size:11px; letter-spacing:.3px; text-transform:uppercase; color:var(--gris); font-weight:bold; }
+  .subs label { display:inline-block; margin:0 6px 6px 0; font-family:var(--sans); font-size:12px; line-height:14px; text-transform:uppercase; letter-spacing:.5px; color:var(--azul); border:2px solid var(--azul); border-radius:4px; padding:5px 10px; cursor:pointer; user-select:none; }
+  .subs input { position:absolute; opacity:0; width:0; height:0; }
+  .subs label:has(input:checked) { background:var(--azul); color:#fff; font-weight:bold; }
+  .subs label:has(input:disabled:not(:checked)) { opacity:.4; cursor:default; }
+  .p-hint { font-size:17px; line-height:1.3; color:var(--tinta); margin:0 0 6px; }
+  button { margin-top:24px; font-family:var(--sans); font-size:14px; font-weight:bold; text-transform:uppercase; letter-spacing:.5px; background:var(--azul); color:#fff; border:2px solid var(--azul); padding:10px 22px; border-radius:5px; cursor:pointer; }
   button:disabled { opacity:.5; cursor:default; }
-  .msg { margin-top:16px; font-size:15px; line-height:1.5; }
-  .ok { color:#0a7a2f; } .err { color:#b3261e; }
-  .pie { border-top:2px solid var(--tinta); margin-top:28px; padding-top:12px; font-size:12px; color:var(--gris); line-height:1.6; }
+  .msg { margin-top:16px; font-size:17px; line-height:1.4; }
+  .ok { color:#007a45; } .err { color:#b3261e; }
+  .pie { border-top:2px solid var(--tinta); padding:24px 60px 32px; font-family:var(--sans); font-size:11px; color:var(--gris); line-height:1.7; text-transform:uppercase; letter-spacing:.3px; text-align:center; }
+  @media (max-width:480px) { .cab,.bloque,.form,.pie { padding-left:22px; padding-right:22px; } .logo { font-size:48px; } .bloque p { font-size:19px; } }
 </style>
 </head>
 <body>
 <div class="wrap">
-  <div class="logo">VERA</div>
-  <div class="sub">Edición diaria · inscripción</div>
-  <div class="fecha">Un resumen diario de las noticias importantes.</div>
+  <div class="cab">
+    <div class="logo">vera</div>
+    <div class="lema">Tu resumen diario de las noticias más importantes.</div>
+    <div class="fecha">Inscripción a la prueba</div>
+  </div>
 
-  <p>Estamos probando <b>Vera</b>, un correo diario, breve y sin opinión, con las noticias más relevantes de Chile y el mundo, además de una selección sobre <b>tus temas de interés</b>.</p>
-  <p>Cada noticia está contada en pocas líneas y contrastada a partir de medios que consideramos confiables, y siempre puedes consultar la fuente original.</p>
-  <p>Estamos comenzando con un grupo pequeño de personas interesadas en mantenerse informadas sobre el acontecer nacional e internacional.</p>
-  <p class="hint">Pruébala durante dos semanas. Después te preguntaremos qué te pareció y qué podemos mejorar. Puedes darte de baja en cualquier momento respondiendo cualquier correo con «baja».</p>
+  <div class="bloque">
+    <div class="centro"><span class="pill">Qué es</span></div>
+    <p>Estamos probando <b>Vera</b>, un correo diario, breve y sin opinión, con las noticias más relevantes de Chile y el mundo, además de una selección sobre <b>tus temas de interés</b>.</p>
+    <p>Cada noticia está contada en pocas líneas y contrastada a partir de medios que consideramos confiables, y siempre puedes consultar la fuente original.</p>
+    <p>Estamos comenzando con un grupo pequeño de personas interesadas en mantenerse informadas sobre el acontecer nacional e internacional.</p>
+    <p class="hint">Pruébala durante dos semanas. Después te preguntaremos qué te pareció y qué podemos mejorar. Puedes darte de baja en cualquier momento respondiendo cualquier correo con «baja».</p>
+  </div>
 
+  <div class="form">
   <form id="f" novalidate>
     <h2>Tus datos</h2>
     <label class="f" for="nombre">Nombre</label>
@@ -64,7 +81,7 @@
     <input type="text" id="ciudad" name="ciudad" placeholder="Concepción, Santiago, Barcelona…" autocomplete="address-level2">
 
     <h2>Tus temas</h2>
-    <p class="hint">Elige <b>2 o 3</b> subtemas. Ocupan la mitad de tu sección personalizada; la otra mitad la elegimos nosotros.</p>
+    <p class="p-hint">Elige <b>2 o 3</b> subtemas. Ocupan la mitad de tu sección personalizada; la otra mitad la elegimos nosotros.</p>
     <div class="subs" id="subs"></div>
 
     <label class="f" for="comentario">¿Algo que quieras decirnos? <span class="hint">(opcional)</span></label>
@@ -73,6 +90,7 @@
     <button type="submit" id="btn">Inscribirme</button>
     <div class="msg" id="msg"></div>
   </form>
+  </div>
 
   <div class="pie">Vera es un editor: seleccionamos y resumimos noticias de fuentes confiables y las linkeamos. No escribimos artículos ni opinamos. Tu correo solo se usa para enviarte la edición diaria durante la prueba.</div>
 </div>
