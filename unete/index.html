@@ -80,7 +80,7 @@
     <h2>Tus datos</h2>
     <label class="f" for="nombre">Nombre</label>
     <input type="text" id="nombre" name="nombre" required autocomplete="name">
-    <label class="f" for="email">Correo (ahí te llega Vera)</label>
+    <label class="f" for="email">Correo (ahí te llega Vera) <span class="hint">(si ya estás inscrito, usa el mismo correo para actualizar tus temas)</span></label>
     <input type="email" id="email" name="email" required autocomplete="email">
     <label class="f" for="ciudad">Ciudad donde vives <span class="hint">(para la noticia local)</span></label>
     <input type="text" id="ciudad" name="ciudad" placeholder="Concepción, Santiago, Barcelona…" autocomplete="address-level2">
@@ -144,7 +144,7 @@ document.getElementById("f").addEventListener("submit", async (ev) => {
   const { error } = await sb.from("subscribers").insert({ nombre, email, ciudad: ciudad || null, subcategorias: subs, comentario: comentario || null, origen: "form" });
   if (error) {
     btn.disabled = false; msg.className = "msg err";
-    msg.textContent = /duplicate|unique/i.test(error.message) ? "Ese correo ya está inscrito. Si quieres cambiar tus temas, responde a cualquier correo de Vera con «temas»." : "No pudimos guardar tu inscripción. Intenta de nuevo o escríbenos.";
+    msg.textContent = "No pudimos guardar tu inscripción. Intenta de nuevo o escríbenos.";
     return;
   }
   // Confirmación: reemplaza el formulario por un bloque en el mismo lenguaje visual (píldora + azul)
@@ -154,7 +154,7 @@ document.getElementById("f").addEventListener("submit", async (ev) => {
   ok.innerHTML = `<div class="centro"><span class="pill">Inscripción lista</span></div>
     <div class="etq">${ciudad ? ciudad : "Bienvenida/o"}</div>
     <div class="titulo">Listo, ${nombre.split(" ")[0]}.</div>
-    <p>Tu primera edición de Vera te llega a <b>${email}</b> cuando arranque la prueba. Un correo al día, todos los días.</p>
+    <p>Vera te llega a <b>${email}</b>: un correo al día, todos los días. Si ya estabas inscrito, reemplazamos tus preferencias anteriores por estas.</p>
     <p class="hint">Tus temas</p><div class="pills">${pills}</div>
     <p class="hint" style="margin-top:18px">Para cambiar tus temas o darte de baja, responde cualquier correo de Vera con «temas» o «baja».</p>`;
   const form = document.getElementById("f");
