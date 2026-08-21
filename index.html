@@ -156,7 +156,8 @@ document.getElementById("f").addEventListener("submit", async (ev) => {
     <div class="titulo">Listo, ${nombre.split(" ")[0]}.</div>
     <p>Vera te llega a <b>${email}</b>: un correo al día, todos los días. Si ya estabas inscrito, reemplazamos tus preferencias anteriores por estas.</p>
     <p class="hint">Tus temas</p><div class="pills">${pills}</div>
-    <p class="hint" style="margin-top:18px">Para cambiar tus temas o darte de baja, responde cualquier correo de Vera con «temas» o «baja».</p>`;
+    <p class="hint" style="margin-top:18px">Importante: Vera llega desde <b>diario@holavera.news</b>. Si el primer correo cae en Promociones o Notificaciones, arrástralo a Principal y responde «Sí» cuando Gmail pregunte — así te llegará siempre a la bandeja principal.</p>
+    <p class="hint">Para cambiar tus temas o darte de baja, responde cualquier correo de Vera con «temas» o «baja».</p>`;
   const form = document.getElementById("f");
   form.parentElement.replaceChild(ok, form);
   ok.scrollIntoView({ block: "start", behavior: "smooth" });
