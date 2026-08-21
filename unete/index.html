@@ -21,41 +21,43 @@
 <meta name="twitter:description" content="Un correo diario y breve con las noticias más relevantes de Chile y el mundo, más tus temas.">
 <meta name="twitter:image" content="https://holavera.news/og.png">
 <style>
-  :root { --azul:#0047ff; --tinte:#e6edff; --tinta:#1a1a1a; --gris:#737373; --papel:#fff; --bg:#f2f2f2; --serif:Georgia,'Times New Roman',Times,serif; --sans:Helvetica,Arial,sans-serif; }
+  :root { --tinta:#2f2129; --gris:#8a8a8a; --papel:#fff; --bg:#efefef;
+    --azul:#d7eaff; --azul-acento:#538fd1; --amarillo:#fef79f; --mostaza:#aea100; --lila:#e4cdff; --purpura:#a07bcd;
+    --serif:Georgia,'Times New Roman',Times,serif; --slab:Rockwell,'Roboto Slab',Georgia,serif; --sans:Helvetica,Arial,sans-serif; }
   * { box-sizing:border-box; }
   body { margin:0; background:var(--bg); font-family:var(--serif); color:var(--tinta); }
   .wrap { max-width:600px; margin:24px auto; background:var(--papel); }
-  .cab { text-align:center; padding:34px 40px 36px; }
-  .logo { font-size:60px; line-height:1.1; letter-spacing:-0.5px; color:#000; }
+  .cab { text-align:center; padding:34px 40px 26px; border-bottom:2px solid var(--tinta); }
+  .logo { font-family:var(--slab); font-weight:bold; font-size:52px; line-height:1.1; letter-spacing:-0.5px; color:var(--tinta); }
   .lema { font-size:22px; line-height:1.2; margin:18px auto 0; max-width:300px; }
   .fecha { font-size:22px; line-height:1.2; color:var(--gris); margin-top:36px; }
-  .bloque { background:var(--tinte); border-top:2px solid var(--azul); padding:30px 60px 36px; color:var(--azul); }
-  .pill { display:inline-block; font-family:var(--sans); font-size:14px; line-height:18px; font-weight:bold; text-transform:uppercase; letter-spacing:.5px; color:#fff; background:var(--azul); border-radius:5px; padding:7px 18px; }
+  .bloque { background:var(--azul); padding:30px 60px 36px; color:var(--tinta); }
+  .pill { display:inline-block; font-family:var(--sans); font-size:13px; line-height:17px; font-weight:bold; text-transform:uppercase; letter-spacing:.8px; color:#fff; background:var(--tinta); border-radius:3px; padding:6px 14px; }
   .centro { text-align:center; margin-bottom:22px; }
   .bloque p { font-size:22px; line-height:1.25; margin:0 0 16px; }
   .bloque p.hint, .hint { font-family:var(--sans); font-size:12px; line-height:1.5; text-transform:uppercase; letter-spacing:.3px; color:inherit; }
   .form { padding:26px 60px 36px; }
-  h2 { font-family:var(--sans); font-size:14px; font-weight:bold; text-transform:uppercase; letter-spacing:.5px; color:var(--azul); margin:22px 0 10px; }
-  label.f { display:block; font-family:var(--sans); font-size:11px; font-weight:bold; text-transform:uppercase; letter-spacing:.3px; color:var(--azul); margin:16px 0 6px; }
+  h2 { font-family:var(--serif); font-size:24px; font-weight:normal; color:var(--tinta); margin:26px 0 10px; }
+  label.f { display:block; font-family:var(--sans); font-size:11px; font-weight:bold; text-transform:uppercase; letter-spacing:.5px; color:var(--tinta); margin:16px 0 6px; }
   label.f .hint { text-transform:none; letter-spacing:0; font-weight:normal; color:var(--gris); }
-  input[type=text], input[type=email] { width:100%; font:inherit; font-size:18px; padding:9px 12px; border:2px solid var(--azul); border-radius:4px; color:var(--tinta); background:#fff; }
-  input:focus { outline:none; box-shadow:0 0 0 3px var(--tinte); }
+  input[type=text], input[type=email] { width:100%; font:inherit; font-size:18px; padding:9px 12px; border:2px solid var(--tinta); border-radius:3px; color:var(--tinta); background:#fff; }
+  input:focus { outline:none; box-shadow:0 0 0 3px var(--azul); }
   .cat { margin:16px 0 8px; font-family:var(--sans); font-size:11px; letter-spacing:.3px; text-transform:uppercase; color:var(--gris); font-weight:bold; }
-  .subs label { display:inline-block; margin:0 6px 6px 0; font-family:var(--sans); font-size:12px; line-height:14px; text-transform:uppercase; letter-spacing:.5px; color:var(--azul); border:2px solid var(--azul); border-radius:4px; padding:5px 10px; cursor:pointer; user-select:none; }
+  .subs label { display:inline-block; margin:0 6px 6px 0; font-family:var(--sans); font-size:12px; line-height:14px; text-transform:uppercase; letter-spacing:.5px; color:var(--tinta); background:var(--azul); border-radius:3px; padding:6px 11px; cursor:pointer; user-select:none; }
   .subs input { position:absolute; opacity:0; width:0; height:0; }
-  .subs label:has(input:checked) { background:var(--azul); color:#fff; font-weight:bold; }
+  .subs label:has(input:checked) { background:var(--tinta); color:#fff; font-weight:bold; }
   .subs label:has(input:disabled:not(:checked)) { opacity:.4; cursor:default; }
   .p-hint { font-size:17px; line-height:1.3; color:var(--tinta); margin:0 0 6px; }
-  button { margin-top:24px; font-family:var(--sans); font-size:14px; font-weight:bold; text-transform:uppercase; letter-spacing:.5px; background:var(--azul); color:#fff; border:2px solid var(--azul); padding:10px 22px; border-radius:5px; cursor:pointer; }
+  button { margin-top:24px; font-family:var(--sans); font-size:14px; font-weight:bold; text-transform:uppercase; letter-spacing:.8px; background:var(--tinta); color:#fff; border:2px solid var(--tinta); padding:11px 22px; border-radius:3px; cursor:pointer; }
   button:disabled { opacity:.5; cursor:default; }
   .msg { margin-top:16px; font-size:17px; line-height:1.4; }
-  .ok { color:#007a45; } .err { color:#b3261e; }
+  .ok { color:var(--purpura); } .err { color:#b3261e; }
   .pie { border-top:2px solid var(--tinta); padding:24px 60px 32px; font-family:var(--sans); font-size:11px; color:var(--gris); line-height:1.7; text-transform:uppercase; letter-spacing:.3px; text-align:center; }
-  .listo { margin:0 -60px; }
+  .listo { margin:0 -60px; background:var(--lila); padding:30px 60px 36px; color:var(--tinta); }
   .listo .etq { font-family:var(--sans); font-size:12px; font-weight:bold; text-transform:uppercase; letter-spacing:.3px; margin-bottom:8px; }
   .listo .titulo { font-size:42px; line-height:.98; margin:0 0 20px; }
   .listo p { font-size:22px; line-height:1.25; margin:0 0 14px; }
-  .pill-out { display:inline-block; font-family:var(--sans); font-size:12px; line-height:14px; text-transform:uppercase; letter-spacing:.5px; color:var(--azul); border:2px solid var(--azul); border-radius:4px; padding:5px 10px; margin:0 6px 6px 0; }
+  .pill-out { display:inline-block; font-family:var(--sans); font-size:12px; line-height:14px; text-transform:uppercase; letter-spacing:.5px; color:var(--tinta); background:#fff; border-radius:3px; padding:6px 11px; margin:0 6px 6px 0; }
   @media (max-width:480px) { .cab,.bloque,.form,.pie { padding-left:22px; padding-right:22px; } .logo { font-size:48px; } .bloque p { font-size:19px; } .listo { margin:0 -22px; } .listo .titulo { font-size:32px; } }
 </style>
 </head>

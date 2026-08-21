@@ -20,34 +20,36 @@
 <meta name="twitter:description" content="7 preguntas cortas sobre cómo te informas. Toma 5 minutos.">
 <meta name="twitter:image" content="https://holavera.news/og.png">
 <style>
-  :root { --azul:#0047ff; --tinte:#e6edff; --tinta:#1a1a1a; --gris:#737373; --papel:#fff; --bg:#f2f2f2; --serif:Georgia,'Times New Roman',Times,serif; --sans:Helvetica,Arial,sans-serif; }
+  :root { --tinta:#2f2129; --gris:#8a8a8a; --papel:#fff; --bg:#efefef;
+    --azul:#d7eaff; --azul-acento:#538fd1; --amarillo:#fef79f; --mostaza:#aea100; --lila:#e4cdff; --purpura:#a07bcd;
+    --serif:Georgia,'Times New Roman',Times,serif; --slab:Rockwell,'Roboto Slab',Georgia,serif; --sans:Helvetica,Arial,sans-serif; }
   * { box-sizing:border-box; }
   body { margin:0; background:var(--bg); font-family:var(--serif); color:var(--tinta); }
   .wrap { max-width:600px; margin:24px auto; background:var(--papel); }
-  .cab { text-align:center; padding:34px 40px 36px; }
-  .logo { font-size:60px; line-height:1.1; letter-spacing:-0.5px; color:#000; }
+  .cab { text-align:center; padding:34px 40px 26px; border-bottom:2px solid var(--tinta); }
+  .logo { font-family:var(--slab); font-weight:bold; font-size:52px; line-height:1.1; letter-spacing:-0.5px; color:var(--tinta); }
   .lema { font-size:22px; line-height:1.2; margin:18px auto 0; max-width:300px; }
   .fecha { font-size:22px; line-height:1.2; color:var(--gris); margin-top:36px; }
-  .bloque { background:var(--tinte); border-top:2px solid var(--azul); padding:30px 60px 36px; color:var(--azul); }
-  .pill { display:inline-block; font-family:var(--sans); font-size:14px; line-height:18px; font-weight:bold; text-transform:uppercase; letter-spacing:.5px; color:#fff; background:var(--azul); border-radius:5px; padding:7px 18px; }
+  .bloque { background:var(--azul); padding:30px 60px 36px; color:var(--tinta); }
+  .pill { display:inline-block; font-family:var(--sans); font-size:13px; line-height:17px; font-weight:bold; text-transform:uppercase; letter-spacing:.8px; color:#fff; background:var(--tinta); border-radius:3px; padding:6px 14px; }
   .centro { text-align:center; margin-bottom:22px; }
   .bloque p { font-size:22px; line-height:1.25; margin:0 0 16px; }
   .hint { font-family:var(--sans); font-size:12px; line-height:1.5; text-transform:uppercase; letter-spacing:.3px; color:inherit; }
   .form { padding:26px 60px 40px; }
-  .num { display:inline-block; font-family:var(--sans); font-size:11px; font-weight:bold; letter-spacing:.5px; color:#fff; background:var(--azul); border-radius:4px; padding:3px 9px; margin-right:8px; vertical-align:2px; }
+  .num { display:inline-block; font-family:var(--sans); font-size:11px; font-weight:bold; letter-spacing:.5px; color:#fff; background:var(--tinta); border-radius:3px; padding:3px 9px; margin-right:8px; vertical-align:2px; }
   label.p { display:block; font-size:21px; line-height:1.25; margin:30px 0 10px; }
   label.p .aclara { font-size:16px; color:var(--gris); }
-  textarea { width:100%; font:inherit; font-size:17px; line-height:1.4; padding:10px 12px; border:2px solid var(--azul); border-radius:4px; color:var(--tinta); background:#fff; min-height:84px; resize:vertical; }
-  textarea:focus, input:focus { outline:none; box-shadow:0 0 0 3px var(--tinte); }
-  h2 { font-family:var(--sans); font-size:14px; font-weight:bold; text-transform:uppercase; letter-spacing:.5px; color:var(--azul); margin:30px 0 10px; }
-  label.f { display:block; font-family:var(--sans); font-size:11px; font-weight:bold; text-transform:uppercase; letter-spacing:.3px; color:var(--azul); margin:14px 0 6px; }
+  textarea { width:100%; font:inherit; font-size:17px; line-height:1.4; padding:10px 12px; border:2px solid var(--tinta); border-radius:3px; color:var(--tinta); background:#fff; min-height:84px; resize:vertical; }
+  textarea:focus, input:focus { outline:none; box-shadow:0 0 0 3px var(--azul); }
+  h2 { font-family:var(--serif); font-size:24px; font-weight:normal; color:var(--tinta); margin:30px 0 10px; }
+  label.f { display:block; font-family:var(--sans); font-size:11px; font-weight:bold; text-transform:uppercase; letter-spacing:.5px; color:var(--tinta); margin:14px 0 6px; }
   label.f .op { text-transform:none; letter-spacing:0; font-weight:normal; color:var(--gris); }
-  input[type=text] { width:100%; font:inherit; font-size:17px; padding:9px 12px; border:2px solid var(--azul); border-radius:4px; color:var(--tinta); background:#fff; }
+  input[type=text] { width:100%; font:inherit; font-size:17px; padding:9px 12px; border:2px solid var(--tinta); border-radius:3px; color:var(--tinta); background:#fff; }
   .fila { display:flex; gap:12px; } .fila > div { flex:1; }
-  button { margin-top:26px; font-family:var(--sans); font-size:14px; font-weight:bold; text-transform:uppercase; letter-spacing:.5px; background:var(--azul); color:#fff; border:2px solid var(--azul); padding:11px 22px; border-radius:5px; cursor:pointer; }
+  button { margin-top:26px; font-family:var(--sans); font-size:14px; font-weight:bold; text-transform:uppercase; letter-spacing:.8px; background:var(--tinta); color:#fff; border:2px solid var(--tinta); padding:11px 22px; border-radius:3px; cursor:pointer; }
   button:disabled { opacity:.5; cursor:default; }
   .msg { margin-top:16px; font-size:17px; line-height:1.4; } .err { color:#b3261e; }
-  .listo { background:var(--tinte); border-top:2px solid var(--azul); padding:30px 60px 40px; color:var(--azul); }
+  .listo { background:var(--lila); padding:30px 60px 40px; color:var(--tinta); }
   .listo .titulo { font-size:42px; line-height:.98; margin:0 0 20px; }
   .listo p { font-size:22px; line-height:1.25; margin:0 0 14px; }
   .pie { border-top:2px solid var(--tinta); padding:24px 60px 32px; font-family:var(--sans); font-size:11px; color:var(--gris); line-height:1.7; text-transform:uppercase; letter-spacing:.3px; text-align:center; }
