@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vera — Empecemos</title>
+<meta name="description" content="Inscríbete en Vera: tu digest diario de noticias, personalizado según tus temas.">
+<meta name="robots" content="noindex">
+<style>
+  /* Formulario de inscripción — réplica de la pág. 21 del diseño de referencia (Canva DAHS8TQTauA, 2026-09-01). */
+  :root { --tinta:#2f2129; --papel:#fff; --gris:#8a8a8a; --gris-lema:#8a8186;
+    --azul:#d7eaff; --amarillo:#fef79f; --lila:#e4cdff; --purpura:#a07bcd;
+    --serif:Georgia,'Times New Roman',Times,serif; --slab:Rockwell,'Roboto Slab',Georgia,serif; --sans:Helvetica,Arial,sans-serif; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--tinta); font-family:var(--serif); color:var(--tinta); }
+  .wrap { max-width:640px; margin:0 auto; padding:0 16px 14px; }
+  .cab { text-align:center; padding:44px 24px 30px; }
+  .cab a { text-decoration:none; }
+  .logo { font-family:var(--slab); font-size:56px; line-height:1; letter-spacing:-.5px; color:#fff; }
+  .lema { font-size:18px; line-height:1.3; color:var(--gris-lema); margin-top:14px; }
+  .card { background:var(--papel); border-radius:18px; padding:32px 34px 36px; margin:0 0 24px; }
+  .card h1 { font-family:var(--serif); font-weight:bold; font-size:28px; line-height:1.1; margin:0 0 22px; }
+  .intro { font-size:19px; line-height:1.35; color:var(--gris); margin:-8px 0 22px; }
+  .intro b { color:var(--tinta); }
+  .grid { display:grid; grid-template-columns:1fr 1fr; gap:2px 26px; }
+  .campo { margin-bottom:16px; }
+  label.f { display:block; font-family:var(--sans); font-size:12px; font-weight:bold; text-transform:uppercase; letter-spacing:.6px; margin:0 0 8px; }
+  input[type=text], input[type=email], select { width:100%; font:inherit; font-size:17px; padding:10px 12px;
+    border:2px solid var(--tinta); border-radius:6px; color:var(--tinta); background:#fff; }
+  select { appearance:none; -webkit-appearance:none;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%238a8a8a' stroke-width='2'/%3E%3C/svg%3E");
+    background-repeat:no-repeat; background-position:right 12px center; padding-right:34px; }
+  input:focus, select:focus { outline:none; box-shadow:0 0 0 3px var(--azul); }
+  .hint { font-family:var(--sans); font-size:10.5px; line-height:1.6; letter-spacing:.4px; text-transform:uppercase; color:var(--gris); margin-top:7px; }
+  .hint i { font-style:italic; }
+  .cat { font-family:var(--sans); font-size:13px; font-weight:bold; letter-spacing:.5px; text-transform:uppercase; margin:22px 0 12px; }
+  .subs label { display:inline-block; margin:0 8px 10px 0; font-family:var(--sans); font-size:13px; line-height:15px;
+    text-transform:uppercase; letter-spacing:.3px; color:var(--tinta); border-radius:999px; padding:9px 16px; cursor:pointer; user-select:none; }
+  .subs .g0 label { background:var(--azul); } .subs .g1 label { background:var(--amarillo); } .subs .g2 label { background:var(--lila); }
+  .subs input { position:absolute; opacity:0; width:0; height:0; }
+  .subs label:has(input:checked) { background:var(--tinta) !important; color:#fff; font-weight:bold; }
+  .subs label:has(input:disabled:not(:checked)) { opacity:.4; cursor:default; }
+  button { display:block; margin-top:26px; font-family:var(--sans); font-size:14px; font-weight:bold; text-transform:uppercase;
+    letter-spacing:.8px; background:var(--tinta); color:#fff; border:2px solid var(--tinta); padding:13px 26px; border-radius:6px; cursor:pointer; }
+  button:disabled { opacity:.5; cursor:default; }
+  .msg { margin-top:14px; font-size:17px; line-height:1.4; }
+  .ok { color:var(--purpura); } .err { color:#b3261e; }
+  .nota-baja { font-family:var(--sans); font-size:10.5px; line-height:1.7; letter-spacing:.4px; text-transform:uppercase;
+    color:var(--gris-lema); padding:0 12px 34px; }
+  .pill-out { display:inline-block; font-family:var(--sans); font-size:12px; line-height:14px; text-transform:uppercase;
+    letter-spacing:.4px; color:var(--tinta); background:var(--azul); border-radius:999px; padding:7px 13px; margin:0 6px 6px 0; }
+  .listo .etq { font-family:var(--sans); font-size:12px; font-weight:bold; text-transform:uppercase; letter-spacing:.4px; color:var(--gris); margin-bottom:8px; }
+  .listo .titulo { font-family:var(--serif); font-weight:bold; font-size:34px; line-height:1; margin:0 0 18px; }
+  .listo p { font-size:18px; line-height:1.35; margin:0 0 14px; }
+  .listo .hint { margin-top:14px; }
+  @media (max-width:560px) { .grid { grid-template-columns:1fr; gap:0; }
+    .cab { padding:36px 16px 26px; } .logo { font-size:46px; } .lema { font-size:16px; }
+    .card { padding:26px 22px 30px; } .card h1 { font-size:25px; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="cab">
+    <a href="../"><div class="logo">vera</div></a>
+    <div class="lema">Lo importante de hoy. Resumido y contrastado para ti.</div>
+  </div>
+
+  <form id="f" novalidate>
+  <div class="card" id="card-datos">
+    <h1>Empecemos</h1>
+    <div class="grid">
+      <div class="campo">
+        <label class="f" for="nombre">Nombre</label>
+        <input type="text" id="nombre" name="nombre" required autocomplete="name">
+      </div>
+      <div class="campo">
+        <label class="f" for="email">Correo</label>
+        <input type="email" id="email" name="email" required autocomplete="email">
+        <div class="hint">Aquí recibirás el <i>digest</i>. Si ya estás inscrito, usa el mismo correo para actualizar tus temas.</div>
+      </div>
+      <div class="campo">
+        <label class="f" for="ciudad">Ciudad donde vives</label>
+        <input type="text" id="ciudad" name="ciudad" autocomplete="address-level2">
+        <div class="hint">Para incluir noticias de tu entorno.</div>
+      </div>
+      <div class="campo">
+        <label class="f" for="region">Región de Chile</label>
+        <select id="region" name="region">
+          <option value="" selected></option>
+          <option>Arica y Parinacota</option><option>Tarapacá</option><option>Antofagasta</option>
+          <option>Atacama</option><option>Coquimbo</option><option>Valparaíso</option>
+          <option>Metropolitana de Santiago</option><option>O'Higgins</option><option>Maule</option>
+          <option>Ñuble</option><option>Biobío</option><option>La Araucanía</option>
+          <option>Los Ríos</option><option>Los Lagos</option><option>Aysén</option><option>Magallanes</option>
+          <option value="fuera">Vivo fuera de Chile</option>
+        </select>
+        <div class="hint">Para personalizar tus noticias de Chile.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" id="card-temas">
+    <h1>Lo que te interesa</h1>
+    <p class="intro">Elige <b>dos o tres</b> de las sub-categorías. Usaremos tus preferencias para personalizar tu edición diaria.</p>
+    <div class="subs" id="subs"></div>
+    <button type="submit" id="btn">Suscribirme al newsletter</button>
+    <div class="msg" id="msg"></div>
+  </div>
+  </form>
+
+  <div class="nota-baja">Puedes darte de baja en cualquier momento respondiendo cualquier correo con «baja».</div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<script>
+// Config pública (anon key: solo permite INSERT en subscribers por RLS).
+const SUPABASE_URL = "https://vahnmlibwwaxddeafdzt.supabase.co";
+const SUPABASE_ANON = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZhaG5tbGlid3dheGRkZWFmZHp0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODY5ODY0NzIsImV4cCI6MjEwMjU2MjQ3Mn0.FSH9rc3HUBlKsqFmswOp50j_bGlj2UYhjIY0_2c8xN4";
+const CATS = {
+  "Política y Sociedad": [["geopolitica_conflictos", "Geopolítica y conflictos"], ["derechos_justicia", "Derechos y justicia social"], ["sociedad_tendencias", "Sociedad y tendencias"]],
+  "Economía y Negocios": [["mercados_finanzas", "Mercados y finanzas"], ["empresas_negocios", "Empresas y negocios"], ["empresas_emprendimiento", "Emprendimiento e innovación"]],
+  "Ciencia, Medicina y Tecnología": [["tecnologia_futuro", "Innovación y futuro"], ["inteligencia_artificial", "Inteligencia artificial"], ["medio_ambiente_clima", "Medio ambiente y clima"], ["investigacion_medica", "Avances médicos"], ["salud_bienestar", "Salud y bienestar"]],
+  "Cultura": [["artes_creatividad", "Artes y creatividad"], ["libros_pensamiento", "Literatura y pensamiento"]],
+  "Deportes": [["deporte_nacional", "Deporte nacional"], ["deporte_internacional", "Deporte internacional"], ["chilenos_exterior", "Chilenos en el deporte mundial"]],
+};
+const cont = document.getElementById("subs");
+let gi = 0;
+for (const [cat, subs] of Object.entries(CATS)) {
+  const h = document.createElement("div"); h.className = "cat"; h.textContent = cat; cont.appendChild(h);
+  const row = document.createElement("div"); row.className = "g" + (gi % 3); gi++;
+  for (const [k, lbl] of subs) {
+    const l = document.createElement("label");
+    l.innerHTML = `<input type="checkbox" name="sub" value="${k}"> ${lbl}`;
+    row.appendChild(l);
+  }
+  cont.appendChild(row);
+}
+cont.addEventListener("change", () => {
+  const n = cont.querySelectorAll("input:checked").length;
+  cont.querySelectorAll("input:not(:checked)").forEach(i => i.disabled = n >= 3);
+});
+const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
+document.getElementById("f").addEventListener("submit", async (ev) => {
+  ev.preventDefault();
+  const msg = document.getElementById("msg"), btn = document.getElementById("btn");
+  const nombre = document.getElementById("nombre").value.trim();
+  const email = document.getElementById("email").value.trim().toLowerCase();
+  const ciudad = document.getElementById("ciudad").value.trim();
+  const regionSel = document.getElementById("region").value;
+  const region = (regionSel && regionSel !== "fuera") ? regionSel : null;
+  const subs = [...cont.querySelectorAll("input:checked")].map(i => i.value);
+  msg.className = "msg"; msg.textContent = "";
+  if (!nombre) { msg.className = "msg err"; msg.textContent = "Falta tu nombre."; return; }
+  if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) { msg.className = "msg err"; msg.textContent = "Ese correo no se ve bien."; return; }
+  if (subs.length < 2 || subs.length > 3) { msg.className = "msg err"; msg.textContent = "Elige 2 o 3 sub-categorías."; return; }
+  btn.disabled = true; msg.textContent = "Guardando…";
+  const { error } = await sb.from("subscribers").insert({ nombre, email, ciudad: ciudad || null, region, subcategorias: subs, origen: "form" });
+  if (error) {
+    btn.disabled = false; msg.className = "msg err";
+    msg.textContent = "No pudimos guardar tu inscripción. Intenta de nuevo o escríbenos.";
+    return;
+  }
+  // Confirmación: reemplaza las dos tarjetas por una tarjeta blanca en el mismo lenguaje visual
+  const pills = subs.map(s => `<span class="pill-out">${document.querySelector(`input[value="${s}"]`).parentElement.textContent.trim()}</span>`).join("");
+  const ok = document.createElement("div");
+  ok.className = "card listo";
+  ok.innerHTML = `<div class="etq">${ciudad ? ciudad : "Bienvenida/o"}</div>
+    <div class="titulo">Listo, ${nombre.split(" ")[0]}.</div>
+    <p>Vera te llega a <b>${email}</b>: un correo al día, todos los días. Si ya estabas inscrito, reemplazamos tus preferencias anteriores por estas.</p>
+    <div>${pills}</div>
+    <p class="hint">Importante: Vera llega desde <b>diario@holavera.news</b>. Si el primer correo cae en Promociones o Notificaciones, arrástralo a Principal y responde «Sí» cuando tu correo pregunte — así te llegará siempre a la bandeja principal.</p>
+    <p class="hint">Para cambiar tus temas o darte de baja, responde cualquier correo de Vera con «temas» o «baja».</p>`;
+  const form = document.getElementById("f");
+  form.parentElement.replaceChild(ok, form);
+  ok.scrollIntoView({ block: "start", behavior: "smooth" });
+});
+</script>
+</body>
+</html>
