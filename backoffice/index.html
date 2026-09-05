@@ -56,6 +56,14 @@
   .chip.tinta { background:var(--tinta); color:#fff; } .chip.lima { background:var(--lima); border:2px solid var(--tinta); padding:2px 7px; }
   .chip.amar { background:var(--amarillo); } .chip.lila { background:var(--lila); } .chip.gris { background:#eee; color:#555; }
   .barra { display:inline-block; height:8px; background:var(--tinta); border-radius:2px; vertical-align:middle; }
+  td.score { white-space:nowrap; } td.score b { display:inline-block; min-width:26px; font-family:var(--serif); font-size:16px; margin-right:6px; }
+  th.filtrable { cursor:pointer; user-select:none; position:relative; } th.filtrable:after { content:" ▾"; color:var(--gris); } th.filtrable.activo { color:var(--purpura); }
+  .popover { position:absolute; z-index:5; top:100%; left:0; background:#fff; border:2px solid var(--tinta); border-radius:4px; padding:10px 12px; min-width:220px; max-height:280px; overflow:auto; font-family:var(--sans); font-size:12px; text-transform:none; letter-spacing:0; font-weight:normal; box-shadow:0 4px 14px rgba(0,0,0,.12); }
+  .popover label { display:block; padding:4px 0; cursor:pointer; } .popover input { margin-right:6px; }
+  .popover .acciones { margin-top:8px; padding-top:8px; border-top:1px solid var(--hair); } .popover .acciones a { margin-right:12px; color:var(--purpura); font-size:11px; text-transform:uppercase; letter-spacing:.4px; }
+  .filtros-activos { margin:6px 0 10px; } .filtros-activos .chip { cursor:pointer; }
+  .kpi { cursor:help; }
+  .pregunta { display:grid; grid-template-columns:32px 1fr; gap:8px; margin:0 0 10px; font-size:16px; } .pregunta .n { font-family:var(--sans); font-weight:bold; font-size:12px; padding-top:3px; }
   .grid-lectores { font-family:var(--sans); font-size:12px; }
   .grid-lectores td { padding:4px 8px 4px 0; border:none; }
   .cel { display:inline-block; width:14px; height:14px; border-radius:2px; margin-right:3px; }
@@ -118,6 +126,9 @@
       <div class="bloque amarillo"><h3 style="margin-top:0">Lectura por edición (30 días)</h3><div class="desliza">Desliza para ver toda la tabla →</div><div class="scroll"><table id="t-ediciones" class="datos"></table></div></div>
       <div class="bloque lila"><h3 style="margin-top:0">Por lector (14 días)</h3><div class="hint" style="margin-bottom:10px">■ clic · ■ abrió · ■ entregado · ■ enviado · ■ rebote</div><div style="overflow-x:auto"><table class="grid-lectores" id="t-grid"></table></div></div>
       <div class="bloque blanco"><h3 style="margin-top:0">Lo más clickeado (7 días)</h3><div id="top"></div></div>
+      <div class="bloque blanco"><h3 style="margin-top:0">A qué le hacen clic (30 días)</h3>
+        <p class="hint" style="margin-bottom:12px">Cada clic en un chip de fuente cuenta como interés en profundizar esa noticia. Agrupado por segmento y por tema; abajo, cada noticia con sus clics.</p>
+        <div id="clics-tipo"></div></div>
     </section>
 
     <section id="s-ediciones">
@@ -133,6 +144,18 @@
 
     <section id="s-encuesta">
       <h2>Encuesta</h2>
+      <div class="bloque azul">
+        <h3 style="margin-top:0">Las preguntas</h3>
+        <div class="pregunta"><span class="n">R1</span><span>¿Cómo te informaste <b>ayer</b> de lo que pasa en Chile y el mundo? (qué viste o leíste, y dónde)</span></div>
+        <div class="pregunta"><span class="n">R2</span><span>¿Eso es lo normal para ti? ¿Cuántas veces a la semana (o al día) te pones a buscar noticias por tu cuenta?</span></div>
+        <div class="pregunta"><span class="n">R3</span><span>¿Qué es lo que <b>menos te gusta</b> de informarte hoy día?</span></div>
+        <div class="pregunta"><span class="n">R4</span><span>Cuéntanos la última vez que sentiste que te perdiste de algo importante. ¿Qué pasó?</span></div>
+        <div class="pregunta"><span class="n">R5</span><span>La última vez que <b>dudaste</b> de una noticia, ¿qué hiciste? ¿Fuiste a mirar cómo lo contaba otro medio?</span></div>
+        <div class="pregunta"><span class="n">R6</span><span>¿Hay algún medio en que confíes? ¿Alguno en que no? ¿Por qué?</span></div>
+        <div class="pregunta"><span class="n">R7</span><span>¿Has probado algo para informarte mejor o más rápido (apps, newsletters, podcasts, cuentas de IG/TikTok)? ¿Algo que abandonaste?</span></div>
+        <p class="hint" style="margin-top:12px">Y sobre la persona: nombre, edad aproximada, ocupación, ciudad y contacto opcional. La encuesta vive en holavera.news/encuesta.</p>
+      </div>
+      <h3 id="encuesta-titulo">Respuestas</h3>
       <div id="encuesta"></div>
     </section>
 
@@ -154,7 +177,9 @@
     <section id="s-fuentes">
       <h2>Fuentes</h2>
       <p class="hint">Lista blanca con score de fiabilidad (bandas de 5, rúbrica de 8 dimensiones) y posicionamiento editorial. Los scores nacen «provisional» hasta la revisión de los socios.</p>
-      <div style="margin:10px 0"><input type="text" id="f-filtro" placeholder="Filtrar por nombre, nivel, ámbito o posicionamiento…"></div>
+      <div style="margin:10px 0"><input type="text" id="f-filtro" placeholder="Buscar por nombre o descripción…"></div>
+      <p class="hint" style="margin:0 0 6px">Haz clic en el título de una columna (nivel, posicionamiento, ámbito, estado) para filtrar por uno o varios valores.</p>
+      <div class="filtros-activos" id="f-activos"></div>
       <div class="desliza">Desliza para ver toda la tabla →</div><div class="scroll"><table id="t-fuentes" class="datos ancha"></table></div>
     </section>
 
@@ -403,10 +428,18 @@ async function cargar() {
   const ed7 = ediciones.filter(e => e.fecha >= d7);
   const confs = ediciones.map(e => e.contenido && e.contenido.confianza && e.contenido.confianza.promedio).filter(x => x != null);
   const confProm = confs.length ? (confs.reduce((a,b)=>a+b,0)/confs.length).toFixed(1) + "%" : "—";
-  $("kpis").innerHTML = [[activos,"lectores activos"],[nuevos,"nuevos · 7 días"],[ed7.length,"ediciones · 7 días"],
+  const KPI_AYUDA = {
+    "lectores activos": "Personas inscritas que reciben Vera hoy. No cuenta a quienes se dieron de baja.",
+    "nuevos lectores · 7 días": "Inscripciones nuevas en los últimos 7 días.",
+    "ediciones · 7 días": "Correos diarios enviados en los últimos 7 días.",
+    "apertura · 7 días": "De los correos entregados en los últimos 7 días, qué porcentaje fue abierto al menos una vez. Ojo: Apple Mail puede marcar aperturas automáticas.",
+    "clics · 7 días": "De los correos entregados en los últimos 7 días, en qué porcentaje el lector abrió al menos una fuente (clic en un chip).",
+    "confianza editorial": "Promedio del story confidence de las ediciones del período: fiabilidad e independencia de las fuentes de cada noticia. Es interno, el lector no lo ve. Se calcula desde la edición del 6 de septiembre.",
+  };
+  $("kpis").innerHTML = [[activos,"lectores activos"],[nuevos,"nuevos lectores · 7 días"],[ed7.length,"ediciones · 7 días"],
     [(sum(f7,"entr") ? Math.round(100*sum(f7,"abre")/sum(f7,"entr")) : 0) + "%","apertura · 7 días"],
     [(sum(f7,"entr") ? Math.round(100*sum(f7,"clic")/sum(f7,"entr")) : 0) + "%","clics · 7 días"],
-    [confProm,"confianza editorial"]].map(([n,l]) => `<div class="kpi"><div class="n">${esc(n)}</div><div class="l">${l}</div></div>`).join("");
+    [confProm,"confianza editorial"]].map(([n,l]) => `<div class="kpi" title="${esc(KPI_AYUDA[l]||"")}"><div class="n">${esc(n)}</div><div class="l">${l}</div></div>`).join("");
   $("t-ediciones").innerHTML = `<tr><th>fecha</th><th class="num">env</th><th class="num">entr</th><th class="num">abre</th><th class="num">clic</th><th class="num">open %</th><th class="num">click %</th></tr>` +
     filas.slice().reverse().map(f => `<tr><td>${f.fecha}</td><td class="num">${f.env}</td><td class="num">${f.entr}</td><td class="num">${f.abre}</td><td class="num">${f.clic}</td><td class="num">${f.op}%</td><td class="num">${f.cl}%</td></tr>`).join("");
   const f14 = fechas.filter(f => f >= d14);
@@ -420,12 +453,30 @@ async function cargar() {
   const top = Object.entries(cnt).sort((a,b) => b[1]-a[1]).slice(0, 8);
   $("top").innerHTML = top.length ? top.map(([k, n]) => `<div class="item"><span class="chip tinta">${n} clic${n>1?"s":""}</span> ${esc(titulares[k] || k)}</div>`).join("") : `<p>Sin clics esta semana todavía.</p>`;
 
+  // A qué le hacen clic (30 días): por segmento, por tema, por lector y noticia por noticia
+  const meta = {};
+  for (const r of ediciones) { const sg = r.contenido.segmentos;
+    const reg = (it, seg, tipo) => { meta[r.fecha + "|" + it.id] = { seg, tipo, tema: it.subcategoria === "local" || it.etiqueta === "local" ? "Local · " + (it.ciudad || it.lugar || "") : (SUB_LABEL[it.subcategoria] || (it.etiqueta === "categoria" ? "Categoría del día" : "")), tit: it.titular, lugar: it.lugar || "" }; };
+    reg(sg.mundo.principal, "Global", "principal"); sg.mundo.breves.forEach(b => reg(b, "Global", "breve"));
+    reg(sg.chile.principal, "Chile", "principal"); sg.chile.breves.forEach(b => reg(b, "Chile", "breve"));
+    (sg.personalizado.curadas||[]).forEach(b => reg(b, "Para ti", "Vera elige")); (sg.personalizado.pool||[]).forEach(b => reg(b, "Para ti", "tema del lector")); }
+  const porSeg = {}, porTema = {}, porItem = {}, porLector = {};
+  let totalClics = 0;
+  for (const e of evws) if (e.tipo === "email.clicked" && e.item) { const k = String(e.fecha_edicion) + "|" + e.item; const m = meta[k]; totalClics++;
+    porItem[k] = (porItem[k]||0) + 1; porLector[e.destinatario] = (porLector[e.destinatario]||0) + 1;
+    const seg = m ? m.seg + (m.tipo === "principal" ? " · principal" : "") : "otro"; porSeg[seg] = (porSeg[seg]||0) + 1;
+    const tema = m && m.tema ? m.tema : (m ? m.seg : "sin clasificar"); porTema[tema] = (porTema[tema]||0) + 1; }
+  const barras = (obj) => { const max = Math.max(1, ...Object.values(obj)); return Object.entries(obj).sort((a,b) => b[1]-a[1]).map(([k, n]) => `<div style="display:grid;grid-template-columns:200px 1fr 40px;gap:10px;align-items:center;margin:5px 0;font-size:14px;"><span>${esc(k)}</span><span class="barra" style="width:${Math.round(100*n/max)}%;max-width:100%;"></span><b style="text-align:right">${n}</b></div>`).join(""); };
+  $("clics-tipo").innerHTML = totalClics ? `<h3 style="margin-top:0">Por segmento</h3>${barras(porSeg)}<h3>Por tema</h3>${barras(porTema)}<h3>Por lector</h3>${barras(Object.fromEntries(Object.entries(porLector).map(([e,n]) => [nombres[e]||e, n])))}<h3>Noticia por noticia</h3>` +
+    Object.entries(porItem).sort((a,b) => b[1]-a[1]).map(([k, n]) => { const m = meta[k] || {}; return `<div class="item"><div class="t">${k.slice(0,10)} · ${esc(m.seg||"")}${m.tema ? " · " + esc(m.tema) : ""}${m.lugar ? " · " + esc(m.lugar) : ""}</div><span class="chip tinta">${n} clic${n>1?"s":""}</span> ${esc(m.tit || titulares[k] || k)}</div>`; }).join("")
+    : "<p>Sin clics en 30 días.</p>";
+
   // ediciones
   $("ediciones").innerHTML = ediciones.map(r => {
     const c = r.contenido.confianza || {}; const sg = r.contenido.segmentos;
     const items = [["Global", sg.mundo.principal, sg.mundo.breves], ["Chile", sg.chile.principal, sg.chile.breves], ["Para ti · Vera elige", null, sg.personalizado.curadas||[]], ["Para ti · pool", null, sg.personalizado.pool||[]]];
     const estados = {}; for (const [,p,bs] of items) for (const it of [p, ...bs]) if (it) estados[it.estado||"—"] = (estados[it.estado||"—"]||0)+1;
-    return `<details class="bloque blanco"><summary><b>${r.fecha}</b> · nº ${r.edicion} · ${esc(r.asunto)}<br><span class="hint">confianza ${c.promedio != null ? c.promedio + "% (mín " + c.minimo + ")" : "sin calcular"} · estados: ${Object.entries(estados).map(([k,v]) => k + " " + v).join(", ")}</span></summary>` +
+    return `<details class="bloque blanco"><summary><b>${r.fecha}</b> · nº ${r.edicion} · ${esc(r.asunto)}<br><span class="hint">confianza ${c.promedio != null ? c.promedio + "% (mín " + c.minimo + ")" : "sin calcular (edición anterior al 6 sep)"} · certeza: ${Object.keys(estados).every(k => k === "—") ? "sin marcar (edición anterior a la regla del 5 sep)" : Object.entries(estados).filter(([k]) => k !== "—").map(([k,v]) => k.replace("_"," ") + " " + v).join(", ")}</span></summary>` +
       items.map(([nom, p, bs]) => `<h3>${nom}</h3>` + [p, ...bs].filter(Boolean).map(it => `<div class="item"><div class="t">${esc(it.lugar||"")} · ${esc(it.estado||"")}${it.confianza != null ? " · confianza " + it.confianza + "%" : ""}</div>${esc(it.titular)}<br>${(it.fuentes||[]).map(f => `<a class="chip" href="${esc(f.url)}" target="_blank" rel="noopener">${esc(f.medio)}${f.via ? " · vía " + esc(f.via) : ""}${f.primaria ? " · primaria" : ""}</a>`).join("")}</div>`).join("")).join("") + `</details>`;
   }).join("") || "<p>Sin ediciones en 30 días.</p>";
 
@@ -435,6 +486,7 @@ async function cargar() {
     subs.map(s => `<tr><td><b>${esc(s.nombre)}</b></td><td>${esc(s.email)}</td><td>${esc(s.ciudad||"")}</td><td>${esc(s.region||"")}</td><td class="wrap">${(s.subcategorias||[]).map(x => `<span class="chip">${esc(SUB_LABEL[x]||x)}</span>`).join("")}</td><td>${s.activo ? "activo" : "<span class='err'>baja</span>"}${cambios[s.email] ? ` · ${cambios[s.email]} cambio(s)` : ""}</td><td>${s.created_at.slice(0,10)}</td></tr>`).join("");
 
   // encuesta
+  $("encuesta-titulo").textContent = `Respuestas (${encuestas.length})`;
   $("encuesta").innerHTML = encuestas.length ? encuestas.map(e => `<div class="bloque blanco"><div class="t hint">${e.created_at.slice(0,16).replace("T"," ")} · ${esc(e.nombre||"anónimo")} · ${esc(e.edad||"")} · ${esc(e.ocupacion||"")} · ${esc(e.ciudad||"")}</div>` +
     [1,2,3,4,5,6,7].filter(i => e["r"+i]).map(i => `<p><b>R${i}.</b> ${esc(e["r"+i])}</p>`).join("") + `</div>`).join("") : "<p>Todavía no hay respuestas.</p>";
 
@@ -454,14 +506,39 @@ async function cargar() {
   // fuentes
   try {
     const medios = (await (await fetch("medios.json", { cache: "no-store" })).json()).medios;
-    const filasF = Object.entries(medios).map(([n, v]) => ({ n, ...v })).sort((a,b) => (b.score||0) - (a.score||0) || a.n.localeCompare(b.n));
-    const pintar = (filtro) => {
-      const f = (filtro||"").toLowerCase();
-      $("t-fuentes").innerHTML = `<tr><th>medio</th><th>nivel</th><th class="num">score</th><th>posicionamiento</th><th>ámbito</th><th>estado</th></tr>` +
-        filasF.filter(x => !f || [x.n, x.nivel, x.posicionamiento, x.linea, JSON.stringify(x.ambito)].join(" ").toLowerCase().includes(f)).map(x =>
-          `<tr><td><b>${esc(x.n)}</b>${x.linea ? `<br><span class="hint linea" style="text-transform:none">${esc(x.linea)}</span>` : ""}</td><td>${esc(x.nivel)}${x.tipo ? " · " + esc(x.tipo) : ""}</td><td class="num">${x.score != null ? `<span class="barra" style="width:${x.score*0.6}px"></span> ${x.score}` : "—"}</td><td>${esc(x.posicionamiento||"")}</td><td>${Array.isArray(x.ambito) ? x.ambito.map(a => `<span class="chip gris">${esc(SUB_LABEL[a]||a)}</span>`).join("") : esc(x.ambito||"")}</td><td>${esc(x.score_estado||"")}</td></tr>`).join("");
+    const filasF = Object.entries(medios).map(([n, v]) => ({ n, ...v, ambitos: Array.isArray(v.ambito) ? v.ambito.map(a => SUB_LABEL[a]||a) : [v.ambito||"general"], estado: v.score_estado||"" })).sort((a,b) => (b.score||0) - (a.score||0) || a.n.localeCompare(b.n));
+    const COLS = [["nivel","nivel", x => [x.nivel]], ["posicionamiento","posicionamiento", x => [x.posicionamiento||"—"]], ["ambitos","ámbito", x => x.ambitos], ["estado","estado", x => [x.estado||"—"]]];
+    const sel = {};   // columna → Set de valores elegidos (vacío = sin filtro)
+    let texto = "";
+    const pintar = () => {
+      const f = texto.toLowerCase();
+      const visibles = filasF.filter(x => (!f || [x.n, x.nivel, x.posicionamiento, x.linea, x.ambitos.join(" ")].join(" ").toLowerCase().includes(f))
+        && COLS.every(([key,, get]) => !(sel[key] && sel[key].size) || get(x).some(v => sel[key].has(v))));
+      const th = (k, l) => `<th class="filtrable ${sel[k]&&sel[k].size?"activo":""}" data-col="${k}">${l}</th>`;
+      $("t-fuentes").innerHTML = `<tr><th>medio (${visibles.length})</th>${th("nivel","nivel")}<th>score</th>${th("posicionamiento","posicionamiento")}${th("ambitos","ámbito")}${th("estado","estado")}</tr>` +
+        visibles.map(x => `<tr><td><b>${esc(x.n)}</b>${x.linea ? `<br><span class="hint linea" style="text-transform:none">${esc(x.linea)}</span>` : ""}</td><td>${esc(x.nivel)}${x.tipo ? " · " + esc(x.tipo) : ""}</td><td class="score">${x.score != null ? `<b>${x.score}</b><span class="barra" style="width:${x.score*0.6}px"></span>` : "—"}</td><td>${esc(x.posicionamiento||"")}</td><td>${x.ambitos.map(a => `<span class="chip gris">${esc(a)}</span>`).join("")}</td><td>${esc(x.estado)}</td></tr>`).join("");
+      const activos = COLS.flatMap(([k,l]) => [...(sel[k]||[])].map(v => `<span class="chip" data-col="${k}" data-v="${esc(v)}" title="Quitar">${l}: ${esc(v)} ✕</span>`));
+      $("f-activos").innerHTML = activos.length ? activos.join("") + `<span class="chip gris" data-limpiar="1">Limpiar filtros</span>` : "";
     };
-    pintar(""); $("f-filtro").addEventListener("input", (e) => pintar(e.target.value));
+    $("t-fuentes").addEventListener("click", (e) => {
+      if (e.target.closest(".popover")) return;
+      const th = e.target.closest("th.filtrable"); if (!th) return;
+      document.querySelectorAll(".popover").forEach(p => p.remove());
+      const key = th.dataset.col; const get = COLS.find(c => c[0] === key)[2];
+      const valores = [...new Set(filasF.flatMap(get))].sort((a,b) => String(a).localeCompare(String(b)));
+      const pop = document.createElement("div"); pop.className = "popover";
+      pop.innerHTML = valores.map(v => `<label><input type="checkbox" value="${esc(v)}" ${sel[key]&&sel[key].has(v)?"checked":""}> ${esc(v)}</label>`).join("") + `<div class="acciones"><a href="#" data-todo="1">Todos</a><a href="#" data-nada="1">Ninguno</a><a href="#" data-cerrar="1">Cerrar</a></div>`;
+      th.appendChild(pop); e.stopPropagation();
+      pop.addEventListener("click", (ev) => { ev.stopPropagation();
+        if (ev.target.dataset.cerrar) { ev.preventDefault(); pop.remove(); return; }
+        if (ev.target.dataset.todo || ev.target.dataset.nada) { ev.preventDefault(); sel[key] = new Set(ev.target.dataset.todo ? valores : []); pintar(); const th2 = [...document.querySelectorAll("th.filtrable")].find(x => x.dataset.col === key); if (th2) th2.appendChild(pop); pop.querySelectorAll("input").forEach(i => i.checked = sel[key].has(i.value)); return; }
+        if (ev.target.type === "checkbox") { sel[key] = sel[key] || new Set(); ev.target.checked ? sel[key].add(ev.target.value) : sel[key].delete(ev.target.value); pintar(); const th2 = [...document.querySelectorAll("th.filtrable")].find(x => x.dataset.col === key); if (th2) th2.appendChild(pop); }
+      });
+    });
+    document.addEventListener("click", () => document.querySelectorAll(".popover").forEach(p => p.remove()));
+    $("f-activos").addEventListener("click", (e) => { const c = e.target.closest(".chip"); if (!c) return;
+      if (c.dataset.limpiar) { for (const k in sel) sel[k].clear(); } else if (sel[c.dataset.col]) sel[c.dataset.col].delete(c.dataset.v); pintar(); });
+    pintar(); $("f-filtro").addEventListener("input", (e) => { texto = e.target.value; pintar(); });
   } catch (e) { $("t-fuentes").innerHTML = `<tr><td>No se pudo cargar medios.json</td></tr>`; }
 }
 </script>
