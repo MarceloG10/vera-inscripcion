@@ -1,0 +1,304 @@
+<title>Manual editorial de Vera</title>
+<style>
+  :root {
+    --papel: #ffffff; --fondo: #efefef; --tinta: #2f2129; --gris: #8a8a8a; --hair: #e2e2e2;
+    --azul: #538fd1; --azul-tinte: #d7eaff;
+    --amarillo: #fef79f; --amarillo-palido: #fdfbdc;
+    --verde: #a07bcd; --verde-tinte: #e4cdff;
+    --serif: Georgia, 'Times New Roman', Times, serif;
+    --sans: Helvetica, Arial, sans-serif;
+  }
+  html { background: var(--fondo); }
+  body { margin: 0; background: var(--fondo); color: var(--tinta); font-family: var(--serif); line-height: 1.45; }
+  .doc { max-width: 680px; margin: 32px auto 48px; background: var(--papel); box-shadow: 0 1px 4px rgba(0,0,0,.08); }
+  .cab { text-align: center; padding: 46px 48px 38px; }
+  .wordmark { font-family: Rockwell,'Roboto Slab',Georgia,serif; font-weight: bold; font-size: 58px; line-height: 1; letter-spacing: -1px; color: var(--tinta); }
+  .lema { font-size: 21px; max-width: 320px; margin: 16px auto 0; text-wrap: balance; }
+  .kicker { font-family: var(--sans); font-size: 11px; font-weight: bold; letter-spacing: 2.5px; text-transform: uppercase; color: var(--gris); margin-top: 26px; }
+  .fecha { font-size: 18px; color: var(--gris); margin-top: 8px; }
+  .nota-fuente { font-family: var(--sans); font-size: 11px; letter-spacing: .4px; text-transform: uppercase; color: var(--gris); margin-top: 18px; line-height: 1.7; }
+  .nota-fuente code { font-family: var(--sans); border: 1px solid var(--hair); border-radius: 3px; padding: 1px 5px; text-transform: none; letter-spacing: 0; }
+
+  section { padding: 34px 48px 40px; }
+  section.azul { background: var(--azul-tinte); border-top: 2px solid var(--tinta); color: var(--tinta); }
+  section.azul { color: var(--tinta); }
+  section.amarillo { background: var(--amarillo); border-top: 2px solid var(--tinta); color: var(--tinta); }
+  section.amarillo-palido { background: var(--amarillo-palido); border-top: 2px solid var(--tinta); color: var(--tinta); }
+  section.verde { background: var(--verde-tinte); border-top: 2px solid var(--tinta); color: var(--tinta); }
+  section.blanca { background: var(--papel); border-top: 2px solid var(--tinta); color: var(--tinta); }
+  section.gris { background: #f7f7f7; border-top: 2px solid var(--gris); color: var(--tinta); }
+
+  .pill-row { text-align: center; margin-bottom: 26px; }
+  .pill { display: inline-block; font-family: var(--sans); font-size: 13px; line-height: 18px; font-weight: bold;
+          text-transform: uppercase; letter-spacing: .6px; border-radius: 5px; padding: 7px 18px; }
+  .azul .pill { background: var(--tinta); color: #fff; }
+  .amarillo .pill, .amarillo-palido .pill { background: var(--tinta); color: #fff; }
+  .verde .pill { background: var(--tinta); color: #fff; }
+  .blanca .pill { background: var(--tinta); color: #fff; }
+  .gris .pill { background: var(--gris); color: #fff; }
+
+  h3 { font-family: var(--sans); font-size: 12px; font-weight: bold; letter-spacing: 1.5px; text-transform: uppercase;
+       margin: 30px 0 10px; }
+  section > h3:first-of-type { margin-top: 0; }
+  .titulo-seccion { font-size: 33px; line-height: 1.05; margin: 0 0 18px; text-wrap: balance; }
+  p { font-size: 18px; margin: 0 0 14px; }
+  p.chica, li { font-size: 17px; }
+  ul { margin: 0 0 16px; padding-left: 22px; }
+  li { margin-bottom: 9px; }
+  li::marker { font-weight: bold; }
+  b { font-weight: bold; }
+  .regla-fecha { display: inline-block; font-family: var(--sans); font-size: 10px; font-weight: normal; letter-spacing: .5px;
+                 text-transform: uppercase; border: 1.5px solid currentColor; border-radius: 4px; padding: 1px 7px; margin-left: 6px;
+                 vertical-align: 2px; opacity: .75; }
+  .ej { font-size: 16px; border-left: 3px solid currentColor; padding: 2px 0 2px 14px; margin: 10px 0 16px; opacity: .92; }
+  .ej b { font-family: var(--sans); font-size: 11px; letter-spacing: 1px; text-transform: uppercase; }
+
+  .tag { display: inline-block; font-family: var(--sans); font-size: 10.5px; font-weight: bold; letter-spacing: 1px;
+         text-transform: uppercase; border: 2px solid currentColor; border-radius: 4px; padding: 2px 9px; margin: 0 6px 6px 0; }
+  .tag.lleno-azul { background: var(--azul-tinte); border-color: var(--azul-tinte); color: var(--tinta); }
+  .tag.lleno-negro { background: var(--tinta); border-color: var(--tinta); color: #fff; }
+  .tag.lleno-verde { background: var(--verde-tinte); border-color: var(--verde-tinte); color: var(--tinta); }
+
+  .tabla-wrap { overflow-x: auto; }
+  table { border-collapse: collapse; width: 100%; font-size: 15.5px; }
+  th { font-family: var(--sans); font-size: 10.5px; letter-spacing: 1px; text-transform: uppercase; text-align: left;
+       padding: 8px 10px 8px 0; border-bottom: 2px solid currentColor; }
+  td { padding: 10px 10px 10px 0; border-bottom: 1px solid; vertical-align: top; }
+  .azul td { border-color: #b3cfe9; } .blanca td { border-color: var(--hair); }
+  .amarillo-palido td { border-color: #e3dc8e; } .verde td { border-color: #cbb6e6; } .gris td { border-color: var(--hair); }
+  td:first-child, th:first-child { white-space: nowrap; }
+  td .sub-preg { font-style: italic; }
+  td .sub-alc { font-family: var(--sans); font-size: 12.5px; color: inherit; opacity: .8; display: block; margin-top: 4px; line-height: 1.5; }
+
+  .fuentes-tabla td { font-size:14px; line-height:1.55; }
+  .fuentes-tabla td:first-child { white-space:normal; min-width:120px; }
+  .via { font-family:var(--sans); font-size:10px; letter-spacing:.5px; text-transform:uppercase; opacity:.65; }
+  .niveles td:first-child { font-family: var(--sans); font-size: 11px; font-weight: bold; letter-spacing: .8px; text-transform: uppercase; }
+  .decision { display: grid; grid-template-columns: 92px 1fr; gap: 14px; padding: 12px 0; border-bottom: 1px solid var(--hair); font-size: 16px; }
+  .decision:last-child { border-bottom: none; }
+  .decision .f { font-family: var(--sans); font-size: 11px; font-weight: bold; letter-spacing: .6px; text-transform: uppercase; color: var(--gris); padding-top: 3px; }
+
+  .pie { background: #111; color: #f5f5f0; text-align: center; padding: 32px 48px 38px; }
+  .pie .frase { font-size: 19px; }
+  .pie .meta { font-family: var(--sans); font-size: 10.5px; letter-spacing: .8px; text-transform: uppercase; color: #bdbdb6; margin-top: 14px; line-height: 1.8; }
+  @media (max-width: 560px) {
+    .cab, section, .pie { padding-left: 24px; padding-right: 24px; }
+    .wordmark { font-size: 48px; }
+    .titulo-seccion { font-size: 27px; }
+    .decision { grid-template-columns: 1fr; gap: 2px; }
+  }
+</style>
+
+<div class="doc">
+  <header class="cab">
+    <div class="wordmark">vera</div>
+    <div class="lema">Tu resumen diario de las noticias más importantes.</div>
+    <div class="kicker">Manual editorial · Para revisión del equipo</div>
+    <div class="fecha">5 de septiembre de 2026 · v1.9</div>
+    <p class="nota-fuente">Este documento es el espejo legible de las reglas que ejecuta el editor automático cada mañana.<br>
+    La fuente de verdad técnica es <code>pipeline/SKILL.md</code> (+ <code>medios.json</code> y <code>docs/fuentes.md</code>) en el repo.<br>
+    Lo que cambiemos aquí como equipo, se cambia allá.</p>
+  </header>
+
+  <!-- ══════════ IDENTIDAD ══════════ -->
+  <section class="azul">
+    <div class="pill-row"><span class="pill">Quiénes somos</span></div>
+    <h2 class="titulo-seccion">No somos un medio. Somos un editor.</h2>
+    <p>Vera no escribe artículos ni opina: <b>selecciona hechos de fuentes confiables, los cuenta en pocas palabras y deja la fuente a la vista</b>. Cada edición la genera el editor automático sin revisión humana — por eso estas reglas son estrictas: son lo único que hay entre el criterio y el envío.</p>
+
+    <h3>Para quién escribimos</h3>
+    <p class="chica">Chileno de 25–40 años que se desconectó de las noticias: consume pasivo por Instagram, lee poco, no verifica nada, y cuando se asoma a las noticias sale peor — ruido, negatividad, fake news, opiniones. Quiere enterarse de lo importante y sentirse mejor por estar informado, no ignorante.</p>
+    <div class="ej"><b>Lo que debe sentir al terminar de leer</b><br>«Ya sé qué pasó, y sé de dónde sale.»</div>
+
+    <h3>Los tres pilares (no negociables)</h3>
+    <ul>
+      <li><b>Fácil acceso.</b> Lo importante va en la primera línea. Cada bloque se entiende en 10 segundos. Nada exige abrir un link para entender el hecho.</li>
+      <li><b>Confianza.</b> Cada noticia lleva su fuente (medio + URL) y solo se citan medios de nuestra lista blanca. Sin ruido: sin adjetivos valorativos, sin opinión, sin alarma, sin ironía, sin emojis, sin «lo que debes saber», sin preguntas retóricas.</li>
+      <li><b>Personalización.</b> Global y Chile son iguales para todos; «Para ti» se arma por persona según sus temas y su ciudad.</li>
+    </ul>
+  </section>
+
+  <!-- ══════════ ESTRUCTURA ══════════ -->
+  <section class="blanca">
+    <div class="pill-row"><span class="pill">La edición diaria</span></div>
+    <h2 class="titulo-seccion">Tres segmentos, todos los días</h2>
+    <p class="chica">Cada segmento: <b>1 noticia principal</b> (titular ≤15 + texto ≤110 palabras) + <b>4 breves</b> (una sola oración de 15–35 palabras cada una, máx. 40 de tolerancia). <span class="regla-fecha">ajuste 5 sep</span></p>
+    <div class="tabla-wrap">
+    <table>
+      <tr><th>Segmento</th><th>Composición</th></tr>
+      <tr><td><span class="tag lleno-azul">Global</span></td>
+          <td>Las 4 noticias más relevantes del mundo (una es la principal) + 1 breve de categoría del pool (rota cada día). <b>Diversidad geográfica</b>: no todo EE.UU./Europa. Chile no va aquí salvo relevancia global real.</td></tr>
+      <tr><td><span class="tag lleno-negro">Chile</span></td>
+          <td>3 noticias nacionales (una es la principal) + 1 breve <b>local</b> (región/ciudad, fuera de la agenda nacional, rotando regiones) + 1 breve de categoría. Nada de farándula salvo interés público. Política sí, pero <b>hechos, no declaraciones cruzadas</b>.</td></tr>
+      <tr><td><span class="tag lleno-verde">Para ti</span></td>
+          <td>3 noticias de los temas que eligió la persona + 1 «Vera elige» de una de sus categorías + <b>1 noticia local de su ciudad</b> (Concepción, Barcelona, Berlín…). Cada noticia lleva el tag del subtema elegido.</td></tr>
+    </table>
+    </div>
+    <h3>El asunto del correo <span class="regla-fecha">reglas 21 y 29 ago</span></h3>
+    <p class="chica">Siempre resume la <b>noticia principal de Global</b>, en ≤10 palabras, sin «Vera ·» delante (el remitente ya dice Vera): <i>«Jue 21 ago — Trump amenaza a quienes comercien con Irán»</i>. Nunca la de Chile ni otra.</p>
+  </section>
+
+  <!-- ══════════ SELECCIÓN ══════════ -->
+  <section class="amarillo-palido">
+    <div class="pill-row"><span class="pill">Qué entra</span></div>
+    <h2 class="titulo-seccion">Relevancia = consecuencias</h2>
+    <ul>
+      <li><b>Últimas 24 horas.</b> Si la nota es de anteayer, tiene que traer un hecho nuevo.</li>
+      <li><b>Entra lo que tiene consecuencias</b>: afecta a mucha gente, cambia una situación, o es algo que dolería saber tarde. <b>No entra</b>: declaraciones sin hecho, polémicas de redes, notas de color, «podría», rumores.</li>
+      <li><b>Nunca se repite una noticia ya enviada</b> (historial de 30 días). Los temas en desarrollo — guerras, catástrofes, juicios — vuelven solo con un hecho nuevo, y el titular parte de esa novedad.</li>
+      <li><b>Un hecho, un ítem.</b> La misma noticia en varios medios = un solo ítem con varias fuentes. Vale entre segmentos: si un conflicto ya está en Global, el ítem de geopolítica en «Para ti» debe ser <b>otro</b> hecho.</li>
+      <li><b>Categoría del día</b>: las breves de categoría de Global y Chile eligen entre las <b>5 categorías</b> del pool; no coinciden el mismo día y rotan a lo largo de la semana.</li>
+      <li><b>Local</b> = hecho concreto de una ciudad (obra, servicio, seguridad, clima, decisión municipal); no política nacional disfrazada.</li>
+    </ul>
+  </section>
+
+  <!-- ══════════ REDACCIÓN ══════════ -->
+  <section class="blanca">
+    <div class="pill-row"><span class="pill">Cómo se escribe</span></div>
+    <h2 class="titulo-seccion">Contar el hecho, no adornarlo</h2>
+    <ul>
+      <li><b>Español neutro de Chile</b>, tuteo si hace falta, sin chilenismos forzados. Todo lo que venga en inglés, catalán o alemán se traduce; la fuente sigue siendo la original.</li>
+      <li><b>Titular</b> (principales): ≤15 palabras, informativo y concreto — dice qué ocurrió, no busca una reacción; sin dos puntos gancho, sin preguntas, sin mayúsculas gritadas.</li>
+      <li><b>Principal</b> (≤110 palabras): qué pasó (1–2 frases) → por qué importa (1–2 frases) → contexto mínimo, respondiendo cuando se pueda qué, dónde, cuándo, por qué importa y qué se sabe hasta ahora. La primera frase no repite palabras del titular. Si no cabe contexto y contraste, gana el contraste.</li>
+      <li><b>Breve = una sola oración</b> <span class="regla-fecha">22 ago</span>: toda breve (Global, Chile, Para ti, curadas y locales) es <b>una única oración autocontenida de 15 a 35 palabras</b> (máximo 40 de tolerancia), sin titular aparte: quién/qué + el hecho + <b>un dato concreto</b> (cifra, lugar exacto, fecha, consecuencia). La oración <b>no se queda en «qué pasó»</b> <span class="regla-fecha">24 ago</span>: debe superar la <b>prueba de autosuficiencia</b> — leída sola, el lector no se queda con la pregunta obvia sin responder. La segunda cláusula tras punto y coma lleva <b>la consecuencia concreta</b> (qué cambia, a quién afecta) o <b>el contexto que el hecho necesita</b> (si habla de una reforma o un acuerdo, decir qué propone, sacándolo de las fuentes). Ser crítico = contar la consecuencia verificable, nunca opinar. Presente de indicativo, sujeto primero, termina en punto. Modelo: «Uber Eats planea comenzar a integrar drones en sus entregas de comida en Dallas y Houston para finales de 2026; la empresa espera reducir los tiempos de traslado a un máximo de 10 minutos.»</li>
+      <li><b>Hecho, declaración e interpretación</b> <span class="regla-fecha">5 sep</span>: siempre diferenciados y nunca los dos últimos presentados como el primero. Hecho: «El Parlamento aprobó el proyecto». Declaración: «El ministro dijo que creará miles de empleos» (atribuida). Interpretación: «Analistas consideran que podría afectar…» (atribuida y con nombre).</li>
+      <li><b>No rellenar vacíos con suposiciones</b> <span class="regla-fecha">5 sep</span>: si un dato no está confirmado, se dice; nunca se completa información faltante con inferencias presentadas como hechos ni se convierte incertidumbre en certeza al redactar.</li>
+      <li><b>Estado de certeza por noticia</b> <span class="regla-fecha">5 sep</span> (interno, no se muestra al lector): <b>confirmado</b> (evidencia primaria o varias fuentes fiables independientes) · <b>reportado</b> (fuentes fiables sin confirmación primaria) · <b>en desarrollo</b> (puede cambiar) · <b>no confirmado</b> (normalmente no sale). Guía la redacción: lo reportado se atribuye, lo en desarrollo usa «hasta ahora».</li>
+      <li><b>Llegar al origen; nada de fuentes terciarias</b> <span class="regla-fecha">5 sep</span>: si A cita a B que cita a un informe, la fuente es el informe; una cadena de citas no son varias fuentes. Cuando hay fuente primaria pertinente, va primero y los medios contextualizan.</li>
+      <li><b>Volumen no es relevancia</b> <span class="regla-fecha">5 sep</span>: una noticia puede estar en 50 medios y no importar, u otra en una sola fuente especializada y ser central. Relevancia = impacto, magnitud, consecuencias, novedad, relevancia para Chile o para el lector.</li>
+      <li><b>Diversidad en Global</b> <span class="regla-fecha">5 sep</span>: máximo 2 noticias del mismo país y 2 conflictos armados por edición; sin dominio de política de EEUU ni personajes mediáticos; regiones alternadas a lo largo de la semana. El validador avisa.</li>
+      <li><b>Jerga técnica o legal, traducida</b> <span class="regla-fecha">29 ago</span>: los términos de ley, ciencia o industria van entre comillas y con su significado en pocas palabras — ❌ «designó a ChatGPT servicio de muy gran tamaño» → ✅ «designó a ChatGPT como "plataforma de muy gran tamaño", la categoría de la ley digital europea para servicios con más de 45 millones de usuarios». Si una frase suena rara, o es error gramatical o es jerga sin traducir; ambas se corrigen antes de enviar.</li>
+      <li><b>Independencia de orígenes</b> <span class="regla-fecha">24 ago</span>: cobertura no es confirmación — un cable de agencia replicado por seis medios es <b>6 medios / 1 origen</b>. El editor lo detecta con lo que ya ve (firmas «(Reuters)», «EFE», «AFP vía…»), sin abrir artículos extra; si todo sale de un cable, la agencia va de primera fuente y el texto atribuye («según Reuters…») en vez de rellenar con réplicas; con reportería propia a la vista, se prefiere como segunda fuente. El validador avisa con 3+ medios de un mismo origen.</li>
+      <li><b>El contraste va dentro del relato</b> <span class="regla-fecha">18 ago</span>: cuando hay disputa real entre fuentes serias o el encuadre difiere («El País lo lee como…; Al Jazeera pone el foco en…»), se dice en una o dos frases del propio texto — nunca en párrafo aparte. Las cifras de un bando siempre se atribuyen.</li>
+      <li><b>Tag y titular no se repiten</b> <span class="regla-fecha">19–21 ago</span>: el tag pone el marco (PERÚ, NACIONAL, BARCELONA) y el titular baja al detalle. </li>
+    </ul>
+    <div class="ej"><b>Ejemplo</b><br>Tag <b>PERÚ</b> + «Un terremoto cerca de Coracora deja tres heridos» — no «…en el sur de Perú», porque Perú ya está en el tag y la ciudad aporta más.</div>
+    <ul>
+      <li><b>Prohibido</b>: copiar párrafos del medio; <i>impactante, terrible, brutal, dramático, alarmante, increíble</i>; verbos de opinión («preocupa», «sorprende»); «expertos aseguran» sin nombre; frases de relleno; repetir palabras del titular en la primera frase.</li>
+    </ul>
+  </section>
+
+  <!-- ══════════ FUENTES ══════════ -->
+  <section class="azul">
+    <div class="pill-row"><span class="pill">Fuentes</span></div>
+    <h2 class="titulo-seccion">Recolectar ancho, citar estrecho</h2>
+    <p class="chica">Leemos de donde sea para <i>enterarnos</i>; solo podemos <i>citar</i> los ~90 medios de la <b>lista blanca</b> (el validador rechaza cualquier otro). Un medio entra si cumple 4 checks: redacción identificable, normas publicadas, trayectoria reconocida, y no ser fuente única de hechos si tiene línea editorial marcada. Revisión mensual entre socios; próxima: <b>18 de septiembre</b>.</p>
+    <div class="tabla-wrap">
+    <table class="niveles">
+      <tr><th>Nivel</th><th>Qué es · cómo se usa</th></tr>
+      <tr><td>Agencia</td><td>Reuters, AP, EFE, AFP — preferentes para los hechos.</td></tr>
+      <tr><td>Público</td><td>BBC, DW, France 24, ONU, OMS, rbb24, Betevé, TVN — preferentes para los hechos.</td></tr>
+      <tr><td>Establecido</td><td>El País, Guardian, Al Jazeera, La Tercera, Cooperativa, BioBío, La Vanguardia… — la base del correo; hechos en disputa se contrastan.</td></tr>
+      <tr><td>Especializado</td><td>DF, Bloomberg Línea, Nature, STAT, AS, ESPN… — <b>solo dentro de su tema</b> (regla dura: el validador rechaza la cita fuera de ámbito). Xataka/Hipertextual nunca como única fuente.</td></tr>
+      <tr><td>Oficial</td><td>Gobierno, Banco Central, clubes, Ajuntament, ONG — siempre marcado «primaria» y atribuido («según el Banco Central»).</td></tr>
+    </table>
+    </div>
+    <h3>Cuántas fuentes por noticia <span class="regla-fecha">regla 21 ago</span></h3>
+    <p class="chica"><b>Objetivo: 3 fuentes por noticia</b> — el mismo hecho citado por 3 medios distintos. Mínimo duro: <b>2</b> (por ahora). Excepción: locales y hechos con fuente oficial primaria pueden llevar 1 si nadie más los cubre. No se rellena por rellenar: si no existe tercera cobertura en la lista, quedan 2.</p>
+    <p class="chica">La URL siempre es la del artículo real, nunca la portada ni una URL inventada.</p>
+  </section>
+
+  <!-- ══════════ PERSONALIZACIÓN ══════════ -->
+  <section class="verde">
+    <div class="pill-row"><span class="pill">Para ti</span></div>
+    <h2 class="titulo-seccion">Ningún tema pesa más que otro</h2>
+    <ul>
+      <li>Cada suscriptor elige <b>2 o 3 subtemas</b> en el formulario. El editor escribe cada día un <b>pool</b> con ≥1 ítem (ideal 2) por cada subtema que algún suscriptor pidió, más <b>una «Vera elige» por cada categoría con suscriptores</b>.</li>
+      <li><b>«Vera elige»</b> <span class="regla-fecha">22 ago</span>: una noticia <b>dentro del rango de interés del lector pero fuera de lo que espera</b>: de la misma categoría de sus temas, con un criterio distinto al resto del correo — algo <b>curioso</b>, un <b>«¿sabías que?»</b> o una <b>noticia positiva</b> — que lo sorprenda con lo que no habría buscado solo. Misma exigencia editorial (hecho verificado, 2–3 fuentes, sin adjetivos ni gancho: lo curioso está en el hecho) y no repite tema con el resto de la edición. El editor escribe una por categoría; el sistema le da a cada lector la de su categoría, rotando por edición.</li>
+      <li>Cada ítem del pool debe <b>responder la pregunta guía</b> de su subtema (ver tabla). Si no la responde, no va — aunque «sea del tema».</li>
+      <li>El orden de preferencia <b>rota por edición</b> <span class="regla-fecha">19 ago</span>: el tema de la noticia principal de «Para ti» va cambiando día a día; ningún tema queda siempre arriba ni el cupo extra cae siempre en el mismo.</li>
+      <li><b>Noticia local por ciudad</b> <span class="regla-fecha">19 ago</span>: cada lector recibe 1 noticia de la ciudad que puso en el formulario (reemplaza a la segunda curada). Fuentes ya cubiertas: <b>Barcelona</b> (La Vanguardia, El Periódico, Betevé, Ajuntament) y <b>Berlín</b> (rbb24, Morgenpost, Berliner Zeitung), además de las regiones chilenas.</li>
+      <li>Cada noticia lleva el <b>tag del subtema que la persona eligió</b>; las curadas llevan «Vera elige» y la local, la ciudad.</li>
+    </ul>
+
+    <h3>Los 16 subtemas y su pregunta guía</h3>
+    <div class="tabla-wrap">
+    <table>
+      <tr><th>Subtema</th><th>La pregunta que cada ítem debe responder</th></tr>
+      <tr><td>Geopolítica y conflictos</td><td><span class="sub-preg">¿Qué está cambiando en las relaciones entre países y el equilibrio de poder?</span><span class="sub-alc">Guerras · diplomacia · alianzas · sanciones · migración</span></td></tr>
+      <tr><td>Derechos y justicia social</td><td><span class="sub-preg">¿Qué está cambiando en los derechos, libertades e igualdad de las personas?</span><span class="sub-alc">DD.HH. · feminismo · LGBTQ+ · discriminación · justicia</span></td></tr>
+      <tr><td>Sociedad y tendencias</td><td><span class="sub-preg">¿Qué está cambiando en la forma en que vivimos y nos relacionamos?</span><span class="sub-alc">Demografía · educación · cultura digital · hábitos · identidad</span></td></tr>
+      <tr><td>Mercados y finanzas</td><td><span class="sub-preg">¿Qué está cambiando en la economía y en los mercados?</span><span class="sub-alc">Bolsas · inflación · bancos centrales · divisas · deuda</span></td></tr>
+      <tr><td>Empresas y negocios</td><td><span class="sub-preg">¿Qué está cambiando en el mundo empresarial?</span><span class="sub-alc">Grandes empresas · fusiones · modelos de negocio · sectores</span></td></tr>
+      <tr><td>Emprendimiento e innovación</td><td><span class="sub-preg">¿Qué nuevas ideas y negocios están transformando el mercado?</span><span class="sub-alc">Startups · venture capital · nuevos productos · ecosistemas</span></td></tr>
+      <tr><td>Innovación y futuro</td><td><span class="sub-preg">¿Qué nuevas tecnologías e ideas podrían cambiar nuestro futuro?</span><span class="sub-alc">Robótica · energía · espacio · materiales · investigación aplicada</span></td></tr>
+      <tr><td>Inteligencia artificial</td><td><span class="sub-preg">¿Cómo está cambiando la inteligencia artificial el mundo?</span><span class="sub-alc">Modelos · empresas de IA · regulación · impacto laboral</span></td></tr>
+      <tr><td>Medio ambiente y clima</td><td><span class="sub-preg">¿Qué está cambiando en nuestro planeta y nuestra relación con él?</span><span class="sub-alc">Clima · biodiversidad · energía · océanos · transición</span></td></tr>
+      <tr><td>Avances médicos</td><td><span class="sub-preg">¿Qué está cambiando en la medicina?</span><span class="sub-alc">Tratamientos · vacunas · diagnósticos · biotecnología · genética</span></td></tr>
+      <tr><td>Salud y bienestar</td><td><span class="sub-preg">¿Qué está cambiando en cómo vivimos y cuidamos nuestra salud?</span><span class="sub-alc">Salud mental · sueño · nutrición · ejercicio · prevención</span></td></tr>
+      <tr><td>Artes y creatividad</td><td><span class="sub-preg">¿Qué está cambiando en la forma en que creamos y experimentamos la cultura?</span><span class="sub-alc">Arte · música · cine · diseño · arquitectura · moda</span></td></tr>
+      <tr><td>Literatura y pensamiento</td><td><span class="sub-preg">¿Qué nuevas ideas están transformando nuestra forma de entender el mundo?</span><span class="sub-alc">Libros · autores · filosofía · historia · debates</span></td></tr>
+      <tr><td>Deporte nacional</td><td><span class="sub-preg">¿Qué está pasando en el deporte chileno?</span><span class="sub-alc">Competiciones · clubes · federaciones · resultados</span></td></tr>
+      <tr><td>Deporte internacional</td><td><span class="sub-preg">¿Qué está pasando en el deporte a nivel mundial?</span><span class="sub-alc">Grandes torneos · atletas · récords · fichajes</span></td></tr>
+      <tr><td>Chilenos en el deporte mundial</td><td><span class="sub-preg">¿Qué están haciendo los deportistas chilenos fuera de Chile?</span><span class="sub-alc">Logros · fichajes · carreras · grandes competiciones</span></td></tr>
+    </table>
+    </div>
+  </section>
+
+
+  <!-- ══════════ DE DÓNDE LEEMOS ══════════ -->
+  <section class="blanca">
+    <div class="pill-row"><span class="pill">De dónde leemos</span></div>
+    <h2 class="titulo-seccion">Las fuentes, segmento por segmento</h2>
+    <p class="chica">Estas son las fuentes de <b>recolección</b> activas hoy (archivo <b>sources.json</b>). Leyenda: <b>RSS</b> = feed directo del medio · <b>GN·sitio</b> = solo ese medio, vía Google News · <b>GN·pista</b> = búsqueda temática en Google News que trae medios diversos — sirve para <i>descubrir</i> el hecho, que luego se cita con un medio de la lista blanca (93 medios citables).</p>
+    <div class="tabla-wrap">
+    <table class="fuentes-tabla">
+      <tr><th>Segmento / Subtema</th><th>Fuentes activas</th></tr>
+      <tr><td><span class="tag lleno-azul">Global</span></td><td>BBC Mundo <span class="via">RSS</span> · France 24 <span class="via">RSS</span> · Deutsche Welle <span class="via">RSS</span> · El País Internacional <span class="via">RSS</span> · El País Portada <span class="via">RSS</span> · The Guardian World <span class="via">RSS</span> · Al Jazeera <span class="via">RSS</span> · ONU Noticias <span class="via">RSS</span> · Reuters <span class="via">GN·sitio</span> · AP News <span class="via">GN·sitio</span> · AFP (via France24/Swissinfo) <span class="via">GN·sitio</span> · CNN en Español <span class="via">GN·sitio</span> · EFE <span class="via">GN·sitio</span></td></tr>
+<tr><td><span class="tag lleno-negro">Chile</span></td><td>La Tercera <span class="via">RSS</span> · CIPER <span class="via">RSS</span> · Cooperativa <span class="via">RSS</span> · BioBioChile <span class="via">GN·sitio</span> · T13 <span class="via">GN·sitio</span> · 24Horas <span class="via">GN·sitio</span> · Emol <span class="via">GN·sitio</span> · El Mostrador <span class="via">GN·sitio</span> · Diario Financiero <span class="via">GN·sitio</span> · Chile (red de seguridad) <span class="via">GN·pista</span></td></tr>
+<tr><td><span class="tag lleno-negro">Local Chile</span></td><td>Concepción · BioBio regional <span class="via">GN·pista</span> · Concepción · Diario Concepción <span class="via">GN·sitio</span> · Santiago · comunas <span class="via">GN·pista</span> · Valparaíso · región <span class="via">GN·pista</span> · Regiones (red de seguridad) <span class="via">GN·pista</span> · Valparaíso · El Mercurio de Valparaíso <span class="via">GN·sitio</span></td></tr>
+<tr><td><span class="tag lleno-verde">Barcelona</span></td><td>Barcelona · La Vanguardia <span class="via">RSS</span> · Barcelona · El Periódico <span class="via">RSS</span> · Barcelona · Betevé <span class="via">RSS</span> · Barcelona · Ajuntament (Servei de Premsa) <span class="via">RSS</span></td></tr>
+<tr><td><span class="tag lleno-verde">Berlín</span></td><td>Berlín · rbb24 <span class="via">RSS</span> · Berlín · Berliner Morgenpost <span class="via">RSS</span> · Berlín · Berliner Zeitung <span class="via">RSS</span></td></tr>
+<tr><td><b>Geopolítica y conflictos</b><br><span class="via">Política y Sociedad</span></td><td>The Guardian World (geopolítica) <span class="via">RSS</span> · Al Jazeera (geopolítica) <span class="via">RSS</span> · France 24 (geopolítica) <span class="via">RSS</span> · Geopolítica (red) <span class="via">GN·pista</span></td></tr>
+<tr><td><b>Derechos y justicia social</b><br><span class="via">Política y Sociedad</span></td><td>ONU Noticias (derechos) <span class="via">RSS</span> · Human Rights Watch <span class="via">RSS</span> · El País Sociedad <span class="via">RSS</span> · Derechos y justicia (red) <span class="via">GN·pista</span> · The Guardian Society <span class="via">RSS</span></td></tr>
+<tr><td><b>Sociedad y tendencias</b><br><span class="via">Política y Sociedad</span></td><td>El País Sociedad <span class="via">RSS</span> · Sociedad y tendencias (red) <span class="via">GN·pista</span> · The Guardian Society <span class="via">RSS</span></td></tr>
+<tr><td><b>Mercados y finanzas</b><br><span class="via">Economía y Negocios</span></td><td>Diario Financiero <span class="via">GN·sitio</span> · El País Economía <span class="via">RSS</span> · Bloomberg Línea <span class="via">GN·sitio</span> · Expansión Mercados <span class="via">RSS</span> · Reuters Business <span class="via">GN·sitio</span> · Economía Chile (red) <span class="via">GN·pista</span> · Vivienda y trabajo Chile (red) <span class="via">GN·pista</span></td></tr>
+<tr><td><b>Empresas y negocios</b><br><span class="via">Economía y Negocios</span></td><td>Diario Financiero <span class="via">GN·sitio</span> · El País Economía <span class="via">RSS</span> · Bloomberg Línea <span class="via">GN·sitio</span> · Reuters Business <span class="via">GN·sitio</span> · Empresas y negocios (red) <span class="via">GN·pista</span></td></tr>
+<tr><td><b>Emprendimiento e innovación</b><br><span class="via">Economía y Negocios</span></td><td>Diario Financiero <span class="via">GN·sitio</span> · El País Economía <span class="via">RSS</span> · Bloomberg Línea <span class="via">GN·sitio</span> · Reuters Business <span class="via">GN·sitio</span> · TechCrunch <span class="via">RSS</span> · Startups y empresas (red) <span class="via">GN·pista</span></td></tr>
+<tr><td><b>Innovación y futuro</b><br><span class="via">Ciencia, Medicina y Tecnología</span></td><td>Hipertextual <span class="via">RSS</span> · Ars Technica <span class="via">RSS</span> · MIT Technology Review <span class="via">RSS</span> · Nature News <span class="via">RSS</span> · NASA <span class="via">RSS</span> · El País Ciencia <span class="via">RSS</span> · Espacio (red) <span class="via">GN·pista</span> · Tecnología y futuro (red) <span class="via">GN·pista</span></td></tr>
+<tr><td><b>Inteligencia artificial</b><br><span class="via">Ciencia, Medicina y Tecnología</span></td><td>Xataka <span class="via">RSS</span> · Hipertextual <span class="via">RSS</span> · The Verge <span class="via">RSS</span> · Ars Technica <span class="via">RSS</span> · MIT Technology Review <span class="via">RSS</span> · El País Tecnología <span class="via">RSS</span> · IA (red) <span class="via">GN·pista</span></td></tr>
+<tr><td><b>Medio ambiente y clima</b><br><span class="via">Ciencia, Medicina y Tecnología</span></td><td>The Guardian Environment <span class="via">RSS</span> · El País Clima y Medio Ambiente <span class="via">RSS</span> · Mongabay Latam <span class="via">RSS</span></td></tr>
+<tr><td><b>Avances médicos</b><br><span class="via">Ciencia, Medicina y Tecnología</span></td><td>OMS Noticias <span class="via">RSS</span> · STAT News <span class="via">RSS</span> · El País Salud <span class="via">RSS</span> · Investigación médica (red) <span class="via">GN·pista</span></td></tr>
+<tr><td><b>Salud y bienestar</b><br><span class="via">Ciencia, Medicina y Tecnología</span></td><td>El País Salud <span class="via">RSS</span> · The Guardian Wellness <span class="via">RSS</span> · Salud mental (red) <span class="via">GN·pista</span> · Nutrición y fitness (red) <span class="via">GN·pista</span></td></tr>
+<tr><td><b>Artes y creatividad</b><br><span class="via">Cultura</span></td><td>El País Cultura <span class="via">RSS</span> · Variety <span class="via">RSS</span> · Pitchfork <span class="via">RSS</span> · The Guardian Culture <span class="via">RSS</span> · Culto (La Tercera) <span class="via">GN·sitio</span> · Cine y series (red) <span class="via">GN·pista</span> · Música (red) <span class="via">GN·pista</span> · Dezeen <span class="via">RSS</span> · Diseño y moda (red) <span class="via">GN·pista</span></td></tr>
+<tr><td><b>Literatura y pensamiento</b><br><span class="via">Cultura</span></td><td>El País Cultura <span class="via">RSS</span> · The Guardian Culture <span class="via">RSS</span> · Culto (La Tercera) <span class="via">GN·sitio</span> · Libros y arte (red) <span class="via">GN·pista</span> · Libros y pensamiento (red) <span class="via">GN·pista</span> · The Guardian Books <span class="via">RSS</span></td></tr>
+<tr><td><b>Deporte nacional</b><br><span class="via">Deportes</span></td><td>AS Chile (Google News) <span class="via">GN·sitio</span> · ESPN Chile (Google News) <span class="via">GN·sitio</span> · Fútbol chileno (red) <span class="via">GN·pista</span> · Deporte nacional (red) <span class="via">GN·pista</span></td></tr>
+<tr><td><b>Deporte internacional</b><br><span class="via">Deportes</span></td><td>AS Fútbol (feed) <span class="via">RSS</span> · El País Deportes <span class="via">RSS</span> · Marca <span class="via">RSS</span> · AS Chile (Google News) <span class="via">GN·sitio</span> · BBC Sport <span class="via">RSS</span> · ESPN Chile (Google News) <span class="via">GN·sitio</span> · Tenis (red) <span class="via">GN·pista</span> · Motor (red) <span class="via">GN·pista</span></td></tr>
+<tr><td><b>Chilenos en el deporte mundial</b><br><span class="via">Deportes</span></td><td>AS Chile (Google News) <span class="via">GN·sitio</span> · ESPN Chile (Google News) <span class="via">GN·sitio</span> · Chilenos en el exterior (red) <span class="via">GN·pista</span></td></tr>
+    </table>
+    </div>
+  </section>
+  <!-- ══════════ DECISIONES ══════════ -->
+  <section class="gris">
+    <div class="pill-row"><span class="pill">Decisiones con fecha</span></div>
+    <div class="decision"><div class="f">17 ago</div><div>Primera edición enviada. Estructura 3 segmentos × (1 principal + 4 breves).</div></div>
+    <div class="decision"><div class="f">18 ago</div><div>Diseño del correo: sistema del socio en Canva (bloques de color, serif, píldoras). Contraste integrado en el texto. Política de fuentes v1 + lista blanca.</div></div>
+    <div class="decision"><div class="f">19 ago</div><div>Pipeline corre en la nube (nada depende de un computador nuestro). Local por ciudad para todos. Rotación de temas en «Para ti». Tags de subtema.</div></div>
+    <div class="decision"><div class="f">21 ago</div><div>Dominio holavera.news: envío directo, métricas por noticia, bienvenida automática, baja de un clic. Asunto = principal de Global. Mínimo 2 fuentes (objetivo 3). <b>Test oficial parte el 22 ago con métricas en cero.</b></div></div>
+    <div class="decision"><div class="f">5 sep</div><div><b>Sistema editorial en cuatro capas</b> (documento del equipo, decisiones de Marcelo): score de fiabilidad por fuente en bandas de 5 (rúbrica de 8 dimensiones, evaluación asistida por IA, todos <i>provisional</i> hasta revisión de los socios; posicionamiento editorial registrado sin castigar el score); story confidence por noticia calculado desde los orígenes independientes — <b>interno, no visible</b> (fase 5 diseñada, se activa cuando el equipo decida); pool primario ampliado (+22 fuentes oficiales con tipo y autoridad); registro de correcciones con procedimiento; reglas nuevas de redacción (hecho/declaración/interpretación, estado de certeza, sin suposiciones, sin terciarias, volumen ≠ relevancia, diversidad); extensiones 15 / 110 / 15–35. Backoffice de socios en holavera.news/socios.</div></div>
+    <div class="decision"><div class="f">29 ago</div><div><b>Jerga traducida</b>: términos legales/técnicos entre comillas y explicados en pocas palabras (caso real: «plataforma de muy gran tamaño» de la DSA soltado sin marcar).</div></div>
+    <div class="decision"><div class="f">29 ago</div><div><b>Asunto sin «Vera ·»</b>: el remitente ya dice Vera; el asunto queda «Día fecha — principal de Global».</div></div>
+    <div class="decision"><div class="f">24 ago</div><div><b>Independencia de orígenes</b>: las agencias cuentan como un origen; atribución en el texto cuando toda la cobertura sale de un cable, campo <code>via</code> opcional y aviso del validador. Versión equilibrada: sin abrir artículos extra ni cambiar el correo.</div></div>
+    <div class="decision"><div class="f">24 ago</div><div><b>Breves con consecuencia</b> (feedback de los lectores de prueba): la oración única debe incluir la consecuencia concreta o el contexto que el hecho necesita («qué proponía la reforma», «qué significa la fusión»). Ejemplos reales de la edición 7 quedaron como modelo en el prompt.</div></div>
+    <div class="decision"><div class="f">22 ago</div><div><b>«Vera elige» redefinida</b>: una por categoría con suscriptores, de la misma categoría de los temas del lector, con criterio curioso / ¿sabías que? / positivo. Reemplaza a las 2 curadas iguales para todos (la segunda nunca llegaba a quien tenía noticia local).</div></div>
+    <div class="decision"><div class="f">22 ago</div><div><b>Breves de una sola oración</b> (20–35 palabras, máx. 40) en todos los segmentos; las principales no cambian. Formato anterior guardado como <code>breves-v1</code> en git para rollback. Anti-repetición: el historial guarda todas las fuentes de cada noticia (antes solo la primera).</div></div>
+    <div class="decision"><div class="f">21 ago</div><div>Revisión de contradicciones: los medios especializados solo se citan en su ámbito (pasa de aviso a <b>regla dura</b>); correcciones de conteos en el prompt (5 categorías; el total diario incluye los locales por ciudad). Links vía Google News se mantienen como excepción declarada.</div></div>
+  </section>
+
+  <!-- ══════════ PARA DISCUTIR ══════════ -->
+  <section class="amarillo">
+    <div class="pill-row"><span class="pill">Para discutir como equipo</span></div>
+    <ul>
+      <li><b>Color del segmento «Para ti»</b> — hoy usa un verde provisional que eligió Claude; falta la decisión de diseño.</li>
+      <li><b>Umbral de éxito del test</b> — fijarlo antes de ver datos. Propuesta sobre la mesa: ≥50% sigue abriendo en la semana 2 y ≥30% clickeó alguna fuente.</li>
+      <li><b>Fuentes en revisión</b> — ¿mantener Xataka/Hipertextual (solo IA/tecnología)? ¿Sumar un medio de mercados en inglés (FT/Bloomberg recolectados, no solo citables)?</li>
+      <li><b>Subir el mínimo de fuentes a 3</b> cuando las corridas lo cumplan con holgura.</li>
+      <li><b>Más testers</b> — meta 10–15 para que la retención signifique algo: <b>holavera.news/unete</b></li>
+    </ul>
+  </section>
+
+  <footer class="pie">
+    <div class="frase">Ya sé qué pasó, y sé de dónde sale.</div>
+    <div class="meta">Vera · manual editorial v1.9 · 5 sep 2026<br>Cambios: se discuten aquí, se escriben en el repo, rigen desde la edición siguiente</div>
+  </footer>
+</div>
