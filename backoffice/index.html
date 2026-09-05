@@ -593,7 +593,7 @@ async function cargar() {
     return `<div class="hint" style="margin-bottom:4px">${tot} clic${tot>1?"s":""} en 30 días</div>` + Object.entries(g).sort((a,b) => b[1]-a[1]).map(([tema, n]) => `<span class="chip lila">${esc(tema)} ×${n}</span>`).join(""); };
   const cambios = {}; for (const h of hist) cambios[h.email] = (cambios[h.email]||0)+1;
   $("t-lectores").innerHTML = `<tr><th>lector</th><th>ciudad · región</th><th>temas que eligió</th><th>a qué le hace clic</th><th>estado</th><th>alta</th></tr>` +
-    subs.map(s => `<tr><td><b>${esc(s.nombre)}</b><br><span class="hint" style="text-transform:none;letter-spacing:0">${esc(s.email)}</span></td><td>${esc(s.ciudad||"")}${s.region ? " · " + esc(s.region) : ""}</td><td class="wrap">${(s.subcategorias||[]).map(x => `<span class="chip">${esc(SUB_LABEL[x]||x)}</span>`).join("")}</td><td class="wrap">${gustosHtml(s.email)}</td><td>${s.activo ? "activo" : "<span class='err'>baja</span>"}${cambios[s.email] ? ` · ${cambios[s.email]} cambio(s)` : ""}</td><td>${s.created_at.slice(0,10)}</td></tr>`).join("");
+    subs.map(s => `<tr><td><b>${esc((s.nombre||"").split(" ")[0])}</b><br><span class="hint" style="text-transform:none;letter-spacing:0">${esc(s.email)}</span></td><td>${esc(s.ciudad||"")}${s.region ? " · " + esc(s.region) : ""}</td><td class="wrap">${(s.subcategorias||[]).map(x => `<span class="chip">${esc(SUB_LABEL[x]||x)}</span>`).join("")}</td><td class="wrap">${gustosHtml(s.email)}</td><td>${s.activo ? "activo" : "<span class='err'>baja</span>"}${cambios[s.email] ? ` · ${cambios[s.email]} cambio(s)` : ""}</td><td>${s.created_at.slice(0,10)}</td></tr>`).join("");
 
   // encuesta
   $("encuesta-titulo").textContent = `Respuestas (${encuestas.length})`;
