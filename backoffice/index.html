@@ -760,7 +760,31 @@ async function cargar() {
   let medios = [], historial = [];
   const citasPorMedio = {}; for (const it of catalogo) for (const f of (it.fuentes||[])) citasPorMedio[f.medio] = (citasPorMedio[f.medio]||0) + 1;
   const fechaCorta = (iso) => iso ? new Intl.DateTimeFormat("es-ES", { timeZone: "Europe/Madrid", day: "2-digit", month: "short", year: "2-digit" }).format(new Date(iso)) : "";
-  async function cargarMedios() { [medios, historial] = await Promise.all([q(sb.from("medios").select("*").order("nombre")), q(sb.from("medios_historial").select("*").order("cuando", { ascending: false }).limit(500))]); pintarFuentes(); }
+  async function cargarMedios() { [medios, historial] = await Promise.all([q(sb.from("medios").select("*").order("nombre")), q(sb.from("medios_historial").select("*").order("cuando", { ascending: false }).limit(500))]); pintarFuentes(); pintarUso(usoPeriodo); }
+  // Uso real de las fuentes (lo que Vera citó de verdad), 30 días o todo
+  let usoPeriodo = "30";
+  const nivelDe = (nombre) => { const m = medios.find(x => x.nombre === nombre) || medios.find(x => (x.alias||[]).includes(nombre)); return m ? m.nivel : "fuera de lista"; };
+  function pintarUso(periodo) {
+    usoPeriodo = periodo;
+    const desde = periodo === "30" ? d30 : "0000";
+    const items = catalogo.filter(it => it.fecha >= desde && Array.isArray(it.fuentes));
+    const porMedio = {}, porNivel = {}, porN = {1:0,2:0,3:0}; let conVia = 0, conPrimaria = 0;
+    for (const it of items) { const fs = it.fuentes; porN[Math.min(3, fs.length)] = (porN[Math.min(3, fs.length)]||0) + 1; if (fs.some(f => f.via)) conVia++; if (fs.some(f => f.primaria)) conPrimaria++;
+      for (const f of fs) { porMedio[f.medio] = (porMedio[f.medio]||0) + 1; const nv = nivelDe(f.medio); porNivel[nv] = (porNivel[nv]||0) + 1; } }
+    const totC = Object.values(porNivel).reduce((a,b)=>a+b,0) || 1; const base = ((porNivel.agencia||0)+(porNivel.publico||0)+(porNivel.establecido||0));
+    const barrasU = (obj, n) => { const max = Math.max(1, ...Object.values(obj)); return Object.entries(obj).sort((a,b)=>b[1]-a[1]).slice(0, n).map(([k, v]) => `<div style="display:grid;grid-template-columns:180px 1fr 44px;gap:10px;align-items:center;margin:4px 0;font-size:14px"><span>${esc(k)}</span><span class="barra" style="width:${Math.round(100*v/max)}%"></span><b style="text-align:right">${v}</b></div>`).join(""); };
+    $("uso-periodo-label").textContent = periodo === "30" ? "· últimos 30 días" : "· todo el histórico";
+    $("uso-fuentes").innerHTML = `<div class="kpis" style="margin-bottom:14px">
+      <div class="kpi"><div class="n">${items.length}</div><div class="l">noticias</div></div>
+      <div class="kpi"><div class="n">${items.length ? (items.reduce((a,it)=>a+it.fuentes.length,0)/items.length).toFixed(2) : "—"}</div><div class="l">fuentes por noticia</div></div>
+      <div class="kpi"><div class="n">${items.length ? Math.round(100*(porN[3]||0)/items.length) : 0}%</div><div class="l">con 3 o más fuentes</div></div>
+      <div class="kpi" title="agencia + público + establecido; objetivo ≥ 80 %"><div class="n">${Math.round(100*base/totC)}%</div><div class="l">citas de agencia · público · establecido</div></div>
+      <div class="kpi"><div class="n">${items.length ? Math.round(100*conVia/items.length) : 0}%</div><div class="l">con origen marcado (via)</div></div>
+      <div class="kpi"><div class="n">${items.length ? Math.round(100*conPrimaria/items.length) : 0}%</div><div class="l">con fuente primaria</div></div></div>
+      <h3>Medios más citados</h3>${barrasU(porMedio, 15)}<h3>Citas por nivel</h3>${barrasU(porNivel, 8)}`;
+    document.querySelectorAll("[data-uso]").forEach(b => { const on = b.dataset.uso === periodo; b.style.background = on ? "var(--tinta)" : "#fff"; b.style.color = on ? "#fff" : "var(--tinta)"; });
+  }
+  document.querySelectorAll("[data-uso]").forEach(b => b.addEventListener("click", () => pintarUso(b.dataset.uso)));
   const ambTxt = (a) => Array.isArray(a) ? a.map(x => SUB_LABEL[x]||x) : [a || "general"];
   function pintarFuentes() {
     const f = ($("f-filtro").value||"").toLowerCase(); const verInact = $("f-inactivos").checked;

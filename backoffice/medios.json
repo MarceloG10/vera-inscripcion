@@ -304,7 +304,7 @@
       "ambito": [
         "artes_creatividad"
       ],
-      "region": "Chile · nacional",
+      "region": "Especializados",
       "score": 70,
       "posicionamiento": "neutral",
       "linea": "Plataforma de arquitectura de origen chileno y alcance global; catálogo curado de obras más que redacción periodística, sin posición política.",
@@ -321,7 +321,9 @@
       "nota": "arquitectura; origen chileno",
       "score_estado": "provisional",
       "score_fecha": "2026-09-05",
-      "activo": true
+      "activo": true,
+      "modificado_en": "2026-09-05T09:44:48.532032+00:00",
+      "modificado_por": "sistema"
     },
     "Ars Technica": {
       "dominios": [
@@ -1651,7 +1653,7 @@
         "deporte_internacional",
         "chilenos_exterior"
       ],
-      "region": "Chile · nacional",
+      "region": "Especializados",
       "score": 65,
       "posicionamiento": "neutral",
       "linea": "Operación deportiva global; el feed en español mezcla producción periodística propia con material automatizado.",
@@ -1667,7 +1669,9 @@
       },
       "score_estado": "provisional",
       "score_fecha": "2026-09-05",
-      "activo": true
+      "activo": true,
+      "modificado_en": "2026-09-05T09:44:48.532032+00:00",
+      "modificado_por": "sistema"
     },
     "Expansión": {
       "dominios": [
@@ -2871,7 +2875,7 @@
       "ambito": [
         "deporte_nacional"
       ],
-      "region": "Chile · nacional",
+      "region": "Especializados",
       "score": 60,
       "posicionamiento": "moderado",
       "linea": "Canal deportivo de Warner Bros. Discovery y titular de los derechos del fútbol chileno: cubre la competencia que además explota comercialmente.",
@@ -2888,7 +2892,9 @@
       "nota": "titular de derechos del fútbol chileno",
       "score_estado": "provisional",
       "score_fecha": "2026-09-05",
-      "activo": true
+      "activo": true,
+      "modificado_en": "2026-09-05T09:44:48.532032+00:00",
+      "modificado_por": "sistema"
     },
     "Tribunal Constitucional": {
       "dominios": [
