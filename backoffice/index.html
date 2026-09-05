@@ -119,7 +119,7 @@
       <button data-s="resumen" class="on">Resumen</button><button data-s="ediciones">Ediciones</button>
       <button data-s="lectores">Lectores</button><button data-s="encuesta">Encuesta</button>
       <button data-s="correcciones">Correcciones</button><button data-s="fuentes">Fuentes</button>
-      <button data-s="editorial">Editorial</button><button data-s="marca">Marca</button>
+      <button data-s="editorial">Editorial</button><button data-s="marca">Marca</button><button data-s="salud">Salud</button>
     </nav>
 
     <section id="s-resumen" class="on">
@@ -136,6 +136,12 @@
       </div>
       <p class="hint" style="margin:0 0 10px">Cada cuadro es el estado más avanzado que alcanzó ese lector con la edición de ese día (un clic implica que también abrió).</p><div style="overflow-x:auto"><table class="grid-lectores" id="t-grid"></table></div></div>
       <div class="bloque blanco"><h3 style="margin-top:0">Lo más clickeado (7 días)</h3><div id="top"></div></div>
+      <div class="bloque azul"><h3 style="margin-top:0">Cuándo leen</h3>
+        <p class="hint" style="margin-bottom:10px">Hora de Barcelona. Cada fila es un lector; cada celda una hora del día, más oscura mientras más aperturas. Todo el histórico.</p>
+        <div id="cuando" class="scroll"></div></div>
+      <div class="bloque lila"><h3 style="margin-top:0">Desde qué dispositivo abren</h3>
+        <p class="hint" style="margin-bottom:10px">Ojo: Apple Mail y Gmail a veces abren el correo por ti desde sus servidores, y eso cuenta como «escritorio». Los clics son más fiables que las aperturas.</p>
+        <div id="dispositivos"></div></div>
       <div class="bloque blanco"><h3 style="margin-top:0">A qué le hacen clic (30 días)</h3>
         <p class="hint" style="margin-bottom:12px">Cada clic en un chip de fuente cuenta como interés en profundizar esa noticia. «Principal» es la noticia grande de apertura de cada segmento; «breves» son las cuatro cortas. Abajo, por tema, por lector y noticia por noticia.</p>
         <div id="clics-tipo"></div></div>
@@ -144,6 +150,10 @@
     <section id="s-ediciones">
       <h2>Ediciones</h2>
       <p class="hint">Confianza editorial = story confidence interno (promedio de los orígenes independientes; no se muestra al lector).</p>
+      <div class="bloque amarillo"><h3 style="margin-top:0">Radiografía por edición</h3>
+        <p class="hint" style="margin-bottom:10px">Para vigilar la diversidad y la certeza: países que cubrió Global, cuántos conflictos, categoría del día, estados de certeza y confianza promedio.</p>
+        <div class="desliza">Desliza para ver toda la tabla →</div><div class="scroll"><table id="t-radio" class="datos ancha"></table></div></div>
+      <h3>Ediciones (30 días)</h3>
       <div id="ediciones"></div>
     </section>
 
@@ -151,6 +161,10 @@
       <h2>Lectores</h2>
       <p class="hint" style="margin:0 0 10px">«Temas que eligió» es lo que marcó en el formulario; «a qué le hace clic» son los temas de las noticias donde abrió una fuente, acumulados desde el primer envío (con cuántas veces). Comparar las dos columnas es la forma de ir aprendiendo sus gustos reales.</p>
       <div class="desliza">Desliza para ver toda la tabla →</div><div class="scroll"><table id="t-lectores" class="datos ancha"></table></div>
+      <div class="bloque azul" style="margin-top:22px"><h3 style="margin-top:0">Retención</h3>
+        <p class="hint" style="margin-bottom:10px">Cuántas de las últimas 7 ediciones abrió cada lector, su racha actual (ediciones seguidas abiertas) y cuándo abrió por última vez. Histórico completo.</p>
+        <div class="scroll"><table id="t-retencion" class="datos"></table></div></div>
+      <div class="bloque blanco"><h3 style="margin-top:0">Altas, bajas y cambios</h3><div id="altas"></div></div>
     </section>
 
     <section id="s-encuesta">
@@ -167,6 +181,23 @@
         <p class="hint" style="margin-top:12px">Y sobre la persona: nombre, edad aproximada, ocupación, ciudad y contacto opcional. La encuesta vive en holavera.news/encuesta.</p>
       </div>
       <p class="hint" style="margin:0 0 6px">Mismo guión de 7 preguntas: las 12 entrevistas por WhatsApp de la fase Descubrir (16–18 ago) y las respuestas del formulario holavera.news/encuesta.</p>
+      <!-- Síntesis de las entrevistas (docs/01-descubrir.md §8, 18 ago 2026, n=12). Se incrusta en el backoffice → Encuesta. -->
+<div class="bloque lila">
+  <h3 style="margin-top:0">Síntesis de lo que dicen (12 entrevistas, 18 ago)</h3>
+  <ul>
+    <li><b>Nadie menciona el tiempo (0/12).</b> El dolor no es «me falta tiempo» sino <b>«lo que me llega no me sirve y no confío en ello»</b>: sesgo, fake news, superficialidad, negatividad, saturación, clickbait (10/12).</li>
+    <li><b>Desconfianza generalizada:</b> 6/12 no confía en ningún medio al 100 %; los demás confían en uno concreto por rigor o por relevancia («tiene lo mío»).</li>
+    <li><b>Dos grupos:</b> los <i>resueltos</i> (hábito diario, satisfechos, sin urgencia) y los <i>desconectados o insatisfechos</i> (tienen el dolor pero no buscan solución). Quien tiene el dolor no tiene energía para arreglarlo → Vera tiene que hacer el trabajo, no pedírselo al usuario.</li>
+    <li><b>Instagram es el canal dominante (10/12)</b>, incluso sabiendo que «está lleno de fake news»: la comodidad le gana a la confianza. El hábito de noticias vive en un momento del día y muere cuando cambia el contexto (dejar el auto, dejar el papel).</li>
+    <li><b>Contrastar ya lo hacen 7/12 por su cuenta</b>; los que no, no lo harían si implica trabajo. El contraste solo sirve si viene hecho y como contexto («quién lo dice y desde dónde»), nunca como tarea.</li>
+    <li><b>Criterio de verdad espontáneo (6/12):</b> fuente primaria, verificable, oficial, «en el lugar de los hechos» — la credibilidad está en la cercanía al hecho y en la fuente citada, no en el promedio de medios.</li>
+    <li><b>La relevancia personal mueve más que la general</b> (solo buscan cuando les afecta; piden un reporte por preferencias) — y el algoritmo esconde «lo que todos saben» → justifica la mitad editorial del correo.</li>
+    <li><b>Diáspora (4/12 fuera de Chile):</b> necesidad concreta de seguir Chile desde afuera, sin resolver.</li>
+    <li><b>Señal roja de formato:</b> un entrevistado probó un digest tipo «5 cosas que tienes que saber» y lo abandonó a las dos escuchas.</li>
+  </ul>
+  <p class="hint" style="margin-top:10px">Muestra chica y sesgada (círculo cercano, 25–40 años, profesionales, 6/12 de Concepción). Faltan: gente «ocupada» a propósito, mayores de 45, sin universidad, usuarios de WhatsApp como canal de noticias. Detalle y evidencia por hipótesis en docs/01-descubrir.md §8.</p>
+</div>
+
       <h3 id="encuesta-titulo">Respuestas</h3>
       <div id="encuesta"></div>
     </section>
@@ -189,6 +220,10 @@
     <section id="s-fuentes">
       <h2>Fuentes</h2>
       <p class="hint">Lista blanca con score de fiabilidad (bandas de 5, rúbrica de 8 dimensiones) y posicionamiento editorial. Los scores nacen «provisional» hasta la revisión de los socios.</p>
+      <div class="bloque azul"><h3 style="margin-top:0">Uso real de las fuentes <span id="uso-periodo-label" style="font-weight:normal;letter-spacing:0;text-transform:none"></span></h3>
+        <div style="margin-bottom:10px"><button class="btn" data-uso="30" style="margin:0 6px 0 0;padding:7px 12px;font-size:11px">30 días</button><button class="btn" data-uso="todo" style="margin:0;padding:7px 12px;font-size:11px;background:#fff;color:var(--tinta)">Todo</button></div>
+        <div id="uso-fuentes"></div></div>
+      <h3>Lista blanca</h3>
       <div style="margin:10px 0"><input type="text" id="f-filtro" placeholder="Buscar por nombre o descripción…"></div>
       <p class="hint" style="margin:0 0 6px">Haz clic en el título de una columna (nivel, posicionamiento, ámbito, estado) para filtrar por uno o varios valores.</p>
       <div class="filtros-activos" id="f-activos"></div>
@@ -299,6 +334,19 @@
       <h3 style="margin-top:30px">Manual editorial completo (v1.9)</h3>
       <iframe id="manual-editorial" src="docs/manual-editorial.html" title="Manual editorial de Vera" style="width:100%;height:1200px;border:1px solid var(--hair);background:#fff;" loading="lazy" onload="try{this.style.height=(this.contentDocument.documentElement.scrollHeight+20)+'px'}catch(e){}"></iframe>
       <p style="margin-top:14px;text-align:center;"><a href="docs/manual-editorial-vera.pdf">Descargar el manual editorial (PDF)</a> · <a href="https://github.com/MarceloG10/vera/blob/main/docs/03-desarrollar.md" target="_blank" rel="noopener">Bitácora de decisiones</a> · <a href="https://github.com/MarceloG10/vera/blob/main/docs/fuentes.md" target="_blank" rel="noopener">Política de fuentes</a> (GitHub)</p>
+    </section>
+
+    <section id="s-salud">
+      <h2>Salud del sistema</h2>
+      <p class="hint" style="margin-bottom:14px">¿Salió la edición de hoy? ¿Llegó? ¿Hay algo cerca de un límite? Verde = bien · ámbar = mirar · rojo = actuar.</p>
+      <div class="kpis" id="salud-kpis"></div>
+      <div class="bloque amarillo" style="margin-top:18px"><h3 style="margin-top:0">Límites de los planes gratuitos</h3><div id="salud-limites"></div></div>
+      <div class="bloque azul"><h3 style="margin-top:0">Respaldo y alertas</h3><div id="salud-respaldo"></div></div>
+      <div class="bloque blanco"><h3 style="margin-top:0">Piezas y horarios</h3>
+        <p style="font-size:15px">· <b>Edición diaria</b>: rutina «vera-diaria (nube)» a las 07:00 Barcelona → guarda la edición en Supabase y envía por Resend.<br>
+        · <b>Vigía</b>: GitHub Actions a las 07:45 comprueba que hubo edición y envíos; si no, avisa por correo a los founders y deja una alerta aquí.<br>
+        · <b>Respaldo</b>: GitHub Actions a las 08:30 vuelca todas las tablas a JSON en el repo privado (versiones en git).<br>
+        · <b>Informe semanal</b>: domingos 18:00 · <b>Webhooks</b> de Resend → Supabase en tiempo real · <b>Web</b>: GitHub Pages con dominio propio.</p></div>
     </section>
 
     <section id="s-marca">
@@ -506,9 +554,11 @@ $("nav").addEventListener("click", (e) => {
 
 // ---------- datos ----------
 async function q(p) { const { data, error } = await p; if (error) throw error; return data || []; }
+async function qAll(build) { const out = []; for (let desde = 0; ; desde += 1000) { const lote = await q(build().range(desde, desde + 999)); out.push(...lote); if (lote.length < 1000) break; } return out; }
+const HORA_BCN = (iso) => { const d = new Date(iso); const p = new Intl.DateTimeFormat("es-ES", { timeZone: "Europe/Madrid", hour: "numeric", hour12: false, weekday: "short" }).formatToParts(d); return { h: parseInt(p.find(x => x.type === "hour").value) % 24, wd: p.find(x => x.type === "weekday").value }; };
 async function cargar() {
   const d30 = dias(30), d14 = dias(14), d7 = dias(7);
-  const [sends, events, evws, subs, ediciones, encuestas, correcciones, hist, clicsTodos, catalogo] = await Promise.all([
+  const [sends, events, evws, subs, ediciones, encuestas, correcciones, hist, evAll, catalogo, sendsAll, eventsAll, salud] = await Promise.all([
     q(sb.from("sends").select("fecha,edicion,email,resend_id,ok").gte("fecha", d30).order("fecha")),
     q(sb.from("events").select("resend_id,fecha,estado").gte("fecha", d30)),
     q(sb.from("email_events").select("tipo,destinatario,item,fecha_edicion,dispositivo,ocurrio_at,url").gte("received_at", d30 + "T00:00:00Z")),
@@ -517,9 +567,13 @@ async function cargar() {
     q(sb.from("encuestas").select("*").order("created_at", { ascending: false })),
     q(sb.from("correcciones").select("*").order("created_at", { ascending: false })),
     q(sb.from("subscriber_history").select("email,changed_at").order("changed_at", { ascending: false })),
-    q(sb.from("email_events").select("destinatario,item,fecha_edicion").eq("tipo", "email.clicked").not("item", "is", null)),
-    q(sb.from("items_edicion").select("fecha,item_id,segmento,tipo,subcategoria,etiqueta,ciudad,lugar,titular")),
+    qAll(() => sb.from("email_events").select("tipo,destinatario,item,fecha_edicion,ocurrio_at,dispositivo").order("id")),
+    qAll(() => sb.from("items_edicion").select("fecha,edicion,item_id,segmento,tipo,subcategoria,etiqueta,ciudad,lugar,titular,estado,confianza,fuentes").order("fecha")),
+    qAll(() => sb.from("sends").select("fecha,email,resend_id,ok,sent_at").order("fecha")),
+    qAll(() => sb.from("events").select("resend_id,estado").order("resend_id")),
+    sb.rpc("salud").then(r => { if (r.error) throw r.error; return r.data; }),
   ]);
+  const clicsTodos = evAll.filter(e => e.tipo === "email.clicked" && e.item);
   const estados = Object.fromEntries(events.map(e => [e.resend_id, e.estado]));
   const nombres = Object.fromEntries(subs.map(s => [s.email, (s.nombre || s.email).split(" ")[0]]));
   const mejor = new Map();
@@ -553,7 +607,7 @@ async function cargar() {
   $("t-grid").innerHTML = `<tr><th></th>${f14.map(f => `<th style="font-size:9px">${f.slice(5)}</th>`).join("")}</tr>` +
     emails.map(em => `<tr><td><b>${esc(nombres[em] || em)}</b></td>${f14.map(f => { const v = mejor.get(key(f, em)); return `<td><span class="cel ${v === undefined ? "cx" : "c" + v}" title="${f} · ${({4:"clic",3:"abrió",2:"entregado",1:"enviado",0:"rebote"})[v] || "sin envío"}"></span></td>`; }).join("")}</tr>`).join("");
   const titulares = {};
-  for (const r of ediciones) { const sg = r.contenido.segmentos; for (const it of [sg.mundo.principal, sg.chile.principal, ...sg.mundo.breves, ...sg.chile.breves, ...(sg.personalizado.curadas||[]), ...(sg.personalizado.pool||[])]) titulares[r.fecha + "|" + it.id] = it.titular; }
+  for (const it of catalogo) titulares[String(it.fecha) + "|" + it.item_id] = it.titular;
   const cnt = {};
   for (const e of evws) if (e.tipo === "email.clicked" && e.item && String(e.fecha_edicion) >= d7) { const k = String(e.fecha_edicion) + "|" + e.item; cnt[k] = (cnt[k]||0) + 1; }
   const top = Object.entries(cnt).sort((a,b) => b[1]-a[1]).slice(0, 8);
@@ -613,9 +667,100 @@ async function cargar() {
     pintarCorr(await q(sb.from("correcciones").select("*").order("created_at", { ascending: false })));
   });
 
+  // ===== Cuándo leen (hora Barcelona) y dispositivo — histórico =====
+  const aper = evAll.filter(e => e.tipo === "email.opened" && e.ocurrio_at);
+  const porHora = {}, porDia = {}, totalHora = Array(24).fill(0);
+  for (const e of aper) { const { h, wd } = HORA_BCN(e.ocurrio_at); porHora[e.destinatario] = porHora[e.destinatario] || Array(24).fill(0); porHora[e.destinatario][h]++; totalHora[h]++; porDia[wd] = (porDia[wd]||0) + 1; }
+  const filaHoras = (arr, nombre) => { const max = Math.max(1, ...arr); return `<tr><td style="white-space:nowrap;padding-right:10px"><b>${esc(nombre)}</b></td>${arr.map((n, h) => `<td title="${h}:00 · ${n} apertura${n===1?"":"s"}" style="padding:2px"><span style="display:block;width:14px;height:14px;border-radius:2px;background:${n ? `rgba(47,33,41,${0.15 + 0.85*n/max})` : "#fff"}"></span></td>`).join("")}<td class="num" style="padding-left:8px">${arr.reduce((a,b)=>a+b,0)}</td></tr>`; };
+  // demora media entre envío y primera apertura, por lector
+  const envio = {}; for (const s of sendsAll) if (s.sent_at) envio[s.fecha + "|" + s.email] = new Date(s.sent_at).getTime();
+  const primera = {}; for (const e of aper) { const k = String(e.fecha_edicion) + "|" + e.destinatario; const tm = new Date(e.ocurrio_at).getTime(); if (!primera[k] || tm < primera[k]) primera[k] = tm; }
+  const demora = {}; for (const k in primera) if (envio[k]) { const em = k.split("|")[1]; (demora[em] = demora[em] || []).push((primera[k] - envio[k]) / 60000); }
+  const fmtMin = (m) => m < 60 ? `${Math.round(m)} min` : `${(m/60).toFixed(1)} h`;
+  const mediana = (a) => { const s = [...a].sort((x,y)=>x-y); return s.length ? s[Math.floor(s.length/2)] : null; };
+  $("cuando").innerHTML = aper.length ? `<table class="grid-lectores"><tr><td></td>${[...Array(24).keys()].map(h => `<td style="font-size:9px;color:#8a8a8a;text-align:center">${h%3===0?h:""}</td>`).join("")}<td class="num" style="font-size:9px;color:#8a8a8a">total</td></tr>` +
+    Object.entries(porHora).sort((a,b) => (nombres[a[0]]||a[0]).localeCompare(nombres[b[0]]||b[0])).map(([em, arr]) => filaHoras(arr, nombres[em] || em)).join("") + filaHoras(totalHora, "Todos") + `</table>` +
+    `<div style="margin-top:12px;font-size:14px">${Object.entries(demora).map(([em, a]) => `<span class="chip lila">${esc(nombres[em]||em)}: abre ${fmtMin(mediana(a))} después del envío</span>`).join("")}</div>` +
+    `<div style="margin-top:8px;font-size:14px"><b>Por día de la semana:</b> ${["lun","mar","mié","jue","vie","sáb","dom"].map(d => `${d} ${porDia[d]||0}`).join(" · ")}</div>` : "<p>Sin aperturas registradas todavía.</p>";
+  const disp = {};
+  for (const e of evAll) if (e.tipo === "email.opened" || e.tipo === "email.clicked") { disp[e.destinatario] = disp[e.destinatario] || { desktop:0, movil:0, otro:0, clics_movil:0, clics:0 }; const d = e.dispositivo === "movil" ? "movil" : e.dispositivo === "desktop" ? "desktop" : "otro"; disp[e.destinatario][d]++; if (e.tipo === "email.clicked") { disp[e.destinatario].clics++; if (d === "movil") disp[e.destinatario].clics_movil++; } }
+  $("dispositivos").innerHTML = Object.keys(disp).length ? `<table class="datos"><tr><th>lector</th><th class="num">escritorio</th><th class="num">móvil</th><th class="num">clics desde móvil</th></tr>` + Object.entries(disp).sort((a,b) => (nombres[a[0]]||a[0]).localeCompare(nombres[b[0]]||b[0])).map(([em, d]) => `<tr><td><b>${esc(nombres[em]||em)}</b></td><td class="num">${d.desktop}</td><td class="num">${d.movil}</td><td class="num">${d.clics_movil} de ${d.clics}</td></tr>`).join("") + `</table>` : "<p>Sin datos todavía.</p>";
+
+  // ===== Retención (histórico) =====
+  const mejorAll = new Map(); const estAll = Object.fromEntries(eventsAll.map(e => [e.resend_id, e.estado]));
+  for (const s of sendsAll) if (s.resend_id) { const k = key(s.fecha, s.email); mejorAll.set(k, Math.max(mejorAll.get(k) ?? 0, ORDEN[estAll[s.resend_id]] ?? 1)); }
+  for (const e of evAll) { const niv = {"email.delivered":2,"email.opened":3,"email.clicked":4,"email.bounced":0}[e.tipo]; if (niv !== undefined && e.fecha_edicion) { const k = key(String(e.fecha_edicion), e.destinatario); mejorAll.set(k, Math.max(mejorAll.get(k) ?? 0, niv)); } }
+  const fechasAll = [...new Set(sendsAll.map(s => s.fecha))].sort();
+  $("t-retencion").innerHTML = `<tr><th>lector</th><th class="num">últimas 7</th><th class="num">racha</th><th>última apertura</th><th class="num">abrió / recibió</th></tr>` +
+    subs.filter(s => s.activo).map(s => { const fs = fechasAll.filter(f => mejorAll.has(key(f, s.email))); const ult7 = fs.slice(-7); const ab7 = ult7.filter(f => (mejorAll.get(key(f, s.email))||0) >= 3).length;
+      let racha = 0; for (let i = fs.length - 1; i >= 0; i--) { if ((mejorAll.get(key(fs[i], s.email))||0) >= 3) racha++; else break; }
+      const abiertas = fs.filter(f => (mejorAll.get(key(f, s.email))||0) >= 3); const ultima = abiertas.length ? abiertas[abiertas.length-1] : "—";
+      return `<tr><td><b>${esc((s.nombre||"").split(" ")[0])}</b></td><td class="num">${ab7} / ${ult7.length}</td><td class="num">${racha}</td><td>${ultima}</td><td class="num">${abiertas.length} / ${fs.length}</td></tr>`; }).join("");
+  const eventos = [...subs.map(s => ({ t: s.created_at, txt: `<b>${esc((s.nombre||"").split(" ")[0])}</b> se inscribió${s.ciudad ? " desde " + esc(s.ciudad) : ""}` })),
+    ...subs.filter(s => !s.activo).map(s => ({ t: s.created_at, txt: `<b>${esc((s.nombre||"").split(" ")[0])}</b> se dio de baja (fecha de alta ${s.created_at.slice(0,10)})` })),
+    ...hist.map(h => ({ t: h.changed_at, txt: `<b>${esc(nombres[h.email]||h.email)}</b> cambió sus temas` }))].sort((a,b) => b.t.localeCompare(a.t));
+  $("altas").innerHTML = eventos.map(e => `<div class="item"><div class="t">${e.t.slice(0,10)}</div>${e.txt}</div>`).join("");
+
+  // ===== Radiografía por edición =====
+  const conflicto = /\b(ataque|bombarde|misil|dron|ofensiva|guerra|combate|tropas|muertos en)\w*/i;
+  const porEd = {};
+  for (const it of catalogo) { const r = porEd[it.fecha] = porEd[it.fecha] || { edicion: it.edicion, paises: new Set(), conflictos: 0, cat: "", estados: {}, conf: [], n: 0 };
+    r.n++; if (it.estado) r.estados[it.estado] = (r.estados[it.estado]||0) + 1; if (it.confianza != null) r.conf.push(it.confianza);
+    if (it.segmento === "Global") { if (it.lugar) r.paises.add(it.lugar.split("/")[0].trim()); if (conflicto.test(it.titular||"")) r.conflictos++; if (it.etiqueta === "categoria") r.cat = SUB_LABEL[it.subcategoria] || it.subcategoria || ""; } }
+  $("t-radio").innerHTML = `<tr><th>fecha</th><th class="num">nº</th><th>países en Global</th><th class="num">conflictos</th><th>categoría del día</th><th>certeza</th><th class="num">confianza</th></tr>` +
+    Object.entries(porEd).sort((a,b) => b[0].localeCompare(a[0])).map(([f, r]) => `<tr><td>${f}</td><td class="num">${r.edicion}</td><td class="wrap">${[...r.paises].map(p => `<span class="chip gris">${esc(p)}</span>`).join("")}</td><td class="num" style="${r.conflictos>2?"color:#b3261e;font-weight:bold":""}">${r.conflictos}</td><td>${esc(r.cat)}</td><td>${Object.keys(r.estados).length ? Object.entries(r.estados).map(([k,v]) => `${k.replace("_"," ")} ${v}`).join(", ") : "<span class='hint' style='text-transform:none'>sin marcar</span>"}</td><td class="num">${r.conf.length ? Math.round(r.conf.reduce((a,b)=>a+b,0)/r.conf.length) + "%" : "—"}</td></tr>`).join("");
+
+  // ===== Salud del sistema =====
+  const hoyStr = new Date().toISOString().slice(0,10);
+  const horaLocal = (iso) => iso ? new Intl.DateTimeFormat("es-ES", { timeZone: "Europe/Madrid", hour: "2-digit", minute: "2-digit" }).format(new Date(iso)) : "—";
+  const fechaHora = (iso) => iso ? new Intl.DateTimeFormat("es-ES", { timeZone: "Europe/Madrid", day: "2-digit", month: "short", hour: "2-digit", minute: "2-digit" }).format(new Date(iso)) : "—";
+  const sem = (estado) => ({ ok: "#9bd39b", ambar: "#fef79f", rojo: "#f3a6a6" })[estado];
+  const tarjeta = (titulo, valor, estado, nota) => `<div class="kpi" style="background:${sem(estado)}" title="${esc(nota||"")}"><div class="n" style="font-size:24px">${valor}</div><div class="l">${titulo}</div>${nota ? `<div class="hint" style="margin-top:6px;text-transform:none;letter-spacing:0">${esc(nota)}</div>` : ""}</div>`;
+  const h = salud.hoy || {}; const ue = salud.ultima_edicion || {}; const ahora = new Date();
+  const esperada = ahora.getUTCHours() >= 5 || ahora.getUTCHours() < 4;   // después de las 07:00 Barcelona
+  const edHoy = ue.fecha === hoyStr;
+  $("salud-kpis").innerHTML = [
+    tarjeta("Edición de hoy", edHoy ? `nº ${ue.edicion}` : (esperada ? "no salió" : "aún no toca"), edHoy ? "ok" : (esperada ? "rojo" : "ambar"), edHoy ? `guardada a las ${horaLocal(ue.creada)}` : (esperada ? "la rutina de las 07:00 no guardó edición" : "sale a las 07:00")),
+    tarjeta("Envíos de hoy", `${h.ok||0} / ${salud.lectores_activos}`, (h.ok||0) >= salud.lectores_activos && (h.fallidos||0) === 0 ? "ok" : ((h.enviados||0) ? "ambar" : (esperada ? "rojo" : "ambar")), h.fallidos ? `${h.fallidos} fallidos` : (h.primer_envio ? `primer envío ${horaLocal(h.primer_envio)}` : "sin envíos")),
+    tarjeta("Último webhook", fechaHora(salud.ultimo_webhook), salud.ultimo_webhook && (Date.now() - new Date(salud.ultimo_webhook)) < 36*3600e3 ? "ok" : "ambar", "aperturas/clics que Resend nos avisa en tiempo real"),
+    tarjeta("Rebotes · 7 días", salud.rebotes_7d, salud.rebotes_7d ? "ambar" : "ok", "correos que no pudieron entregarse"),
+    tarjeta("Envíos fallidos · 7 días", (salud.envios_7d||{}).fallidos || 0, (salud.envios_7d||{}).fallidos ? "ambar" : "ok", `${(salud.envios_7d||{}).total || 0} envíos en la semana`),
+    tarjeta("Alertas · 7 días", (salud.alertas_7d||[]).length, (salud.alertas_7d||[]).length ? "ambar" : "ok", "avisos del vigía"),
+  ].join("");
+  const barra = (v, max, txt, estado) => `<div style="margin:8px 0"><div style="display:flex;justify-content:space-between;font-family:var(--sans);font-size:12px"><span>${txt}</span><b>${v} / ${max}</b></div><div style="height:10px;background:#fff;border-radius:3px;overflow:hidden"><div style="height:100%;width:${Math.min(100, 100*v/max)}%;background:${sem(estado)}"></div></div></div>`;
+  const correosHoy = h.enviados || 0;
+  $("salud-limites").innerHTML = barra(correosHoy, 100, "Correos enviados hoy (Resend gratis: 100 al día, 3.000 al mes)", correosHoy > 80 ? "rojo" : correosHoy > 60 ? "ambar" : "ok") +
+    barra(salud.db_mb, 500, "Base de datos (Supabase gratis: 500 MB)", salud.db_mb > 400 ? "rojo" : salud.db_mb > 300 ? "ambar" : "ok") +
+    `<p class="hint" style="margin-top:8px">Con ${salud.lectores_activos} lectores se usan ~${salud.lectores_activos + 2} correos al día. El tope diario de Resend se toca cerca de los 80 lectores; el de Supabase queda lejos (${salud.db_mb} MB usados). Dominio holavera.news: renovación anual en Hostinger (comprado el 21 ago 2026).</p>`;
+  const ur = salud.ultimo_respaldo;
+  $("salud-respaldo").innerHTML = (ur ? `<p><b>Último respaldo:</b> ${fechaHora(ur.cuando)} · ${ur.filas} filas · ${Math.round((ur.bytes||0)/1024)} KB · <a href="https://github.com/MarceloG10/vera/tree/main/respaldos" target="_blank" rel="noopener">ver en GitHub</a></p>` : `<p><b>Sin respaldos todavía.</b> El primero corre mañana a las 08:30.</p>`) +
+    `<p class="hint">Supabase gratis no hace copias de seguridad; por eso cada día se vuelcan todas las tablas al repo privado. Si el último respaldo tiene más de 2 días, algo falló en GitHub Actions.</p>` +
+    ((salud.alertas_7d||[]).length ? `<h3>Alertas de la semana</h3>` + salud.alertas_7d.map(a => `<div class="item"><div class="t">${fechaHora(a.cuando)} · ${esc(a.tipo)}</div>${esc(a.mensaje)}</div>`).join("") : `<p style="margin-top:10px">Sin alertas en los últimos 7 días.</p>`);
+
   // fuentes
   try {
     const medios = (await (await fetch("medios.json", { cache: "no-store" })).json()).medios;
+    const nivelDe = (nombre) => { const m = medios[nombre] || Object.values(medios).find(v => (v.alias||[]).includes(nombre)); return m ? m.nivel : "fuera de lista"; };
+    const pintarUso = (periodo) => {
+      const desde = periodo === "30" ? d30 : "0000";
+      const items = catalogo.filter(it => it.fecha >= desde && Array.isArray(it.fuentes));
+      const porMedio = {}, porNivel = {}, porN = {1:0,2:0,3:0}; let conVia = 0, conPrimaria = 0;
+      for (const it of items) { const fs = it.fuentes; porN[Math.min(3, fs.length)] = (porN[Math.min(3, fs.length)]||0) + 1; if (fs.some(f => f.via)) conVia++; if (fs.some(f => f.primaria)) conPrimaria++;
+        for (const f of fs) { porMedio[f.medio] = (porMedio[f.medio]||0) + 1; const nv = nivelDe(f.medio); porNivel[nv] = (porNivel[nv]||0) + 1; } }
+      const totC = Object.values(porNivel).reduce((a,b)=>a+b,0) || 1; const base = ((porNivel.agencia||0)+(porNivel.publico||0)+(porNivel.establecido||0));
+      const barrasU = (obj, n) => { const max = Math.max(1, ...Object.values(obj)); return Object.entries(obj).sort((a,b)=>b[1]-a[1]).slice(0, n).map(([k, v]) => `<div style="display:grid;grid-template-columns:180px 1fr 44px;gap:10px;align-items:center;margin:4px 0;font-size:14px"><span>${esc(k)}</span><span class="barra" style="width:${Math.round(100*v/max)}%"></span><b style="text-align:right">${v}</b></div>`).join(""); };
+      $("uso-periodo-label").textContent = periodo === "30" ? "· últimos 30 días" : "· todo el histórico";
+      $("uso-fuentes").innerHTML = `<div class="kpis" style="margin-bottom:14px">
+        <div class="kpi"><div class="n">${items.length}</div><div class="l">noticias</div></div>
+        <div class="kpi"><div class="n">${items.length ? (items.reduce((a,it)=>a+it.fuentes.length,0)/items.length).toFixed(2) : "—"}</div><div class="l">fuentes por noticia</div></div>
+        <div class="kpi"><div class="n">${items.length ? Math.round(100*(porN[3]||0)/items.length) : 0}%</div><div class="l">con 3 o más fuentes</div></div>
+        <div class="kpi" title="agencia + público + establecido; objetivo ≥ 80 %"><div class="n">${Math.round(100*base/totC)}%</div><div class="l">citas de agencia · público · establecido</div></div>
+        <div class="kpi"><div class="n">${items.length ? Math.round(100*conVia/items.length) : 0}%</div><div class="l">con origen marcado (via)</div></div>
+        <div class="kpi"><div class="n">${items.length ? Math.round(100*conPrimaria/items.length) : 0}%</div><div class="l">con fuente primaria</div></div></div>
+        <h3>Medios más citados</h3>${barrasU(porMedio, 15)}<h3>Citas por nivel</h3>${barrasU(porNivel, 8)}`;
+      document.querySelectorAll("[data-uso]").forEach(b => { const on = b.dataset.uso === periodo; b.style.background = on ? "var(--tinta)" : "#fff"; b.style.color = on ? "#fff" : "var(--tinta)"; });
+    };
+    pintarUso("30"); document.querySelectorAll("[data-uso]").forEach(b => b.addEventListener("click", () => pintarUso(b.dataset.uso)));
     const filasF = Object.entries(medios).map(([n, v]) => ({ n, ...v, ambitos: Array.isArray(v.ambito) ? v.ambito.map(a => SUB_LABEL[a]||a) : [v.ambito||"general"], estado: v.score_estado||"" })).sort((a,b) => (b.score||0) - (a.score||0) || a.n.localeCompare(b.n));
     const COLS = [["nivel","nivel", x => [x.nivel]], ["posicionamiento","posicionamiento", x => [x.posicionamiento||"—"]], ["ambitos","ámbito", x => x.ambitos], ["estado","estado", x => [x.estado||"—"]]];
     const sel = {};   // columna → Set de valores elegidos (vacío = sin filtro)
