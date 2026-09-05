@@ -63,6 +63,17 @@
   .popover .acciones { margin-top:8px; padding-top:8px; border-top:1px solid var(--hair); } .popover .acciones a { margin-right:12px; color:var(--purpura); font-size:11px; text-transform:uppercase; letter-spacing:.4px; }
   .filtros-activos { margin:6px 0 10px; } .filtros-activos .chip { cursor:pointer; }
   .kpi { cursor:help; }
+  .grupo-region { margin:26px 0 8px; font-family:var(--serif); font-size:22px; }
+  .fuente { border-top:1px solid var(--hair); padding:12px 0; display:grid; grid-template-columns:1.6fr 1fr 1fr 1.2fr auto; gap:10px 16px; align-items:start; font-size:14px; }
+  .fuente.inactiva { opacity:.5; }
+  .fuente .nom { font-family:var(--serif); font-size:16px; } .fuente .nom small { display:block; font-family:var(--sans); font-size:11px; color:var(--gris); letter-spacing:0; text-transform:none; margin-top:2px; }
+  .fuente .lab { font-family:var(--sans); font-size:9.5px; letter-spacing:.8px; text-transform:uppercase; color:var(--gris); display:block; margin-bottom:3px; }
+  .fuente .acc button { font-family:var(--sans); font-size:10.5px; letter-spacing:.5px; text-transform:uppercase; background:#fff; color:var(--tinta); border:1.5px solid var(--tinta); border-radius:3px; padding:5px 9px; cursor:pointer; margin:0 0 4px; display:block; width:100%; }
+  .editor { grid-column:1 / -1; background:#f7f5f6; border:1px solid var(--hair); border-radius:4px; padding:14px 16px; }
+  .editor .campos { display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:10px 16px; }
+  .editor label.f { margin:0 0 4px; } .editor input, .editor select, .editor textarea { font-size:14px; padding:7px 9px; }
+  .dims { font-family:var(--sans); font-size:11px; color:var(--gris); }
+  @media (max-width:640px) { .fuente { grid-template-columns:1fr 1fr; } .fuente .acc button { width:auto; display:inline-block; margin-right:4px; } }
   .pregunta { display:grid; grid-template-columns:32px 1fr; gap:8px; margin:0 0 10px; font-size:16px; } .pregunta .n { font-family:var(--sans); font-weight:bold; font-size:12px; padding-top:3px; }
   .grid-lectores { font-family:var(--sans); font-size:12px; }
   .grid-lectores td { padding:4px 8px 4px 0; border:none; }
@@ -223,11 +234,15 @@
       <div class="bloque azul"><h3 style="margin-top:0">Uso real de las fuentes <span id="uso-periodo-label" style="font-weight:normal;letter-spacing:0;text-transform:none"></span></h3>
         <div style="margin-bottom:10px"><button class="btn" data-uso="30" style="margin:0 6px 0 0;padding:7px 12px;font-size:11px">30 días</button><button class="btn" data-uso="todo" style="margin:0;padding:7px 12px;font-size:11px;background:#fff;color:var(--tinta)">Todo</button></div>
         <div id="uso-fuentes"></div></div>
-      <h3>Lista blanca</h3>
-      <div style="margin:10px 0"><input type="text" id="f-filtro" placeholder="Buscar por nombre o descripción…"></div>
-      <p class="hint" style="margin:0 0 6px">Haz clic en el título de una columna (nivel, posicionamiento, ámbito, estado) para filtrar por uno o varios valores.</p>
-      <div class="filtros-activos" id="f-activos"></div>
-      <div class="desliza">Desliza para ver toda la tabla →</div><div class="scroll"><table id="t-fuentes" class="datos ancha"></table></div>
+      <h3>Pool de fuentes</h3>
+      <p class="hint" style="margin:0 0 10px">Fuente por fuente, agrupadas por región. El score se edita con vuestro criterio (queda registrado quién, cuándo y por qué); una fuente se saca desactivándola, nunca se borra. Lo que guarden aquí es lo que usa el editor desde la mañana siguiente.</p>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:10px 0">
+        <input type="text" id="f-filtro" placeholder="Buscar por nombre, dominio o descripción…" style="flex:1;min-width:220px">
+        <label class="hint" style="text-transform:none;letter-spacing:0;font-size:12px"><input type="checkbox" id="f-inactivos"> mostrar desactivadas</label>
+        <button class="btn" id="f-nueva" style="margin:0;padding:9px 14px;font-size:12px">+ Agregar fuente</button>
+      </div>
+      <div id="f-form" class="bloque blanco" hidden></div>
+      <div id="f-grupos"></div>
     </section>
 
     <section id="s-editorial">
@@ -737,68 +752,85 @@ async function cargar() {
     `<p class="hint">Supabase gratis no hace copias de seguridad; por eso cada día se vuelcan todas las tablas al repo privado. Si el último respaldo tiene más de 2 días, algo falló en GitHub Actions.</p>` +
     ((salud.alertas_7d||[]).length ? `<h3>Alertas de la semana</h3>` + salud.alertas_7d.map(a => `<div class="item"><div class="t">${fechaHora(a.cuando)} · ${esc(a.tipo)}</div>${esc(a.mensaje)}</div>`).join("") : `<p style="margin-top:10px">Sin alertas en los últimos 7 días.</p>`);
 
-  // fuentes
-  try {
-    const medios = (await (await fetch("medios.json", { cache: "no-store" })).json()).medios;
-    const nivelDe = (nombre) => { const m = medios[nombre] || Object.values(medios).find(v => (v.alias||[]).includes(nombre)); return m ? m.nivel : "fuera de lista"; };
-    const pintarUso = (periodo) => {
-      const desde = periodo === "30" ? d30 : "0000";
-      const items = catalogo.filter(it => it.fecha >= desde && Array.isArray(it.fuentes));
-      const porMedio = {}, porNivel = {}, porN = {1:0,2:0,3:0}; let conVia = 0, conPrimaria = 0;
-      for (const it of items) { const fs = it.fuentes; porN[Math.min(3, fs.length)] = (porN[Math.min(3, fs.length)]||0) + 1; if (fs.some(f => f.via)) conVia++; if (fs.some(f => f.primaria)) conPrimaria++;
-        for (const f of fs) { porMedio[f.medio] = (porMedio[f.medio]||0) + 1; const nv = nivelDe(f.medio); porNivel[nv] = (porNivel[nv]||0) + 1; } }
-      const totC = Object.values(porNivel).reduce((a,b)=>a+b,0) || 1; const base = ((porNivel.agencia||0)+(porNivel.publico||0)+(porNivel.establecido||0));
-      const barrasU = (obj, n) => { const max = Math.max(1, ...Object.values(obj)); return Object.entries(obj).sort((a,b)=>b[1]-a[1]).slice(0, n).map(([k, v]) => `<div style="display:grid;grid-template-columns:180px 1fr 44px;gap:10px;align-items:center;margin:4px 0;font-size:14px"><span>${esc(k)}</span><span class="barra" style="width:${Math.round(100*v/max)}%"></span><b style="text-align:right">${v}</b></div>`).join(""); };
-      $("uso-periodo-label").textContent = periodo === "30" ? "· últimos 30 días" : "· todo el histórico";
-      $("uso-fuentes").innerHTML = `<div class="kpis" style="margin-bottom:14px">
-        <div class="kpi"><div class="n">${items.length}</div><div class="l">noticias</div></div>
-        <div class="kpi"><div class="n">${items.length ? (items.reduce((a,it)=>a+it.fuentes.length,0)/items.length).toFixed(2) : "—"}</div><div class="l">fuentes por noticia</div></div>
-        <div class="kpi"><div class="n">${items.length ? Math.round(100*(porN[3]||0)/items.length) : 0}%</div><div class="l">con 3 o más fuentes</div></div>
-        <div class="kpi" title="agencia + público + establecido; objetivo ≥ 80 %"><div class="n">${Math.round(100*base/totC)}%</div><div class="l">citas de agencia · público · establecido</div></div>
-        <div class="kpi"><div class="n">${items.length ? Math.round(100*conVia/items.length) : 0}%</div><div class="l">con origen marcado (via)</div></div>
-        <div class="kpi"><div class="n">${items.length ? Math.round(100*conPrimaria/items.length) : 0}%</div><div class="l">con fuente primaria</div></div></div>
-        <h3>Medios más citados</h3>${barrasU(porMedio, 15)}<h3>Citas por nivel</h3>${barrasU(porNivel, 8)}`;
-      document.querySelectorAll("[data-uso]").forEach(b => { const on = b.dataset.uso === periodo; b.style.background = on ? "var(--tinta)" : "#fff"; b.style.color = on ? "#fff" : "var(--tinta)"; });
-    };
-    pintarUso("30"); document.querySelectorAll("[data-uso]").forEach(b => b.addEventListener("click", () => pintarUso(b.dataset.uso)));
-    const filasF = Object.entries(medios).map(([n, v]) => ({ n, ...v, ambitos: Array.isArray(v.ambito) ? v.ambito.map(a => SUB_LABEL[a]||a) : [v.ambito||"general"], estado: v.score_estado||"" })).sort((a,b) => (b.score||0) - (a.score||0) || a.n.localeCompare(b.n));
-    const COLS = [["nivel","nivel", x => [x.nivel]], ["posicionamiento","posicionamiento", x => [x.posicionamiento||"—"]], ["ambitos","ámbito", x => x.ambitos], ["estado","estado", x => [x.estado||"—"]]];
-    const sel = {};   // columna → Set de valores elegidos (vacío = sin filtro)
-    let texto = "";
-    const pintar = () => {
-      const f = texto.toLowerCase();
-      const visibles = filasF.filter(x => (!f || [x.n, x.nivel, x.posicionamiento, x.linea, x.ambitos.join(" ")].join(" ").toLowerCase().includes(f))
-        && COLS.every(([key,, get]) => !(sel[key] && sel[key].size) || get(x).some(v => sel[key].has(v))));
-      const th = (k, l) => `<th class="filtrable ${sel[k]&&sel[k].size?"activo":""}" data-col="${k}">${l}</th>`;
-      $("t-fuentes").innerHTML = `<tr><th>medio (${visibles.length})</th>${th("nivel","nivel")}<th>score</th>${th("posicionamiento","posicionamiento")}${th("ambitos","ámbito")}${th("estado","estado")}</tr>` +
-        visibles.map(x => `<tr><td><b>${esc(x.n)}</b>${x.linea ? `<br><span class="hint linea" style="text-transform:none">${esc(x.linea)}</span>` : ""}</td><td>${esc(x.nivel)}${x.tipo ? " · " + esc(x.tipo) : ""}</td><td class="score">${x.score != null ? `<b>${x.score}</b><span class="barra" style="width:${x.score*0.6}px"></span>` : "—"}</td><td>${esc(x.posicionamiento||"")}</td><td>${x.ambitos.map(a => `<span class="chip gris">${esc(a)}</span>`).join("")}</td><td>${esc(x.estado)}</td></tr>`).join("");
-      const activos = COLS.flatMap(([k,l]) => [...(sel[k]||[])].map(v => `<span class="chip" data-col="${k}" data-v="${esc(v)}" title="Quitar">${l}: ${esc(v)} ✕</span>`));
-      $("f-activos").innerHTML = activos.length ? activos.join("") + `<span class="chip gris" data-limpiar="1">Limpiar filtros</span>` : "";
-    };
-    $("t-fuentes").addEventListener("click", (e) => {
-      if (e.target.closest(".popover")) return;
-      const th = e.target.closest("th.filtrable"); if (!th) return;
-      document.querySelectorAll(".popover").forEach(p => p.remove());
-      const key = th.dataset.col; const get = COLS.find(c => c[0] === key)[2];
-      const valores = [...new Set(filasF.flatMap(get))].sort((a,b) => String(a).localeCompare(String(b)));
-      const pop = document.createElement("div"); pop.className = "popover";
-      pop.innerHTML = valores.map(v => `<label><input type="checkbox" value="${esc(v)}" ${sel[key]&&sel[key].has(v)?"checked":""}> ${esc(v)}</label>`).join("") + `<div class="acciones"><a href="#" data-todo="1">Todos</a><a href="#" data-nada="1">Ninguno</a><a href="#" data-cerrar="1">Cerrar</a></div>`;
-      document.body.appendChild(pop); e.stopPropagation();
-      const r = th.getBoundingClientRect(); pop.style.top = (r.bottom + 4) + "px";
-      pop.style.left = Math.max(8, Math.min(r.left, window.innerWidth - pop.offsetWidth - 12)) + "px";
-      pop.style.maxWidth = (window.innerWidth - 24) + "px";
-      pop.addEventListener("click", (ev) => { ev.stopPropagation();
-        if (ev.target.dataset.cerrar) { ev.preventDefault(); pop.remove(); return; }
-        if (ev.target.dataset.todo || ev.target.dataset.nada) { ev.preventDefault(); sel[key] = new Set(ev.target.dataset.todo ? valores : []); pintar(); pop.querySelectorAll("input").forEach(i => i.checked = sel[key].has(i.value)); return; }
-        if (ev.target.type === "checkbox") { sel[key] = sel[key] || new Set(); ev.target.checked ? sel[key].add(ev.target.value) : sel[key].delete(ev.target.value); pintar(); }
-      });
-    });
-    document.addEventListener("click", () => document.querySelectorAll(".popover").forEach(p => p.remove()));
-    window.addEventListener("scroll", () => document.querySelectorAll(".popover").forEach(p => p.remove()), { passive: true });
-    $("f-activos").addEventListener("click", (e) => { const c = e.target.closest(".chip"); if (!c) return;
-      if (c.dataset.limpiar) { for (const k in sel) sel[k].clear(); } else if (sel[c.dataset.col]) sel[c.dataset.col].delete(c.dataset.v); pintar(); });
-    pintar(); $("f-filtro").addEventListener("input", (e) => { texto = e.target.value; pintar(); });
-  } catch (e) { $("t-fuentes").innerHTML = `<tr><td>No se pudo cargar medios.json</td></tr>`; }
+  // ===== Pool de fuentes: tabla `medios` (fuente de verdad), editable por los founders =====
+  const NIVELES = ["agencia","publico","establecido","especializado","oficial"];
+  const REGIONES = ["Chile · nacional","Chile · regional","Agencias e internacionales","España y Cataluña","Alemania","Especializados","Oficiales y primarias"];
+  const DIM_LABEL = {precision:"precisión",fuentes:"calidad de fuentes",independencia:"independencia",sensacionalismo:"sensacionalismo",transparencia:"transparencia",correcciones:"correcciones",carga_editorial:"carga editorial",calidad:"calidad periodística"};
+  const yo = (await sb.auth.getUser()).data.user.email;
+  let medios = [], historial = [];
+  const citasPorMedio = {}; for (const it of catalogo) for (const f of (it.fuentes||[])) citasPorMedio[f.medio] = (citasPorMedio[f.medio]||0) + 1;
+  const fechaCorta = (iso) => iso ? new Intl.DateTimeFormat("es-ES", { timeZone: "Europe/Madrid", day: "2-digit", month: "short", year: "2-digit" }).format(new Date(iso)) : "";
+  async function cargarMedios() { [medios, historial] = await Promise.all([q(sb.from("medios").select("*").order("nombre")), q(sb.from("medios_historial").select("*").order("cuando", { ascending: false }).limit(500))]); pintarFuentes(); }
+  const ambTxt = (a) => Array.isArray(a) ? a.map(x => SUB_LABEL[x]||x) : [a || "general"];
+  function pintarFuentes() {
+    const f = ($("f-filtro").value||"").toLowerCase(); const verInact = $("f-inactivos").checked;
+    const vis = medios.filter(m => (verInact || m.activo) && (!f || [m.nombre, (m.dominios||[]).join(" "), m.linea, m.nivel, m.posicionamiento, ambTxt(m.ambito).join(" ")].join(" ").toLowerCase().includes(f)));
+    const grupos = {}; for (const m of vis) (grupos[m.region] = grupos[m.region] || []).push(m);
+    const orden = [...REGIONES, ...Object.keys(grupos).filter(r => !REGIONES.includes(r))];
+    $("f-grupos").innerHTML = orden.filter(r => grupos[r]).map(r => `<div class="grupo-region">${esc(r)} <span class="hint" style="font-size:11px">${grupos[r].length} fuente${grupos[r].length>1?"s":""}</span></div>` +
+      grupos[r].sort((a,b) => (b.score||0)-(a.score||0) || a.nombre.localeCompare(b.nombre)).map(m => {
+        const h = historial.filter(x => x.medio === m.nombre).slice(0, 3);
+        return `<div class="fuente ${m.activo ? "" : "inactiva"}" data-m="${esc(m.nombre)}">
+          <div><div class="nom"><b>${esc(m.nombre)}</b>${m.activo ? "" : " <span class='chip gris'>desactivada</span>"}<small>${esc((m.dominios||[]).join(" · "))}${m.linea ? "<br>" + esc(m.linea) : ""}</small></div></div>
+          <div><span class="lab">score · posicionamiento</span><b style="font-family:var(--serif);font-size:20px">${m.score ?? "—"}</b> <span class="barra" style="width:${(m.score||0)*0.5}px"></span><br><span style="font-size:13px">${esc(m.posicionamiento||"")}</span><br><span class="chip ${m.score_estado === "revisado" ? "lila" : "gris"}" style="margin-top:4px">${esc(m.score_estado||"provisional")}</span>${m.dimensiones ? `<div class="dims" title="${esc(Object.entries(m.dimensiones).map(([k,v]) => DIM_LABEL[k]+" "+v).join(" · "))}">${Object.entries(m.dimensiones).map(([k,v]) => `${(DIM_LABEL[k]||k).slice(0,4)} ${v}`).join(" · ")}</div>` : ""}</div>
+          <div><span class="lab">nivel · ámbito</span>${esc(m.nivel)}${m.tipo ? " · " + esc(m.tipo) : ""}<br>${ambTxt(m.ambito).map(a => `<span class="chip gris" style="margin-top:4px">${esc(a)}</span>`).join("")}<br><span class="hint" style="text-transform:none">${citasPorMedio[m.nombre] ? citasPorMedio[m.nombre] + " citas en Vera" : "sin citas aún"}</span></div>
+          <div><span class="lab">última modificación</span>${m.modificado_en ? `${fechaCorta(m.modificado_en)}<br><span class="hint" style="text-transform:none">${esc(m.modificado_por||"")}</span>` : "<span class='hint' style='text-transform:none'>sin cambios (evaluación IA 5 sep)</span>"}${h.length ? `<details style="margin-top:4px"><summary class="hint" style="cursor:pointer">historial (${historial.filter(x => x.medio === m.nombre).length})</summary>${h.map(x => `<div class="hint" style="text-transform:none;margin-top:4px">${fechaCorta(x.cuando)} · ${esc(x.campo)}: ${esc(x.anterior||"—")} → ${esc(x.nuevo||"—")} · ${esc(x.motivo)} <i>(${esc((x.por||"").split("@")[0])})</i></div>`).join("")}</details>` : ""}</div>
+          <div class="acc"><button data-editar="${esc(m.nombre)}">Editar</button><button data-toggle="${esc(m.nombre)}">${m.activo ? "Desactivar" : "Reactivar"}</button></div>
+        </div>`; }).join("")).join("") || "<p>Ninguna fuente coincide.</p>";
+  }
+  function formEditor(m) {
+    const amb = Array.isArray(m.ambito) ? m.ambito : (m.ambito === "general" || !m.ambito ? [] : [m.ambito]);
+    return `<div class="editor"><div class="campos">
+      <div><label class="f">Score (bandas de 5)</label><input type="number" min="0" max="100" step="5" id="e-score" value="${m.score ?? 80}"></div>
+      <div><label class="f">Posicionamiento</label><select id="e-pos">${["neutral","moderado","marcado","institucional"].map(p => `<option ${m.posicionamiento===p?"selected":""}>${p}</option>`).join("")}</select></div>
+      <div><label class="f">Nivel</label><select id="e-nivel">${NIVELES.map(n => `<option ${m.nivel===n?"selected":""}>${n}</option>`).join("")}</select></div>
+      <div><label class="f">Región</label><select id="e-region">${REGIONES.map(r => `<option ${m.region===r?"selected":""}>${r}</option>`).join("")}</select></div>
+      <div style="grid-column:1/-1"><label class="f">Ámbito (vacío = general; si no, uno o varios subtemas)</label><select id="e-amb" multiple size="4" style="width:100%">${Object.entries(SUB_LABEL).map(([k,l]) => `<option value="${k}" ${amb.includes(k)?"selected":""}>${l}</option>`).join("")}</select></div>
+      <div style="grid-column:1/-1"><label class="f">Nota (cómo usarla)</label><input type="text" id="e-nota" value="${esc(m.nota||"")}"></div>
+      <div style="grid-column:1/-1"><label class="f">Motivo del cambio (obligatorio, queda en el historial)</label><input type="text" id="e-motivo" placeholder="p. ej. revisamos 10 notas de agosto: precisión alta, sin correcciones pendientes"></div>
+      </div><div style="margin-top:12px"><button class="btn" id="e-guardar" style="margin:0 8px 0 0;padding:9px 14px;font-size:12px">Guardar</button><button class="btn" id="e-cancelar" style="margin:0;padding:9px 14px;font-size:12px;background:#fff;color:var(--tinta)">Cancelar</button><span class="msg" id="e-msg" style="margin-left:10px"></span></div></div>`;
+  }
+  async function guardarCambios(m, cambios, motivo) {
+    const hist = [];
+    for (const [campo, nuevo] of Object.entries(cambios)) { const ant = m[campo]; if (JSON.stringify(ant) !== JSON.stringify(nuevo)) hist.push({ medio: m.nombre, campo, anterior: ant == null ? null : (typeof ant === "object" ? JSON.stringify(ant) : String(ant)), nuevo: nuevo == null ? null : (typeof nuevo === "object" ? JSON.stringify(nuevo) : String(nuevo)), motivo, por: yo }); }
+    if (!hist.length) return "sin cambios";
+    const { error } = await sb.from("medios").update(cambios).eq("nombre", m.nombre); if (error) throw error;
+    const r2 = await sb.from("medios_historial").insert(hist); if (r2.error) throw r2.error;
+    return hist.length + " cambio(s) guardado(s)";
+  }
+  $("f-grupos").addEventListener("click", async (e) => {
+    const b = e.target.closest("button"); if (!b) return;
+    if (b.dataset.editar) { const m = medios.find(x => x.nombre === b.dataset.editar); const fila = b.closest(".fuente"); fila.querySelectorAll(".editor").forEach(x => x.remove()); fila.insertAdjacentHTML("beforeend", formEditor(m));
+      fila.querySelector("#e-cancelar").onclick = () => fila.querySelector(".editor").remove();
+      fila.querySelector("#e-guardar").onclick = async () => { const msg = fila.querySelector("#e-msg"); const motivo = fila.querySelector("#e-motivo").value.trim(); if (!motivo) { msg.className = "msg err"; msg.textContent = "Escribe el motivo."; return; }
+        const sel = [...fila.querySelector("#e-amb").selectedOptions].map(o => o.value);
+        try { msg.className = "msg"; msg.textContent = "Guardando…"; msg.textContent = await guardarCambios(m, { score: parseInt(fila.querySelector("#e-score").value), posicionamiento: fila.querySelector("#e-pos").value, nivel: fila.querySelector("#e-nivel").value, region: fila.querySelector("#e-region").value, ambito: sel.length ? sel : "general", nota: fila.querySelector("#e-nota").value.trim() || null }, motivo); await cargarMedios(); }
+        catch (err) { msg.className = "msg err"; msg.textContent = "No se pudo guardar: " + (err.message||err); } };
+      return; }
+    if (b.dataset.toggle) { const m = medios.find(x => x.nombre === b.dataset.toggle); const motivo = prompt(`${m.activo ? "Desactivar" : "Reactivar"} «${m.nombre}». Motivo (queda en el historial):`); if (!motivo) return;
+      try { await guardarCambios(m, { activo: !m.activo }, motivo); await cargarMedios(); } catch (err) { alert("No se pudo: " + (err.message||err)); } }
+  });
+  $("f-filtro").addEventListener("input", pintarFuentes); $("f-inactivos").addEventListener("change", pintarFuentes);
+  $("f-nueva").addEventListener("click", () => { const box = $("f-form"); box.hidden = false; box.innerHTML = `<h3 style="margin-top:0">Agregar una fuente al pool</h3><div class="campos" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px 16px">
+      <div><label class="f">Nombre</label><input type="text" id="n-nombre" placeholder="p. ej. La Segunda"></div>
+      <div><label class="f">Dominios (separados por coma)</label><input type="text" id="n-dom" placeholder="lasegunda.com"></div>
+      <div><label class="f">Alias (separados por coma, opcional)</label><input type="text" id="n-alias"></div>
+      <div><label class="f">Nivel</label><select id="n-nivel">${NIVELES.map(n => `<option>${n}</option>`).join("")}</select></div>
+      <div><label class="f">Región</label><select id="n-region">${REGIONES.map(r => `<option>${r}</option>`).join("")}</select></div>
+      <div><label class="f">Score inicial</label><input type="number" min="0" max="100" step="5" id="n-score" value="75"></div>
+      <div><label class="f">Posicionamiento</label><select id="n-pos">${["neutral","moderado","marcado","institucional"].map(p => `<option>${p}</option>`).join("")}</select></div>
+      <div style="grid-column:1/-1"><label class="f">Ámbito (vacío = general)</label><select id="n-amb" multiple size="4" style="width:100%">${Object.entries(SUB_LABEL).map(([k,l]) => `<option value="${k}">${l}</option>`).join("")}</select></div>
+      <div style="grid-column:1/-1"><label class="f">Nota / por qué entra (obligatorio)</label><input type="text" id="n-motivo" placeholder="cumple los 4 checks: redacción identificable, normas, trayectoria…"></div></div>
+      <div style="margin-top:12px"><button class="btn" id="n-guardar" style="margin:0 8px 0 0;padding:9px 14px;font-size:12px">Agregar</button><button class="btn" id="n-cerrar" style="margin:0;padding:9px 14px;font-size:12px;background:#fff;color:var(--tinta)">Cerrar</button><span class="msg" id="n-msg" style="margin-left:10px"></span></div>`;
+    $("n-cerrar").onclick = () => { box.hidden = true; };
+    $("n-guardar").onclick = async () => { const msg = $("n-msg"); const nombre = $("n-nombre").value.trim(), doms = $("n-dom").value.split(",").map(s => s.trim().toLowerCase().replace(/^https?:\/\/(www\.)?/, "")).filter(Boolean), motivo = $("n-motivo").value.trim();
+      if (!nombre || !doms.length || !motivo) { msg.className = "msg err"; msg.textContent = "Faltan nombre, dominio o motivo."; return; }
+      const sel = [...$("n-amb").selectedOptions].map(o => o.value);
+      const fila = { nombre, dominios: doms, alias: $("n-alias").value.split(",").map(s => s.trim()).filter(Boolean), nivel: $("n-nivel").value, region: $("n-region").value, score: parseInt($("n-score").value), posicionamiento: $("n-pos").value, ambito: sel.length ? sel : "general", nota: motivo, score_estado: "revisado", score_fecha: new Date().toISOString().slice(0,10), activo: true, modificado_en: new Date().toISOString(), modificado_por: yo };
+      try { const r = await sb.from("medios").insert(fila); if (r.error) throw r.error; await sb.from("medios_historial").insert({ medio: nombre, campo: "alta", anterior: null, nuevo: `score ${fila.score} · ${fila.nivel} · ${fila.region}`, motivo, por: yo }); msg.className = "msg ok"; msg.textContent = "Agregada. El editor la usa desde mañana."; await cargarMedios(); }
+      catch (err) { msg.className = "msg err"; msg.textContent = "No se pudo agregar: " + (err.message||err); } }; });
+  await cargarMedios();
+
 }
 </script>
 </body>
