@@ -1,0 +1,2814 @@
+{
+  "_doc": "Lista blanca de medios que Vera puede citar como fuente (política en docs/fuentes.md). Solo los medios de esta lista pueden aparecer en `fuentes[].medio` de una edición (edicion.py validar lo exige). Google News y las 'redes' de sources.json son PISTAS: el hecho se cita con un medio de aquí o no sale. niveles: agencia (agencias de noticias) · publico (medios públicos e instituciones internacionales) · establecido (prensa de referencia con redacción y normas públicas) · especializado (medio líder en su tema; citar solo dentro de su ámbito) · oficial (fuente primaria institucional: gobierno, banco central, club, federación; siempre marcar primaria=true y acompañar con un medio si es posible). ambito: 'general' o lista de claves de subtema de sources.json. alias: otras formas en que aparece el nombre (Google News, feeds). Añadir un medio = discutirlo entre los socios y anotar fecha en docs/fuentes.md.",
+  "revisado": "2026-08-18 · 2026-09-05 pool primario ampliado (+22 oficiales) · 2026-09-05 scores provisionales (rúbrica 8 dimensiones)",
+  "medios": {
+    "Reuters": {
+      "dominios": [
+        "reuters.com"
+      ],
+      "nivel": "agencia",
+      "ambito": "general",
+      "score": 95,
+      "posicionamiento": "neutral",
+      "score_estado": "provisional",
+      "score_fecha": "2026-09-05",
+      "linea": "Agencia global regida por los Trust Principles; su servicio de noticias no tiene línea editorial ni sección de opinión.",
+      "dimensiones": {
+        "precision": 5,
+        "fuentes": 4,
+        "independencia": 5,
+        "sensacionalismo": 5,
+        "transparencia": 5,
+        "correcciones": 5,
+        "carga_editorial": 5,
+        "calidad": 5
+      }
+    },
+    "AP News": {
+      "dominios": [
+        "apnews.com"
+      ],
+      "nivel": "agencia",
+      "ambito": "general",
+      "alias": [
+        "AP",
+        "Associated Press"
+      ],
+      "score": 95,
+      "posicionamiento": "neutral",
+      "score_estado": "provisional",
+      "score_fecha": "2026-09-05",
+      "linea": "Agencia cooperativa estadounidense sin fines de lucro; referencia global de reporteo neutro.",
+      "dimensiones": {
+        "precision": 5,
+        "fuentes": 5,
+        "independencia": 5,
+        "sensacionalismo": 5,
+        "transparencia": 4,
+        "correcciones": 5,
+        "carga_editorial": 5,
+        "calidad": 4
+      }
+    },
+    "EFE": {
+      "dominios": [
+        "efe.com"
+      ],
+      "nivel": "agencia",
+      "ambito": "general",
+      "alias": [
+        "EFE - Agencia de noticias",
+        "EFE Verifica",
+        "Agencia EFE"
+      ],
+      "score": 90,
+      "posicionamiento": "neutral",
+      "score_estado": "provisional",
+      "score_fecha": "2026-09-05",
+      "linea": "Agencia de referencia en español, de capital mayoritariamente estatal español pero con estatuto de independencia editorial.",
+      "dimensiones": {
+        "precision": 5,
+        "fuentes": 4,
+        "independencia": 5,
+        "sensacionalismo": 5,
+        "transparencia": 4,
+        "correcciones": 4,
+        "carga_editorial": 5,
+        "calidad": 4
+      }
+    },
+    "AFP vía Swissinfo": {
+      "dominios": [
+        "swissinfo.ch"
+      ],
+      "nivel": "agencia",
+      "ambito": "general",
+      "alias": [
+        "SWI swissinfo.ch",
+        "AFP (via France24/Swissinfo)",
+        "AFP",
+        "Swissinfo"
+      ],
+      "score": 90,
+      "posicionamiento": "neutral",
+      "score_estado": "provisional",
+      "score_fecha": "2026-09-05",
+      "linea": "Servicio internacional del radiodifusor público suizo SRG SSR que redistribuye teletipo de agencia (AFP/EFE) en español; mandato de servicio público sin línea partidista.",
+      "dimensiones": {
+        "precision": 5,
+        "fuentes": 4,
+        "independencia": 4,
+        "sensacionalismo": 5,
+        "transparencia": 4,
+        "correcciones": 4,
+        "carga_editorial": 5,
+        "calidad": 4
+      }
+    },
+    "BBC Mundo": {
+      "dominios": [
+        "bbc.com",
+        "bbc.co.uk"
+      ],
+      "nivel": "publico",
+      "ambito": "general",
+      "alias": [
+        "BBC",
+        "BBC News Mundo",
+        "BBC Sport"
+      ],
+      "score": 90,
+      "posicionamiento": "neutral",
+      "score_estado": "provisional",
+      "score_fecha": "2026-09-05",
+      "linea": "Medio público británico con mandato legal de imparcialidad, financiado por licencia y supervisado por Ofcom.",
+      "dimensiones": {
+        "precision": 5,
+        "fuentes": 4,
+        "independencia": 4,
+        "sensacionalismo": 4,
+        "transparencia": 4,
+        "correcciones": 5,
+        "carga_editorial": 5,
+        "calidad": 5
+      }
+    },
+    "DW": {
+      "dominios": [
+        "dw.com"
+      ],
+      "nivel": "publico",
+      "ambito": "general",
+      "alias": [
+        "Deutsche Welle",
+        "DW.com",
+        "DW Español"
+      ],
+      "score": 85,
+      "posicionamiento": "moderado",
+      "score_estado": "provisional",
+      "score_fecha": "2026-09-05",
+      "linea": "Radiodifusora pública internacional alemana (Deutsche-Welle-Gesetz), con mirada europea y atlantista declarada.",
+      "dimensiones": {
+        "precision": 5,
+        "fuentes": 4,
+        "independencia": 4,
+        "sensacionalismo": 5,
+        "transparencia": 4,
+        "correcciones": 4,
+        "carga_editorial": 4,
+        "calidad": 4
+      }
+    },
+    "France 24": {
+      "dominios": [
+        "france24.com"
+      ],
+      "nivel": "publico",
+      "ambito": "general",
+      "alias": [
+        "France24"
+      ],
+      "score": 80,
+      "posicionamiento": "moderado",
+      "score_estado": "provisional",
+      "score_fecha": "2026-09-05",
+      "linea": "Medio público francés (France Médias Monde) con mandato internacional; mirada europea-francesa, atenta a derechos humanos y América Latina.",
+      "dimensiones": {
+        "precision": 4,
+        "fuentes": 4,
+        "independencia": 4,
+        "sensacionalismo": 4,
+        "transparencia": 4,
+        "correcciones": 3,
+        "carga_editorial": 4,
+        "calidad": 4
+      }
+    },
+    "ONU Noticias": {
+      "dominios": [
+        "news.un.org",
+        "un.org"
+      ],
+      "nivel": "publico",
+      "ambito": "general",
+      "alias": [
+        "Noticias ONU",
+        "UN News"
+      ],
+      "score": 80,
+      "posicionamiento": "moderado",
+      "score_estado": "provisional",
+      "score_fecha": "2026-09-05",
+      "linea": "Servicio de noticias de la propia ONU: riguroso con los datos de sus agencias, pero es comunicación institucional del organismo, no prensa independiente sobre él.",
+      "dimensiones": {
+        "precision": 5,
+        "fuentes": 4,
+        "independencia": 3,
+        "sensacionalismo": 5,
+        "transparencia": 4,
+        "correcciones": 3,
+        "carga_editorial": 4,
+        "calidad": 4
+      }
+    },
+    "OMS": {
+      "dominios": [
+        "who.int",
+        "paho.org"
+      ],
+      "nivel": "publico",
+      "ambito": [
+        "investigacion_medica",
+        "salud_bienestar"
+      ],
+      "alias": [
+        "OMS Noticias",
+        "WHO",
+        "OPS"
+      ],
+      "score": 90,
+      "posicionamiento": "institucional",
+      "score_estado": "provisional",
+      "score_fecha": "2026-09-05",
+      "linea": "No es un medio sino un organismo internacional de salud (OMS/OPS): comunica sus propios datos, guías y posiciones institucionales.",
+      "dimensiones": {
+        "precision": 5,
+        "fuentes": 5,
+        "independencia": 5,
+        "sensacionalismo": 5,
+        "transparencia": 4,
+        "correcciones": 3,
+        "carga_editorial": 4,
+        "calidad": 4
+      }
+    },
+    "NASA": {
+      "dominios": [
+        "nasa.gov"
+      ],
+      "nivel": "publico",
+      "ambito": [
+        "tecnologia_futuro"
+      ],
+      "alias": [
+        "nasanet"
+      ],
+      "score": 90,
+      "posicionamiento": "neutral",
+      "score_estado": "provisional",
+      "score_fecha": "2026-09-05",
+      "linea": "Agencia espacial de EEUU: fuente primaria sobre sus propias misiones y datos, no un medio periodístico.",
+      "dimensiones": {
+        "precision": 5,
+        "fuentes": 5,
+        "independencia": 5,
+        "sensacionalismo": 5,
+        "transparencia": 4,
+        "correcciones": 3,
+        "carga_editorial": 4,
+        "calidad": 4
+      }
+    },
+    "ESA": {
+      "dominios": [
+        "esa.int"
+      ],
+      "nivel": "publico",
+      "ambito": [
+        "tecnologia_futuro"
+      ],
+      "score": 90,
+      "posicionamiento": "neutral",
+      "score_estado": "provisional",
+      "score_fecha": "2026-09-05",
+      "linea": "Comunicación institucional de la agencia espacial europea: es fuente primaria sobre sus propias misiones, no periodismo.",
+      "dimensiones": {
+        "precision": 5,
+        "fuentes": 5,
+        "independencia": 5,
+        "sensacionalismo": 4,
+        "transparencia": 4,
+        "correcciones": 3,
+        "carga_editorial": 3,
+        "calidad": 4
+      }
+    },
+    "24Horas": {
+      "dominios": [
+        "24horas.cl",
+        "tvn.cl"
+      ],
+      "nivel": "publico",
+      "ambito": "general",
+      "alias": [
+        "24horas",
+        "TVN",
+        "24 Horas"
+      ],
+      "score": 70,
+      "posicionamiento": "neutral",
+      "score_estado": "provisional",
+      "score_fecha": "2026-09-05",
+      "linea": "Área de prensa de TVN, canal público chileno con mandato legal de pluralismo y fiscalización del CNTV; sin línea partidista declarada.",
+      "dimensiones": {
+        "precision": 4,
+        "fuentes": 3,
+        "independencia": 4,
+        "sensacionalismo": 3,
+        "transparencia": 3,
+        "correcciones": 3,
+        "carga_editorial": 4,
+        "calidad": 3
+      }
+    },
+    "El País": {
+      "dominios": [
+        "elpais.com"
+      ],
+      "nivel": "establecido",
+      "ambito": "general",
+      "alias": [
+        "EL PAÍS",
+        "El País Internacional",
+        "El País Portada",
+        "El País Economía",
+        "El País Sociedad",
+        "El País Tecnología",
+        "El País Ciencia",
+        "El País Salud",
+        "El País Cultura",
+        "El País Deportes",
+        "El País · El Viajero",
+        "El Viajero (El País)"
+      ],
+      "score": 85,
+      "posicionamiento": "moderado",
+      "score_estado": "provisional",
+      "score_fecha": "2026-09-05",
+      "linea": "Diario de referencia español del grupo PRISA, de sensibilidad liberal-progresista, con separación formal entre información y opinión.",
+      "dimensiones": {
+        "precision": 4,
+        "fuentes": 4,
+        "independencia": 5,
+        "sensacionalismo": 4,
+        "transparencia": 4,
+        "correcciones": 4,
+        "carga_editorial": 4,
+        "calidad": 5
+      }
+    },
+    "The Guardian": {
+      "dominios": [
+        "theguardian.com"
+      ],
+      "nivel": "establecido",
+      "ambito": "general",
+      "alias": [
+        "The Guardian World",
+        "The Guardian Society",
+        "The Guardian Environment",
+        "The Guardian Wellness",
+        "The Guardian Culture",
+        "The Guardian Books",
+        "Guardian"
+      ],
+      "score": 90,
+      "posicionamiento": "marcado",
+      "score_estado": "provisional",
+      "score_fecha": "2026-09-05",
+      "linea": "Prensa de referencia británica de línea liberal-progresista, propiedad del Scott Trust (sin dueño comercial).",
+      "dimensiones": {
+        "precision": 4,
+        "fuentes": 4,
+        "independencia": 5,
+        "sensacionalismo": 4,
+        "transparencia": 5,
+        "correcciones": 5,
+        "carga_editorial": 3,
+        "calidad": 5
+      }
+    },
+    "Al Jazeera": {
+      "dominios": [
+        "aljazeera.com"
+      ],
+      "nivel": "establecido",
+      "ambito": "general",
+      "alias": [
+        "Al Jazeera English"
+      ],
+      "score": 80,
+      "posicionamiento": "marcado",
+      "score_estado": "provisional",
+      "score_fecha": "2026-09-05",
+      "linea": "Cadena catarí de alcance global, línea panárabe y crítica con Israel y con la política exterior de EE.UU.; sin cobertura crítica de Qatar.",
+      "dimensiones": {
+        "precision": 4,
+        "fuentes": 4,
+        "independencia": 5,
+        "sensacionalismo": 4,
+        "transparencia": 4,
+        "correcciones": 3,
+        "carga_editorial": 3,
+        "calidad": 4
+      }
+    },
+    "CNN en Español": {
+      "dominios": [
+        "cnnespanol.cnn.com",
+        "cnn.com"
+      ],
+      "nivel": "establecido",
+      "ambito": "general",
+      "alias": [
+        "CNN",
+        "CNN Español"
+      ],
+      "score": 80,
+      "posicionamiento": "moderado",
+      "score_estado": "provisional",
+      "score_fecha": "2026-09-05",
+      "linea": "Cadena estadounidense con edición en español; percibida como centro/centro-izquierda en política de EE.UU., con opinión separada de la información.",
+      "dimensiones": {
+        "precision": 4,
+        "fuentes": 4,
+        "independencia": 4,
+        "sensacionalismo": 3,
+        "transparencia": 4,
+        "correcciones": 4,
+        "carga_editorial": 4,
+        "calidad": 4
+      }
+    },
+    "La Nación": {
+      "dominios": [
+        "lanacion.com.ar"
+      ],
+      "nivel": "establecido",
+      "ambito": "general",
+      "alias": [
+        "La Nación (Argentina)",
+        "LA NACION"
+      ],
+      "nota": "Argentina; útil para región y deportes",
+      "score": 80,
+      "posicionamiento": "moderado",
+      "score_estado": "provisional",
+      "score_fecha": "2026-09-05",
+      "linea": "Diario argentino de referencia, liberal en lo económico y de centroderecha en lo político; miembro del GDA y participante de investigaciones del ICIJ.",
+      "dimensiones": {
+        "precision": 4,
+        "fuentes": 4,
+        "independencia": 4,
+        "sensacionalismo": 4,
+        "transparencia": 4,
+        "correcciones": 3,
+        "carga_editorial": 4,
+        "calidad": 4
+      }
+    },
+    "Clarín": {
+      "dominios": [
+        "clarin.com"
+      ],
+      "nivel": "establecido",
+      "ambito": "general",
+      "alias": [
+        "Clarin.com"
+      ],
+      "nota": "Argentina",
+      "score": 70,
+      "posicionamiento": "marcado",
+      "score_estado": "provisional",
+      "score_fecha": "2026-09-05",
+      "linea": "Diario argentino de mayor circulación, cabeza de un grupo multimedia con intereses propios; línea conservadora y antikirchnerista.",
+      "dimensiones": {
+        "precision": 4,
+        "fuentes": 3,
+        "independencia": 4,
+        "sensacionalismo": 3,
+        "transparencia": 3,
+        "correcciones": 3,
+        "carga_editorial": 3,
+        "calidad": 4
+      }
+    },
+    "La Vanguardia": {
+      "dominios": [
+        "lavanguardia.com"
+      ],
+      "nivel": "establecido",
+      "ambito": "general",
+      "nota": "España",
+      "score": 75,
+      "posicionamiento": "moderado",
+      "score_estado": "provisional",
+      "score_fecha": "2026-09-05",
+      "linea": "Diario histórico de Barcelona (Grupo Godó), catalanista moderado y de centro, con la mejor cobertura local del área metropolitana.",
+      "dimensiones": {
+        "precision": 4,
+        "fuentes": 4,
+        "independencia": 4,
+        "sensacionalismo": 4,
+        "transparencia": 3,
+        "correcciones": 3,
+        "carga_editorial": 3,
+        "calidad": 4
+      }
+    },
+    "elDiario.es": {
+      "dominios": [
+        "eldiario.es"
+      ],
+      "nivel": "establecido",
+      "ambito": "general",
+      "nota": "España; línea editorial marcada, no como única fuente de un hecho",
+      "score": 85,
+      "posicionamiento": "marcado",
+      "score_estado": "provisional",
+      "score_fecha": "2026-09-05",
+      "linea": "Digital español de línea progresista, propiedad de su redacción y socios; investigación de peso y encuadre editorial claramente de izquierda.",
+      "dimensiones": {
+        "precision": 4,
+        "fuentes": 4,
+        "independencia": 5,
+        "sensacionalismo": 4,
+        "transparencia": 5,
+        "correcciones": 4,
+        "carga_editorial": 3,
+        "calidad": 4
+      }
+    },
+    "The New York Times": {
+      "dominios": [
+        "nytimes.com"
+      ],
+      "nivel": "establecido",
+      "ambito": "general",
+      "alias": [
+        "NYT"
+      ],
+      "score": 90,
+      "posicionamiento": "moderado",
+      "score_estado": "provisional",
+      "score_fecha": "2026-09-05",
+      "linea": "Diario de referencia estadounidense; su página editorial es de sensibilidad liberal, con separación formal respecto de la redacción de noticias.",
+      "dimensiones": {
+        "precision": 4,
+        "fuentes": 5,
+        "independencia": 5,
+        "sensacionalismo": 4,
+        "transparencia": 5,
+        "correcciones": 5,
+        "carga_editorial": 4,
+        "calidad": 5
+      }
+    },
+    "Financial Times": {
+      "dominios": [
+        "ft.com"
+      ],
+      "nivel": "establecido",
+      "ambito": [
+        "mercados_finanzas",
+        "empresas_negocios",
+        "empresas_emprendimiento"
+      ],
+      "alias": [
+        "FT"
+      ],
+      "score": 90,
+      "posicionamiento": "moderado",
+      "score_estado": "provisional",
+      "score_fecha": "2026-09-05",
+      "linea": "Diario económico global (propiedad de Nikkei), liberal de mercado y centrista; referencia en negocios y finanzas.",
+      "dimensiones": {
+        "precision": 5,
+        "fuentes": 4,
+        "independencia": 5,
+        "sensacionalismo": 4,
+        "transparencia": 4,
+        "correcciones": 4,
+        "carga_editorial": 3,
+        "calidad": 5
+      }
+    },
+    "Bloomberg": {
+      "dominios": [
+        "bloomberg.com"
+      ],
+      "nivel": "establecido",
+      "ambito": [
+        "mercados_finanzas",
+        "empresas_negocios",
+        "empresas_emprendimiento",
+        "inteligencia_artificial"
+      ],
+      "score": 90,
+      "posicionamiento": "moderado",
+      "score_estado": "provisional",
+      "score_fecha": "2026-09-05",
+      "linea": "Referencia mundial en información económica y de mercados; línea de negocios pro-mercado, con opinión (Bloomberg Opinion) separada de la información.",
+      "dimensiones": {
+        "precision": 5,
+        "fuentes": 4,
+        "independencia": 5,
+        "sensacionalismo": 5,
+        "transparencia": 4,
+        "correcciones": 3,
+        "carga_editorial": 4,
+        "calidad": 5
+      }
+    },
+    "La Tercera": {
+      "dominios": [
+        "latercera.com"
+      ],
+      "nivel": "establecido",
+      "ambito": "general",
+      "alias": [
+        "Culto (La Tercera)",
+        "El Deportivo",
+        "La Tercera PM",
+        "Pulso"
+      ],
+      "score": 80,
+      "posicionamiento": "moderado",
+      "score_estado": "provisional",
+      "score_fecha": "2026-09-05",
+      "linea": "Diario chileno de referencia (Copesa), de tradición liberal-conservadora en economía, con opinión etiquetada aparte y secciones especializadas (Pulso, El Deportivo, Culto).",
+      "dimensiones": {
+        "precision": 4,
+        "fuentes": 4,
+        "independencia": 5,
+        "sensacionalismo": 4,
+        "transparencia": 4,
+        "correcciones": 3,
+        "carga_editorial": 4,
+        "calidad": 4
+      }
+    },
+    "Cooperativa": {
+      "dominios": [
+        "cooperativa.cl"
+      ],
+      "nivel": "establecido",
+      "ambito": "general",
+      "alias": [
+        "Radio Cooperativa"
+      ],
+      "score": 80,
+      "posicionamiento": "moderado",
+      "score_estado": "provisional",
+      "score_fecha": "2026-09-05",
+      "linea": "Radio chilena de noticias, históricamente ligada a la Democracia Cristiana; hoy una de las marcas informativas con mayor confianza medida en Chile.",
+      "dimensiones": {
+        "precision": 4,
+        "fuentes": 4,
+        "independencia": 5,
+        "sensacionalismo": 4,
+        "transparencia": 3,
+        "correcciones": 3,
+        "carga_editorial": 4,
+        "calidad": 4
+      }
+    },
+    "CIPER": {
+      "dominios": [
+        "ciperchile.cl"
+      ],
+      "nivel": "especializado",
+      "ambito": "general",
+      "alias": [
+        "CIPER Chile"
+      ],
+      "nota": "periodismo de investigación",
+      "score": 90,
+      "posicionamiento": "moderado",
+      "score_estado": "provisional",
+      "score_fecha": "2026-09-05",
+      "linea": "Centro chileno de periodismo de investigación sin fines de lucro; agenda progresista en la selección de temas, método documental riguroso.",
+      "dimensiones": {
+        "precision": 5,
+        "fuentes": 5,
+        "independencia": 5,
+        "sensacionalismo": 4,
+        "transparencia": 4,
+        "correcciones": 3,
+        "carga_editorial": 3,
+        "calidad": 5
+      }
+    },
+    "BioBioChile": {
+      "dominios": [
+        "biobiochile.cl"
+      ],
+      "nivel": "establecido",
+      "ambito": "general",
+      "alias": [
+        "Bío Bío",
+        "BioBio Chile",
+        "Radio Bío Bío"
+      ],
+      "score": 70,
+      "posicionamiento": "moderado",
+      "score_estado": "provisional",
+      "score_fecha": "2026-09-05",
+      "linea": "Brazo digital de Radio Bío-Bío: cobertura nacional de alto volumen con red regional propia, editorialmente poco marcada.",
+      "dimensiones": {
+        "precision": 4,
+        "fuentes": 3,
+        "independencia": 4,
+        "sensacionalismo": 3,
+        "transparencia": 3,
+        "correcciones": 3,
+        "carga_editorial": 4,
+        "calidad": 3
+      }
+    },
+    "T13": {
+      "dominios": [
+        "t13.cl"
+      ],
+      "nivel": "establecido",
+      "ambito": "general",
+      "alias": [
+        "Teletrece",
+        "Tele13"
+      ],
+      "score": 70,
+      "posicionamiento": "neutral",
+      "score_estado": "provisional",
+      "score_fecha": "2026-09-05",
+      "linea": "Prensa de Canal 13, televisión comercial chilena; sin militancia declarada, con agenda digital orientada a crimen, emoción y deporte.",
+      "dimensiones": {
+        "precision": 4,
+        "fuentes": 3,
+        "independencia": 4,
+        "sensacionalismo": 3,
+        "transparencia": 3,
+        "correcciones": 3,
+        "carga_editorial": 4,
+        "calidad": 3
+      }
+    },
+    "Emol": {
+      "dominios": [
+        "emol.com"
+      ],
+      "nivel": "establecido",
+      "ambito": "general",
+      "alias": [
+        "Emol Propiedades",
+        "El Mercurio Online"
+      ],
+      "score": 80,
+      "posicionamiento": "moderado",
+      "score_estado": "provisional",
+      "score_fecha": "2026-09-05",
+      "linea": "Portal de El Mercurio: línea editorial de centroderecha y matriz empresarial conservadora, con cobertura noticiosa de formato convencional.",
+      "dimensiones": {
+        "precision": 4,
+        "fuentes": 4,
+        "independencia": 5,
+        "sensacionalismo": 4,
+        "transparencia": 3,
+        "correcciones": 3,
+        "carga_editorial": 3,
+        "calidad": 4
+      }
+    },
+    "El Mercurio": {
+      "dominios": [
+        "elmercurio.com",
+        "lasegunda.com"
+      ],
+      "nivel": "establecido",
+      "ambito": "general",
+      "alias": [
+        "La Segunda",
+        "La Segunda / El Mercurio"
+      ],
+      "score": 80,
+      "posicionamiento": "marcado",
+      "score_estado": "provisional",
+      "score_fecha": "2026-09-05",
+      "linea": "Diario de referencia chileno, línea editorial abiertamente conservadora y pro-mercado; la mayor red de reporteo del país.",
+      "dimensiones": {
+        "precision": 4,
+        "fuentes": 4,
+        "independencia": 5,
+        "sensacionalismo": 4,
+        "transparencia": 4,
+        "correcciones": 2,
+        "carga_editorial": 3,
+        "calidad": 4
+      }
+    },
+    "El Mostrador": {
+      "dominios": [
+        "elmostrador.cl"
+      ],
+      "nivel": "establecido",
+      "ambito": "general",
+      "score": 75,
+      "posicionamiento": "moderado",
+      "score_estado": "provisional",
+      "score_fecha": "2026-09-05",
+      "linea": "Nativo digital chileno con tradición de periodismo de investigación; línea progresista y liberal en lo valórico.",
+      "dimensiones": {
+        "precision": 4,
+        "fuentes": 4,
+        "independencia": 4,
+        "sensacionalismo": 4,
+        "transparencia": 3,
+        "correcciones": 3,
+        "carga_editorial": 3,
+        "calidad": 4
+      }
+    },
+    "Diario Financiero": {
+      "dominios": [
+        "df.cl"
+      ],
+      "nivel": "especializado",
+      "ambito": [
+        "mercados_finanzas",
+        "empresas_negocios",
+        "empresas_emprendimiento"
+      ],
+      "alias": [
+        "DF",
+        "DFSud"
+      ],
+      "score": 85,
+      "posicionamiento": "moderado",
+      "score_estado": "provisional",
+      "score_fecha": "2026-09-05",
+      "linea": "Diario chileno de negocios y mercados; línea editorial promercado explícita en su opinión, con información empresarial de alta especialización.",
+      "dimensiones": {
+        "precision": 4,
+        "fuentes": 4,
+        "independencia": 5,
+        "sensacionalismo": 5,
+        "transparencia": 4,
+        "correcciones": 3,
+        "carga_editorial": 4,
+        "calidad": 5
+      }
+    },
+    "CNN Chile": {
+      "dominios": [
+        "cnnchile.com"
+      ],
+      "nivel": "establecido",
+      "ambito": "general",
+      "score": 75,
+      "posicionamiento": "moderado",
+      "score_estado": "provisional",
+      "score_fecha": "2026-09-05",
+      "linea": "Canal de noticias chileno que opera bajo licencia de la marca CNN; línea editorial convencional, sin posición partidaria explícita.",
+      "dimensiones": {
+        "precision": 4,
+        "fuentes": 4,
+        "independencia": 4,
+        "sensacionalismo": 3,
+        "transparencia": 3,
+        "correcciones": 3,
+        "carga_editorial": 4,
+        "calidad": 4
+      }
+    },
+    "Chilevisión": {
+      "dominios": [
+        "chilevision.cl"
+      ],
+      "nivel": "establecido",
+      "ambito": "general",
+      "alias": [
+        "CHV",
+        "CHV Noticias"
+      ],
+      "score": 65,
+      "posicionamiento": "neutral",
+      "score_estado": "provisional",
+      "score_fecha": "2026-09-05",
+      "linea": "Canal de TV abierta chileno (grupo Paramount), sin línea política fuerte pero con agenda comercial de policial y servicio.",
+      "dimensiones": {
+        "precision": 4,
+        "fuentes": 3,
+        "independencia": 4,
+        "sensacionalismo": 2,
+        "transparencia": 3,
+        "correcciones": 2,
+        "carga_editorial": 4,
+        "calidad": 3
+      }
+    },
+    "Meganoticias": {
+      "dominios": [
+        "meganoticias.cl"
+      ],
+      "nivel": "establecido",
+      "ambito": "general",
+      "alias": [
+        "Mega"
+      ],
+      "nota": "TV comercial; hechos sí, no como única fuente en política",
+      "score": 55,
+      "posicionamiento": "moderado",
+      "score_estado": "provisional",
+      "score_fecha": "2026-09-05",
+      "linea": "Portal del noticiero de TV comercial chilena (Mega): agenda de sucesos, servicio y espectáculo.",
+      "dimensiones": {
+        "precision": 3,
+        "fuentes": 3,
+        "independencia": 3,
+        "sensacionalismo": 2,
+        "transparencia": 2,
+        "correcciones": 2,
+        "carga_editorial": 4,
+        "calidad": 2
+      }
+    },
+    "ADN Radio": {
+      "dominios": [
+        "adnradio.cl"
+      ],
+      "nivel": "establecido",
+      "ambito": "general",
+      "alias": [
+        "ADN"
+      ],
+      "score": 65,
+      "posicionamiento": "neutral",
+      "score_estado": "provisional",
+      "score_fecha": "2026-09-05",
+      "linea": "Radio informativa chilena del grupo Ibero Americana Radio Chile (PRISA); sin línea partidista marcada, con web muy volcada a deporte y servicio.",
+      "dimensiones": {
+        "precision": 4,
+        "fuentes": 3,
+        "independencia": 3,
+        "sensacionalismo": 3,
+        "transparencia": 3,
+        "correcciones": 2,
+        "carga_editorial": 4,
+        "calidad": 3
+      }
+    },
+    "Radio Pauta": {
+      "dominios": [
+        "pauta.cl"
+      ],
+      "nivel": "establecido",
+      "ambito": "general",
+      "alias": [
+        "Radio Pauta 100.5",
+        "Pauta"
+      ],
+      "score": 65,
+      "posicionamiento": "moderado",
+      "score_estado": "provisional",
+      "score_fecha": "2026-09-05",
+      "linea": "Radio y sitio chileno de análisis económico y político, hoy controlado por gremios empresariales: 60% Sociedad Nacional de Agricultura y 40% Cámara Chilena de la Construcción tras la fusión con Radio Agricultura anunciada en agosto de 2026.",
+      "dimensiones": {
+        "precision": 4,
+        "fuentes": 3,
+        "independencia": 3,
+        "sensacionalismo": 4,
+        "transparencia": 3,
+        "correcciones": 2,
+        "carga_editorial": 3,
+        "calidad": 3
+      }
+    },
+    "SoyChile": {
+      "dominios": [
+        "soychile.cl"
+      ],
+      "nivel": "establecido",
+      "ambito": "general",
+      "alias": [
+        "SoyChile.cl",
+        "Soy Concepción",
+        "Soy Valparaíso",
+        "Soy Chile"
+      ],
+      "nota": "red regional de El Mercurio; para la breve local",
+      "score": 60,
+      "posicionamiento": "neutral",
+      "score_estado": "provisional",
+      "score_fecha": "2026-09-05",
+      "linea": "Red regional digital de El Mercurio (Valparaíso, Concepción, Atacama, etc.), pensada para la breve local de alto volumen.",
+      "dimensiones": {
+        "precision": 4,
+        "fuentes": 3,
+        "independencia": 3,
+        "sensacionalismo": 4,
+        "transparencia": 2,
+        "correcciones": 2,
+        "carga_editorial": 4,
+        "calidad": 2
+      }
+    },
+    "Diario Concepción": {
+      "dominios": [
+        "diarioconcepcion.cl"
+      ],
+      "nivel": "establecido",
+      "ambito": "general",
+      "nota": "local Concepción",
+      "score": 70,
+      "posicionamiento": "neutral",
+      "score_estado": "provisional",
+      "score_fecha": "2026-09-05",
+      "linea": "Diario local del Biobío, de agenda municipal e institucional y tono sobrio.",
+      "dimensiones": {
+        "precision": 4,
+        "fuentes": 3,
+        "independencia": 4,
+        "sensacionalismo": 4,
+        "transparencia": 3,
+        "correcciones": 3,
+        "carga_editorial": 4,
+        "calidad": 3
+      }
+    },
+    "El Mercurio de Valparaíso": {
+      "dominios": [
+        "mercuriovalpo.cl"
+      ],
+      "nivel": "establecido",
+      "ambito": "general",
+      "alias": [
+        "Mercurio de Valpo.",
+        "El Mercurio de Valpo"
+      ],
+      "nota": "local Valparaíso",
+      "score": 70,
+      "posicionamiento": "moderado",
+      "score_estado": "provisional",
+      "score_fecha": "2026-09-05",
+      "linea": "Decano de la prensa regional chilena (fundado en 1827), del grupo El Mercurio S.A.P.; conservador en su matriz editorial, con cobertura local de Valparaíso mayormente descriptiva.",
+      "dimensiones": {
+        "precision": 4,
+        "fuentes": 3,
+        "independencia": 4,
+        "sensacionalismo": 4,
+        "transparencia": 3,
+        "correcciones": 2,
+        "carga_editorial": 4,
+        "calidad": 3
+      }
+    },
+    "El Sur": {
+      "dominios": [
+        "elsur.cl"
+      ],
+      "nivel": "establecido",
+      "ambito": "general",
+      "nota": "local Concepción",
+      "score": 70,
+      "posicionamiento": "moderado",
+      "score_estado": "provisional",
+      "score_fecha": "2026-09-05",
+      "linea": "Diario regional de Concepción (Biobío) fundado en 1882; cobertura local y línea editorial tradicional.",
+      "dimensiones": {
+        "precision": 4,
+        "fuentes": 3,
+        "independencia": 4,
+        "sensacionalismo": 4,
+        "transparencia": 3,
+        "correcciones": 2,
+        "carga_editorial": 3,
+        "calidad": 3
+      }
+    },
+    "El Austral": {
+      "dominios": [
+        "australtemuco.cl",
+        "australvaldivia.cl",
+        "australosorno.cl",
+        "elaustral.cl"
+      ],
+      "nivel": "establecido",
+      "ambito": "general",
+      "nota": "regionales El Mercurio",
+      "score": 70,
+      "posicionamiento": "moderado",
+      "score_estado": "provisional",
+      "score_fecha": "2026-09-05",
+      "linea": "Diarios regionales de El Mercurio en la macrozona sur (Temuco, Valdivia, Osorno); línea conservadora regional.",
+      "dimensiones": {
+        "precision": 4,
+        "fuentes": 3,
+        "independencia": 4,
+        "sensacionalismo": 4,
+        "transparencia": 3,
+        "correcciones": 2,
+        "carga_editorial": 3,
+        "calidad": 3
+      }
+    },
+    "El Día": {
+      "dominios": [
+        "diarioeldia.cl",
+        "eldia.cl"
+      ],
+      "nivel": "establecido",
+      "ambito": "general",
+      "nota": "La Serena / Coquimbo",
+      "score": 65,
+      "posicionamiento": "neutral",
+      "score_estado": "provisional",
+      "score_fecha": "2026-09-05",
+      "linea": "Diario regional de La Serena y Coquimbo; agenda policial, local y deportiva.",
+      "dimensiones": {
+        "precision": 3,
+        "fuentes": 3,
+        "independencia": 3,
+        "sensacionalismo": 4,
+        "transparencia": 3,
+        "correcciones": 3,
+        "carga_editorial": 4,
+        "calidad": 3
+      }
+    },
+    "El Rancagüino": {
+      "dominios": [
+        "elrancaguino.cl"
+      ],
+      "nivel": "establecido",
+      "ambito": "general",
+      "nota": "O'Higgins",
+      "score": 60,
+      "posicionamiento": "neutral",
+      "score_estado": "provisional",
+      "score_fecha": "2026-09-05",
+      "linea": "Diario local centenario de la Región de O'Higgins; sin línea partidista visible, agenda muy pegada a autoridades locales, minería y deporte.",
+      "dimensiones": {
+        "precision": 3,
+        "fuentes": 3,
+        "independencia": 3,
+        "sensacionalismo": 4,
+        "transparencia": 3,
+        "correcciones": 2,
+        "carga_editorial": 4,
+        "calidad": 3
+      }
+    },
+    "Bloomberg Línea": {
+      "dominios": [
+        "bloomberglinea.com"
+      ],
+      "nivel": "especializado",
+      "ambito": [
+        "mercados_finanzas",
+        "empresas_negocios",
+        "empresas_emprendimiento"
+      ],
+      "score": 80,
+      "posicionamiento": "moderado",
+      "score_estado": "provisional",
+      "score_fecha": "2026-09-05",
+      "linea": "Empresa conjunta de Bloomberg Media y Falic Media, con redacciones propias por país en América Latina; enfoque de negocios y mercados, con mirada pro-mercado.",
+      "dimensiones": {
+        "precision": 4,
+        "fuentes": 4,
+        "independencia": 4,
+        "sensacionalismo": 4,
+        "transparencia": 4,
+        "correcciones": 3,
+        "carga_editorial": 4,
+        "calidad": 4
+      }
+    },
+    "Expansión": {
+      "dominios": [
+        "expansion.com"
+      ],
+      "nivel": "especializado",
+      "ambito": [
+        "mercados_finanzas",
+        "empresas_negocios",
+        "empresas_emprendimiento"
+      ],
+      "nota": "España",
+      "score": 75,
+      "posicionamiento": "moderado",
+      "score_estado": "provisional",
+      "score_fecha": "2026-09-05",
+      "linea": "Diario económico español (Unidad Editorial), liberal y pro-mercado; fuerte en Ibex, banca y mercados.",
+      "dimensiones": {
+        "precision": 4,
+        "fuentes": 4,
+        "independencia": 4,
+        "sensacionalismo": 4,
+        "transparencia": 3,
+        "correcciones": 2,
+        "carga_editorial": 3,
+        "calidad": 4
+      }
+    },
+    "El Economista": {
+      "dominios": [
+        "eleconomista.es"
+      ],
+      "nivel": "especializado",
+      "ambito": [
+        "mercados_finanzas",
+        "empresas_negocios"
+      ],
+      "nota": "España",
+      "score": 65,
+      "posicionamiento": "moderado",
+      "score_estado": "provisional",
+      "score_fecha": "2026-09-05",
+      "linea": "Diario económico español de línea liberal-conservadora en política económica.",
+      "dimensiones": {
+        "precision": 4,
+        "fuentes": 3,
+        "independencia": 3,
+        "sensacionalismo": 3,
+        "transparencia": 3,
+        "correcciones": 3,
+        "carga_editorial": 3,
+        "calidad": 3
+      }
+    },
+    "TechCrunch": {
+      "dominios": [
+        "techcrunch.com"
+      ],
+      "nivel": "especializado",
+      "ambito": [
+        "empresas_emprendimiento",
+        "inteligencia_artificial",
+        "tecnologia_futuro"
+      ],
+      "score": 75,
+      "posicionamiento": "moderado",
+      "score_estado": "provisional",
+      "score_fecha": "2026-09-05",
+      "linea": "Prensa especializada estadounidense en startups, capital de riesgo y tecnología; mirada de industria, favorable al ecosistema que cubre.",
+      "dimensiones": {
+        "precision": 4,
+        "fuentes": 3,
+        "independencia": 4,
+        "sensacionalismo": 4,
+        "transparencia": 4,
+        "correcciones": 4,
+        "carga_editorial": 4,
+        "calidad": 4
+      }
+    },
+    "MIT Technology Review": {
+      "dominios": [
+        "technologyreview.com"
+      ],
+      "nivel": "especializado",
+      "ambito": [
+        "inteligencia_artificial",
+        "tecnologia_futuro",
+        "medio_ambiente_clima"
+      ],
+      "alias": [
+        "MIT Tech Review"
+      ],
+      "score": 85,
+      "posicionamiento": "moderado",
+      "score_estado": "provisional",
+      "score_fecha": "2026-09-05",
+      "linea": "Revista de tecnología propiedad del MIT con independencia editorial declarada; mirada crítica y de política pública sobre la tecnología.",
+      "dimensiones": {
+        "precision": 4,
+        "fuentes": 4,
+        "independencia": 5,
+        "sensacionalismo": 5,
+        "transparencia": 3,
+        "correcciones": 3,
+        "carga_editorial": 4,
+        "calidad": 5
+      }
+    },
+    "Nature": {
+      "dominios": [
+        "nature.com"
+      ],
+      "nivel": "especializado",
+      "ambito": [
+        "tecnologia_futuro",
+        "investigacion_medica",
+        "medio_ambiente_clima"
+      ],
+      "alias": [
+        "Nature News"
+      ],
+      "score": 95,
+      "posicionamiento": "moderado",
+      "score_estado": "provisional",
+      "score_fecha": "2026-09-05",
+      "linea": "Revista científica de referencia con revisión por pares y una redacción periodística propia (Nature News); editorializa a favor de la ciencia y de la política climática.",
+      "dimensiones": {
+        "precision": 5,
+        "fuentes": 5,
+        "independencia": 5,
+        "sensacionalismo": 4,
+        "transparencia": 5,
+        "correcciones": 5,
+        "carga_editorial": 4,
+        "calidad": 5
+      }
+    },
+    "Science": {
+      "dominios": [
+        "science.org",
+        "sciencemag.org"
+      ],
+      "nivel": "especializado",
+      "ambito": [
+        "tecnologia_futuro",
+        "investigacion_medica",
+        "medio_ambiente_clima"
+      ],
+      "score": 95,
+      "posicionamiento": "neutral",
+      "score_estado": "provisional",
+      "score_fecha": "2026-09-05",
+      "linea": "Revista de la AAAS: papers revisados por pares más una redacción de noticias científicas profesional e independiente del proceso editorial de los artículos.",
+      "dimensiones": {
+        "precision": 5,
+        "fuentes": 5,
+        "independencia": 4,
+        "sensacionalismo": 5,
+        "transparencia": 5,
+        "correcciones": 5,
+        "carga_editorial": 4,
+        "calidad": 5
+      }
+    },
+    "STAT News": {
+      "dominios": [
+        "statnews.com"
+      ],
+      "nivel": "especializado",
+      "ambito": [
+        "investigacion_medica",
+        "salud_bienestar"
+      ],
+      "alias": [
+        "STAT"
+      ],
+      "score": 90,
+      "posicionamiento": "neutral",
+      "score_estado": "provisional",
+      "score_fecha": "2026-09-05",
+      "linea": "Redacción especializada en salud, biotecnología y política sanitaria (Boston Globe Media); rigurosa y pro-evidencia científica, sin alineamiento partidista.",
+      "dimensiones": {
+        "precision": 4,
+        "fuentes": 5,
+        "independencia": 5,
+        "sensacionalismo": 5,
+        "transparencia": 4,
+        "correcciones": 4,
+        "carga_editorial": 5,
+        "calidad": 5
+      }
+    },
+    "The Lancet": {
+      "dominios": [
+        "thelancet.com"
+      ],
+      "nivel": "especializado",
+      "ambito": [
+        "investigacion_medica",
+        "salud_bienestar"
+      ],
+      "score": 90,
+      "posicionamiento": "moderado",
+      "score_estado": "provisional",
+      "score_fecha": "2026-09-05",
+      "linea": "Revista médica revisada por pares del grupo Elsevier; su sección editorial toma posiciones políticas explícitas en salud global.",
+      "dimensiones": {
+        "precision": 4,
+        "fuentes": 5,
+        "independencia": 5,
+        "sensacionalismo": 4,
+        "transparencia": 5,
+        "correcciones": 5,
+        "carga_editorial": 3,
+        "calidad": 5
+      }
+    },
+    "NEJM": {
+      "dominios": [
+        "nejm.org"
+      ],
+      "nivel": "especializado",
+      "ambito": [
+        "investigacion_medica"
+      ],
+      "alias": [
+        "New England Journal of Medicine"
+      ],
+      "score": 95,
+      "posicionamiento": "neutral",
+      "score_estado": "provisional",
+      "score_fecha": "2026-09-05",
+      "linea": "Revista médica de referencia mundial (Massachusetts Medical Society), con revisión por pares y estándar alto de divulgación de conflictos de interés.",
+      "dimensiones": {
+        "precision": 5,
+        "fuentes": 5,
+        "independencia": 5,
+        "sensacionalismo": 5,
+        "transparencia": 4,
+        "correcciones": 5,
+        "carga_editorial": 4,
+        "calidad": 5
+      }
+    },
+    "Ars Technica": {
+      "dominios": [
+        "arstechnica.com"
+      ],
+      "nivel": "especializado",
+      "ambito": [
+        "inteligencia_artificial",
+        "tecnologia_futuro"
+      ],
+      "score": 90,
+      "posicionamiento": "moderado",
+      "score_estado": "provisional",
+      "score_fecha": "2026-09-05",
+      "linea": "Revista tecnológica estadounidense (Condé Nast) con redactores especializados por área; escéptica del poder corporativo y crítica con la administración Trump.",
+      "dimensiones": {
+        "precision": 5,
+        "fuentes": 5,
+        "independencia": 4,
+        "sensacionalismo": 4,
+        "transparencia": 5,
+        "correcciones": 4,
+        "carga_editorial": 3,
+        "calidad": 5
+      }
+    },
+    "The Verge": {
+      "dominios": [
+        "theverge.com"
+      ],
+      "nivel": "especializado",
+      "ambito": [
+        "inteligencia_artificial",
+        "tecnologia_futuro",
+        "empresas_negocios"
+      ],
+      "score": 75,
+      "posicionamiento": "marcado",
+      "score_estado": "provisional",
+      "score_fecha": "2026-09-05",
+      "linea": "Tecnología y cultura digital (Vox Media) con voz autoral deliberada: la crónica y el comentario van fundidos en la misma pieza.",
+      "dimensiones": {
+        "precision": 4,
+        "fuentes": 4,
+        "independencia": 4,
+        "sensacionalismo": 3,
+        "transparencia": 4,
+        "correcciones": 4,
+        "carga_editorial": 2,
+        "calidad": 4
+      }
+    },
+    "Wired": {
+      "dominios": [
+        "wired.com"
+      ],
+      "nivel": "especializado",
+      "ambito": [
+        "inteligencia_artificial",
+        "tecnologia_futuro"
+      ],
+      "score": 75,
+      "posicionamiento": "moderado",
+      "score_estado": "provisional",
+      "score_fecha": "2026-09-05",
+      "linea": "Revista de tecnología y cultura digital de Condé Nast, con voz autoral marcada; su edición en español traduce buena parte del original estadounidense.",
+      "dimensiones": {
+        "precision": 4,
+        "fuentes": 4,
+        "independencia": 4,
+        "sensacionalismo": 3,
+        "transparencia": 4,
+        "correcciones": 4,
+        "carga_editorial": 3,
+        "calidad": 4
+      }
+    },
+    "Xataka": {
+      "dominios": [
+        "xataka.com"
+      ],
+      "nivel": "especializado",
+      "ambito": [
+        "inteligencia_artificial",
+        "tecnologia_futuro"
+      ],
+      "nota": "blog tecnológico serio pero con contenido de afiliados: nunca como única fuente; excluir 'seleccion'/ofertas",
+      "score": 60,
+      "posicionamiento": "neutral",
+      "score_estado": "provisional",
+      "score_fecha": "2026-09-05",
+      "linea": "Blog tecnológico español profesionalizado (Webedia) con negocio de afiliados incorporado a la redacción.",
+      "dimensiones": {
+        "precision": 4,
+        "fuentes": 3,
+        "independencia": 2,
+        "sensacionalismo": 3,
+        "transparencia": 3,
+        "correcciones": 2,
+        "carga_editorial": 3,
+        "calidad": 3
+      }
+    },
+    "Hipertextual": {
+      "dominios": [
+        "hipertextual.com"
+      ],
+      "nivel": "especializado",
+      "ambito": [
+        "inteligencia_artificial",
+        "tecnologia_futuro"
+      ],
+      "nota": "idem Xataka",
+      "score": 50,
+      "posicionamiento": "neutral",
+      "score_estado": "provisional",
+      "score_fecha": "2026-09-05",
+      "linea": "Blog tecnológico en español con enlaces de afiliación; catálogo de gadgets, lanzamientos y entretenimiento más que redacción de noticias.",
+      "dimensiones": {
+        "precision": 3,
+        "fuentes": 2,
+        "independencia": 2,
+        "sensacionalismo": 2,
+        "transparencia": 3,
+        "correcciones": 2,
+        "carga_editorial": 4,
+        "calidad": 2
+      }
+    },
+    "Mongabay Latam": {
+      "dominios": [
+        "es.mongabay.com",
+        "mongabay.com"
+      ],
+      "nivel": "especializado",
+      "ambito": [
+        "medio_ambiente_clima"
+      ],
+      "alias": [
+        "Mongabay"
+      ],
+      "score": 90,
+      "posicionamiento": "moderado",
+      "score_estado": "provisional",
+      "score_fecha": "2026-09-05",
+      "linea": "Redacción sin fines de lucro especializada en medio ambiente en América Latina; misión conservacionista declarada, pero con muro entre financiamiento y decisiones editoriales.",
+      "dimensiones": {
+        "precision": 4,
+        "fuentes": 5,
+        "independencia": 5,
+        "sensacionalismo": 4,
+        "transparencia": 5,
+        "correcciones": 5,
+        "carga_editorial": 4,
+        "calidad": 5
+      }
+    },
+    "Variety": {
+      "dominios": [
+        "variety.com"
+      ],
+      "nivel": "especializado",
+      "ambito": [
+        "artes_creatividad"
+      ],
+      "nota": "prensa de la industria audiovisual",
+      "score": 80,
+      "posicionamiento": "moderado",
+      "score_estado": "provisional",
+      "score_fecha": "2026-09-05",
+      "linea": "Prensa de industria de Hollywood (grupo PMC); autoridad dentro del negocio audiovisual y estructuralmente cercana a la industria que cubre.",
+      "dimensiones": {
+        "precision": 4,
+        "fuentes": 4,
+        "independencia": 5,
+        "sensacionalismo": 3,
+        "transparencia": 4,
+        "correcciones": 3,
+        "carga_editorial": 3,
+        "calidad": 4
+      }
+    },
+    "Pitchfork": {
+      "dominios": [
+        "pitchfork.com"
+      ],
+      "nivel": "especializado",
+      "ambito": [
+        "artes_creatividad"
+      ],
+      "nota": "música",
+      "score": 70,
+      "posicionamiento": "moderado",
+      "score_estado": "provisional",
+      "score_fecha": "2026-09-05",
+      "linea": "Publicación estadounidense de crítica musical (Condé Nast), con canon propio muy marcado en lo estético y estándares editoriales de la casa.",
+      "dimensiones": {
+        "precision": 4,
+        "fuentes": 3,
+        "independencia": 3,
+        "sensacionalismo": 4,
+        "transparencia": 4,
+        "correcciones": 3,
+        "carga_editorial": 3,
+        "calidad": 4
+      }
+    },
+    "Dezeen": {
+      "dominios": [
+        "dezeen.com"
+      ],
+      "nivel": "especializado",
+      "ambito": [
+        "artes_creatividad"
+      ],
+      "nota": "diseño y arquitectura",
+      "score": 80,
+      "posicionamiento": "neutral",
+      "score_estado": "provisional",
+      "score_fecha": "2026-09-05",
+      "linea": "Revista británica de referencia en arquitectura y diseño, con autoridad dentro de ese nicho y ninguna fuera de él.",
+      "dimensiones": {
+        "precision": 4,
+        "fuentes": 4,
+        "independencia": 4,
+        "sensacionalismo": 4,
+        "transparencia": 4,
+        "correcciones": 3,
+        "carga_editorial": 4,
+        "calidad": 4
+      }
+    },
+    "ArchDaily": {
+      "dominios": [
+        "archdaily.cl",
+        "archdaily.com"
+      ],
+      "nivel": "especializado",
+      "ambito": [
+        "artes_creatividad"
+      ],
+      "nota": "arquitectura; origen chileno",
+      "score": 70,
+      "posicionamiento": "neutral",
+      "score_estado": "provisional",
+      "score_fecha": "2026-09-05",
+      "linea": "Plataforma de arquitectura de origen chileno y alcance global; catálogo curado de obras más que redacción periodística, sin posición política.",
+      "dimensiones": {
+        "precision": 4,
+        "fuentes": 3,
+        "independencia": 3,
+        "sensacionalismo": 5,
+        "transparencia": 4,
+        "correcciones": 2,
+        "carga_editorial": 4,
+        "calidad": 3
+      }
+    },
+    "AS": {
+      "dominios": [
+        "as.com",
+        "chile.as.com"
+      ],
+      "nivel": "especializado",
+      "ambito": [
+        "deporte_nacional",
+        "deporte_internacional",
+        "chilenos_exterior"
+      ],
+      "alias": [
+        "AS Chile",
+        "Diario AS",
+        "AS Chile (Google News)",
+        "AS Fútbol (feed)"
+      ],
+      "score": 60,
+      "posicionamiento": "moderado",
+      "score_estado": "provisional",
+      "score_fecha": "2026-09-05",
+      "linea": "Diario deportivo popular español del grupo PRISA, de matriz madridista; su edición chilena mezcla deporte con virales y farándula.",
+      "dimensiones": {
+        "precision": 3,
+        "fuentes": 3,
+        "independencia": 4,
+        "sensacionalismo": 2,
+        "transparencia": 3,
+        "correcciones": 2,
+        "carga_editorial": 3,
+        "calidad": 3
+      }
+    },
+    "Marca": {
+      "dominios": [
+        "marca.com"
+      ],
+      "nivel": "especializado",
+      "ambito": [
+        "deporte_internacional",
+        "chilenos_exterior"
+      ],
+      "alias": [
+        "MARCA"
+      ],
+      "score": 55,
+      "posicionamiento": "marcado",
+      "score_estado": "provisional",
+      "score_fecha": "2026-09-05",
+      "linea": "Diario deportivo español líder (Unidad Editorial), con sesgo madridista reconocido y modelo de negocio basado en volumen y rumor de mercado.",
+      "dimensiones": {
+        "precision": 3,
+        "fuentes": 2,
+        "independencia": 4,
+        "sensacionalismo": 2,
+        "transparencia": 3,
+        "correcciones": 2,
+        "carga_editorial": 3,
+        "calidad": 3
+      }
+    },
+    "ESPN": {
+      "dominios": [
+        "espn.cl",
+        "espn.com",
+        "espn.com.ar"
+      ],
+      "nivel": "especializado",
+      "ambito": [
+        "deporte_nacional",
+        "deporte_internacional",
+        "chilenos_exterior"
+      ],
+      "alias": [
+        "ESPN Chile",
+        "ESPN Chile (Google News)"
+      ],
+      "score": 65,
+      "posicionamiento": "neutral",
+      "score_estado": "provisional",
+      "score_fecha": "2026-09-05",
+      "linea": "Operación deportiva global; el feed en español mezcla producción periodística propia con material automatizado.",
+      "dimensiones": {
+        "precision": 4,
+        "fuentes": 3,
+        "independencia": 4,
+        "sensacionalismo": 3,
+        "transparencia": 2,
+        "correcciones": 2,
+        "carga_editorial": 4,
+        "calidad": 3
+      }
+    },
+    "TNT Sports": {
+      "dominios": [
+        "tntsports.cl"
+      ],
+      "nivel": "especializado",
+      "ambito": [
+        "deporte_nacional"
+      ],
+      "alias": [
+        "tntsports.cl",
+        "TNT Sports Chile"
+      ],
+      "nota": "titular de derechos del fútbol chileno",
+      "score": 60,
+      "posicionamiento": "moderado",
+      "score_estado": "provisional",
+      "score_fecha": "2026-09-05",
+      "linea": "Canal deportivo de Warner Bros. Discovery y titular de los derechos del fútbol chileno: cubre la competencia que además explota comercialmente.",
+      "dimensiones": {
+        "precision": 3,
+        "fuentes": 3,
+        "independencia": 3,
+        "sensacionalismo": 3,
+        "transparencia": 3,
+        "correcciones": 2,
+        "carga_editorial": 3,
+        "calidad": 3
+      }
+    },
+    "DSports": {
+      "dominios": [
+        "dsports.latam.com",
+        "dsports.com"
+      ],
+      "nivel": "especializado",
+      "ambito": [
+        "deporte_nacional",
+        "deporte_internacional"
+      ],
+      "score": 65,
+      "posicionamiento": "neutral",
+      "score_estado": "provisional",
+      "score_fecha": "2026-09-05",
+      "linea": "Señal deportiva latinoamericana de DirecTV; el sitio funciona como apoyo del canal, centrado en resultados y agenda.",
+      "dimensiones": {
+        "precision": 4,
+        "fuentes": 3,
+        "independencia": 3,
+        "sensacionalismo": 4,
+        "transparencia": 2,
+        "correcciones": 2,
+        "carga_editorial": 4,
+        "calidad": 3
+      }
+    },
+    "ATP Tour": {
+      "dominios": [
+        "atptour.com"
+      ],
+      "nivel": "oficial",
+      "ambito": [
+        "deporte_internacional",
+        "chilenos_exterior"
+      ],
+      "alias": [
+        "ATP"
+      ],
+      "score": 90,
+      "posicionamiento": "institucional",
+      "score_estado": "provisional",
+      "score_fecha": "2026-09-05",
+      "linea": "Organizador del circuito profesional de tenis masculino: interés en promover a sus jugadores y torneos, cobertura no crítica de sí mismo",
+      "tipo": "federación deportiva",
+      "autoridad": "alta"
+    },
+    "Gobierno de Chile": {
+      "dominios": [
+        "gob.cl",
+        "minsal.cl",
+        "hacienda.cl",
+        "mineduc.cl",
+        "interior.gob.cl",
+        "senapred.cl"
+      ],
+      "nivel": "oficial",
+      "ambito": "general",
+      "alias": [
+        "Gob.cl",
+        "Ministerio",
+        "SENAPRED"
+      ],
+      "score": 90,
+      "posicionamiento": "institucional",
+      "score_estado": "provisional",
+      "score_fecha": "2026-09-05",
+      "linea": "Fuente gubernamental: interés en presentar favorablemente sus políticas y gestión, dato oficial pero no independiente del gobierno de turno",
+      "tipo": "gobierno",
+      "autoridad": "alta"
+    },
+    "Banco Central de Chile": {
+      "dominios": [
+        "bcentral.cl"
+      ],
+      "nivel": "oficial",
+      "ambito": "general",
+      "alias": [
+        "Banco Central"
+      ],
+      "score": 90,
+      "posicionamiento": "institucional",
+      "score_estado": "provisional",
+      "score_fecha": "2026-09-05",
+      "linea": "Institución autónoma emisora de estadísticas y política monetaria; interés en defender la credibilidad de sus propias decisiones y proyecciones",
+      "tipo": "estadística",
+      "autoridad": "alta"
+    },
+    "INE": {
+      "dominios": [
+        "ine.gob.cl",
+        "ine.cl"
+      ],
+      "nivel": "oficial",
+      "ambito": "general",
+      "score": 90,
+      "posicionamiento": "institucional",
+      "score_estado": "provisional",
+      "score_fecha": "2026-09-05",
+      "linea": "Instituto nacional de estadísticas: produce datos oficiales, pero puede reflejar énfasis metodológicos o de agenda del gobierno de turno",
+      "tipo": "estadística",
+      "autoridad": "alta"
+    },
+    "Congreso Nacional": {
+      "dominios": [
+        "senado.cl",
+        "camara.cl",
+        "bcn.cl"
+      ],
+      "nivel": "oficial",
+      "ambito": "general",
+      "alias": [
+        "Senado",
+        "Cámara de Diputados",
+        "BCN"
+      ],
+      "score": 90,
+      "posicionamiento": "institucional",
+      "score_estado": "provisional",
+      "score_fecha": "2026-09-05",
+      "linea": "Poder legislativo: fuente primaria de leyes y sesiones, pero con dinámica político-partidista propia de cada bancada",
+      "tipo": "gobierno",
+      "autoridad": "alta"
+    },
+    "Poder Judicial": {
+      "dominios": [
+        "pjud.cl"
+      ],
+      "nivel": "oficial",
+      "ambito": "general",
+      "score": 90,
+      "posicionamiento": "institucional",
+      "score_estado": "provisional",
+      "score_fecha": "2026-09-05",
+      "linea": "Poder judicial: fuente primaria de sentencias y fallos, sin agenda editorial externa pero con interés en su propia imagen institucional",
+      "tipo": "tribunal",
+      "autoridad": "alta"
+    },
+    "Fiscalía de Chile": {
+      "dominios": [
+        "fiscaliadechile.cl"
+      ],
+      "nivel": "oficial",
+      "ambito": "general",
+      "alias": [
+        "Fiscalía"
+      ],
+      "score": 90,
+      "posicionamiento": "institucional",
+      "score_estado": "provisional",
+      "score_fecha": "2026-09-05",
+      "linea": "Ministerio Público: interés en mostrar efectividad de sus investigaciones y persecuciones penales, no es parte juzgadora",
+      "tipo": "gobierno",
+      "autoridad": "alta"
+    },
+    "Cruzados": {
+      "dominios": [
+        "cruzados.cl"
+      ],
+      "nivel": "oficial",
+      "ambito": [
+        "deporte_nacional"
+      ],
+      "nota": "sitio del club (Universidad Católica)",
+      "score": 90,
+      "posicionamiento": "institucional",
+      "score_estado": "provisional",
+      "score_fecha": "2026-09-05",
+      "linea": "Club de fútbol profesional constituido como sociedad anónima deportiva: interés en promover su propia imagen, plantel y resultados",
+      "tipo": "empresa",
+      "autoridad": "alta"
+    },
+    "ANFP": {
+      "dominios": [
+        "anfp.cl"
+      ],
+      "nivel": "oficial",
+      "ambito": [
+        "deporte_nacional"
+      ],
+      "score": 90,
+      "posicionamiento": "institucional",
+      "score_estado": "provisional",
+      "score_fecha": "2026-09-05",
+      "linea": "Federación nacional de fútbol: interés en promover el fútbol chileno y su propia gestión dirigencial",
+      "tipo": "federación deportiva",
+      "autoridad": "alta"
+    },
+    "COCh": {
+      "dominios": [
+        "coch.cl"
+      ],
+      "nivel": "oficial",
+      "ambito": [
+        "deporte_nacional"
+      ],
+      "alias": [
+        "Comité Olímpico de Chile"
+      ],
+      "score": 90,
+      "posicionamiento": "institucional",
+      "score_estado": "provisional",
+      "score_fecha": "2026-09-05",
+      "linea": "Comité olímpico nacional: interés en la promoción del deporte olímpico chileno y en su propia gestión institucional",
+      "tipo": "federación deportiva",
+      "autoridad": "alta"
+    },
+    "Human Rights Watch": {
+      "dominios": [
+        "hrw.org"
+      ],
+      "nivel": "oficial",
+      "ambito": [
+        "derechos_justicia",
+        "geopolitica_conflictos"
+      ],
+      "alias": [
+        "HRW"
+      ],
+      "nota": "ONG: fuente primaria de sus informes; atribuir siempre («según HRW»)",
+      "score": 90,
+      "posicionamiento": "institucional",
+      "score_estado": "provisional",
+      "score_fecha": "2026-09-05",
+      "linea": "ONG de derechos humanos con agenda de incidencia propia; atribuir siempre como fuente («según HRW»), no es árbitro neutral de los hechos",
+      "tipo": "ONG",
+      "autoridad": "media"
+    },
+    "Amnistía Internacional": {
+      "dominios": [
+        "amnesty.org",
+        "amnistia.cl"
+      ],
+      "nivel": "oficial",
+      "ambito": [
+        "derechos_justicia"
+      ],
+      "alias": [
+        "Amnesty International",
+        "Amnistía"
+      ],
+      "nota": "ONG: idem HRW",
+      "score": 90,
+      "posicionamiento": "institucional",
+      "score_estado": "provisional",
+      "score_fecha": "2026-09-05",
+      "linea": "ONG de derechos humanos con agenda de incidencia propia; atribuir siempre como fuente, no es árbitro neutral de los hechos",
+      "tipo": "ONG",
+      "autoridad": "media"
+    },
+    "ACNUR": {
+      "dominios": [
+        "acnur.org",
+        "unhcr.org"
+      ],
+      "nivel": "publico",
+      "ambito": [
+        "derechos_justicia",
+        "geopolitica_conflictos"
+      ],
+      "alias": [
+        "UNHCR"
+      ],
+      "score": 85,
+      "posicionamiento": "moderado",
+      "score_estado": "provisional",
+      "score_fecha": "2026-09-05",
+      "linea": "Agencia de la ONU para los refugiados: fuente primaria y estándar global de datos de desplazamiento forzado, con mandato explícito de defensa de los refugiados.",
+      "dimensiones": {
+        "precision": 5,
+        "fuentes": 5,
+        "independencia": 5,
+        "sensacionalismo": 3,
+        "transparencia": 4,
+        "correcciones": 3,
+        "carga_editorial": 3,
+        "calidad": 4
+      }
+    },
+    "El Periódico": {
+      "dominios": [
+        "elperiodico.com",
+        "elperiodico.cat"
+      ],
+      "nivel": "establecido",
+      "ambito": "general",
+      "alias": [
+        "El Periódico de Catalunya"
+      ],
+      "nota": "España/Cataluña",
+      "score": 70,
+      "posicionamiento": "moderado",
+      "score_estado": "provisional",
+      "score_fecha": "2026-09-05",
+      "linea": "Diario de Barcelona (Prensa Ibérica), de centro-izquierda y catalanista moderado, fuerte en área metropolitana y servicios.",
+      "dimensiones": {
+        "precision": 4,
+        "fuentes": 4,
+        "independencia": 4,
+        "sensacionalismo": 3,
+        "transparencia": 3,
+        "correcciones": 3,
+        "carga_editorial": 4,
+        "calidad": 3
+      }
+    },
+    "Betevé": {
+      "dominios": [
+        "beteve.cat"
+      ],
+      "nivel": "publico",
+      "ambito": "general",
+      "alias": [
+        "betevé",
+        "BTV"
+      ],
+      "nota": "TV pública de Barcelona",
+      "score": 75,
+      "posicionamiento": "moderado",
+      "score_estado": "provisional",
+      "score_fecha": "2026-09-05",
+      "linea": "Televisión y medio público municipal de Barcelona, en catalán; servicio público local con dependencia del ayuntamiento al que cubre.",
+      "dimensiones": {
+        "precision": 4,
+        "fuentes": 4,
+        "independencia": 3,
+        "sensacionalismo": 5,
+        "transparencia": 4,
+        "correcciones": 3,
+        "carga_editorial": 4,
+        "calidad": 4
+      }
+    },
+    "Ajuntament de Barcelona": {
+      "dominios": [
+        "ajuntament.barcelona.cat",
+        "barcelona.cat"
+      ],
+      "nivel": "oficial",
+      "ambito": "general",
+      "alias": [
+        "Ayuntamiento de Barcelona",
+        "Servei de Premsa"
+      ],
+      "nota": "fuente oficial municipal (primaria)",
+      "score": 90,
+      "posicionamiento": "institucional",
+      "score_estado": "provisional",
+      "score_fecha": "2026-09-05",
+      "linea": "Ayuntamiento municipal: interés en proyectar una imagen favorable de la gestión del alcalde y del gobierno local",
+      "tipo": "municipio",
+      "autoridad": "alta"
+    },
+    "Generalitat de Catalunya": {
+      "dominios": [
+        "gencat.cat",
+        "govern.cat"
+      ],
+      "nivel": "oficial",
+      "ambito": "general",
+      "alias": [
+        "Govern",
+        "Generalitat"
+      ],
+      "nota": "fuente oficial autonómica (primaria)",
+      "score": 90,
+      "posicionamiento": "institucional",
+      "score_estado": "provisional",
+      "score_fecha": "2026-09-05",
+      "linea": "Gobierno autonómico: interés en presentar favorablemente sus políticas y gestión, en un contexto político catalán con tensiones independentistas",
+      "tipo": "gobierno",
+      "autoridad": "alta"
+    },
+    "3Cat / 324": {
+      "dominios": [
+        "ccma.cat",
+        "3cat.cat"
+      ],
+      "nivel": "publico",
+      "ambito": "general",
+      "alias": [
+        "324",
+        "CCMA",
+        "TV3"
+      ],
+      "nota": "medios públicos catalanes",
+      "score": 80,
+      "posicionamiento": "moderado",
+      "score_estado": "provisional",
+      "score_fecha": "2026-09-05",
+      "linea": "Medios públicos catalanes (CCMA) con mandato legal de pluralismo y libro de estilo público; encuadre catalanista documentado en su cobertura política.",
+      "dimensiones": {
+        "precision": 4,
+        "fuentes": 4,
+        "independencia": 4,
+        "sensacionalismo": 5,
+        "transparencia": 4,
+        "correcciones": 4,
+        "carga_editorial": 3,
+        "calidad": 4
+      }
+    },
+    "RTVE": {
+      "dominios": [
+        "rtve.es"
+      ],
+      "nivel": "publico",
+      "ambito": "general",
+      "alias": [
+        "RTVE Noticias",
+        "TVE"
+      ],
+      "score": 80,
+      "posicionamiento": "moderado",
+      "score_estado": "provisional",
+      "score_fecha": "2026-09-05",
+      "linea": "Radiotelevisión pública española, con mandato de pluralismo y manual de estilo propio, expuesta a la rotación política en su gobernanza.",
+      "dimensiones": {
+        "precision": 4,
+        "fuentes": 4,
+        "independencia": 4,
+        "sensacionalismo": 4,
+        "transparencia": 4,
+        "correcciones": 3,
+        "carga_editorial": 4,
+        "calidad": 4
+      }
+    },
+    "Ara": {
+      "dominios": [
+        "ara.cat"
+      ],
+      "nivel": "establecido",
+      "ambito": "general",
+      "nota": "Cataluña",
+      "score": 75,
+      "posicionamiento": "marcado",
+      "score_estado": "provisional",
+      "score_fecha": "2026-09-05",
+      "linea": "Diario catalán fundado en 2010, de línea catalanista y soberanista explícita, con periodismo de calidad y reportería propia.",
+      "dimensiones": {
+        "precision": 4,
+        "fuentes": 4,
+        "independencia": 4,
+        "sensacionalismo": 4,
+        "transparencia": 3,
+        "correcciones": 3,
+        "carga_editorial": 3,
+        "calidad": 4
+      }
+    },
+    "rbb24": {
+      "dominios": [
+        "rbb24.de",
+        "rbb-online.de"
+      ],
+      "nivel": "publico",
+      "ambito": "general",
+      "alias": [
+        "rbb",
+        "rbb|24"
+      ],
+      "nota": "radiodifusor público Berlín-Brandeburgo (ARD)",
+      "score": 85,
+      "posicionamiento": "neutral",
+      "score_estado": "provisional",
+      "score_fecha": "2026-09-05",
+      "linea": "Radiodifusor público alemán de Berlín-Brandeburgo (ARD), con mandato de pluralismo, control por consejo de radiodifusión y sujeción al Pressekodex.",
+      "dimensiones": {
+        "precision": 5,
+        "fuentes": 4,
+        "independencia": 4,
+        "sensacionalismo": 5,
+        "transparencia": 4,
+        "correcciones": 4,
+        "carga_editorial": 4,
+        "calidad": 4
+      }
+    },
+    "Berliner Morgenpost": {
+      "dominios": [
+        "morgenpost.de"
+      ],
+      "nivel": "establecido",
+      "ambito": "general",
+      "alias": [
+        "Morgenpost"
+      ],
+      "nota": "Berlín (grupo Funke)",
+      "score": 75,
+      "posicionamiento": "moderado",
+      "score_estado": "provisional",
+      "score_fecha": "2026-09-05",
+      "linea": "Diario regional de Berlín del grupo Funke, de tradición liberal-conservadora; foco casi exclusivamente local.",
+      "dimensiones": {
+        "precision": 4,
+        "fuentes": 4,
+        "independencia": 4,
+        "sensacionalismo": 4,
+        "transparencia": 4,
+        "correcciones": 3,
+        "carga_editorial": 4,
+        "calidad": 3
+      }
+    },
+    "Berliner Zeitung": {
+      "dominios": [
+        "berliner-zeitung.de"
+      ],
+      "nivel": "establecido",
+      "ambito": "general",
+      "nota": "Berlín",
+      "score": 60,
+      "posicionamiento": "marcado",
+      "score_estado": "provisional",
+      "score_fecha": "2026-09-05",
+      "linea": "Diario berlinés con línea impuesta por su editor Holger Friedrich: contestataria, escéptica frente a la OTAN y benévola con las posiciones rusas.",
+      "dimensiones": {
+        "precision": 3,
+        "fuentes": 3,
+        "independencia": 4,
+        "sensacionalismo": 3,
+        "transparencia": 3,
+        "correcciones": 2,
+        "carga_editorial": 2,
+        "calidad": 3
+      }
+    },
+    "Der Tagesspiegel": {
+      "dominios": [
+        "tagesspiegel.de"
+      ],
+      "nivel": "establecido",
+      "ambito": "general",
+      "alias": [
+        "Tagesspiegel"
+      ],
+      "nota": "Berlín; sin feed local estable, citar cuando aparezca",
+      "score": 80,
+      "posicionamiento": "moderado",
+      "score_estado": "provisional",
+      "score_fecha": "2026-09-05",
+      "linea": "Diario de calidad de Berlín, liberal-progresista de centro, con la cobertura local más sólida de la capital alemana.",
+      "dimensiones": {
+        "precision": 4,
+        "fuentes": 4,
+        "independencia": 4,
+        "sensacionalismo": 4,
+        "transparencia": 4,
+        "correcciones": 4,
+        "carga_editorial": 4,
+        "calidad": 4
+      }
+    },
+    "Contraloría General de la República": {
+      "dominios": [
+        "contraloria.cl"
+      ],
+      "nivel": "oficial",
+      "ambito": "general",
+      "alias": [
+        "Contraloría"
+      ],
+      "tipo": "gobierno",
+      "autoridad": "alta",
+      "nota": "Fiscalización del Estado: dictámenes, auditorías, sumarios",
+      "score": 90,
+      "posicionamiento": "institucional",
+      "score_estado": "provisional",
+      "score_fecha": "2026-09-05"
+    },
+    "Tribunal Constitucional": {
+      "dominios": [
+        "tribunalconstitucional.cl"
+      ],
+      "nivel": "oficial",
+      "ambito": [
+        "derechos_justicia",
+        "geopolitica_conflictos"
+      ],
+      "alias": [
+        "TC"
+      ],
+      "tipo": "tribunal",
+      "autoridad": "alta",
+      "nota": "Sentencias y requerimientos",
+      "score": 90,
+      "posicionamiento": "institucional",
+      "score_estado": "provisional",
+      "score_fecha": "2026-09-05"
+    },
+    "Servel": {
+      "dominios": [
+        "servel.cl"
+      ],
+      "nivel": "oficial",
+      "ambito": "general",
+      "alias": [
+        "Servicio Electoral"
+      ],
+      "tipo": "gobierno",
+      "autoridad": "alta",
+      "nota": "Resultados y calendario electoral",
+      "score": 90,
+      "posicionamiento": "institucional",
+      "score_estado": "provisional",
+      "score_fecha": "2026-09-05"
+    },
+    "CMF": {
+      "dominios": [
+        "cmfchile.cl"
+      ],
+      "nivel": "oficial",
+      "ambito": [
+        "mercados_finanzas",
+        "empresas_negocios"
+      ],
+      "alias": [
+        "Comisión para el Mercado Financiero"
+      ],
+      "tipo": "gobierno",
+      "autoridad": "alta",
+      "nota": "Hechos esenciales, sanciones, cifras del sistema financiero",
+      "score": 90,
+      "posicionamiento": "institucional",
+      "score_estado": "provisional",
+      "score_fecha": "2026-09-05"
+    },
+    "Ministerio de Salud": {
+      "dominios": [
+        "minsal.cl"
+      ],
+      "nivel": "oficial",
+      "ambito": [
+        "salud_bienestar",
+        "investigacion_medica"
+      ],
+      "alias": [
+        "Minsal",
+        "ISP"
+      ],
+      "tipo": "gobierno",
+      "autoridad": "alta",
+      "nota": "Cifras sanitarias, alertas, campañas",
+      "score": 90,
+      "posicionamiento": "institucional",
+      "score_estado": "provisional",
+      "score_fecha": "2026-09-05"
+    },
+    "Cochilco": {
+      "dominios": [
+        "cochilco.cl"
+      ],
+      "nivel": "oficial",
+      "ambito": [
+        "mercados_finanzas",
+        "economia_chile",
+        "empresas_negocios"
+      ],
+      "alias": [
+        "Comisión Chilena del Cobre"
+      ],
+      "tipo": "estadística",
+      "autoridad": "alta",
+      "nota": "Producción y precio del cobre",
+      "score": 90,
+      "posicionamiento": "institucional",
+      "score_estado": "provisional",
+      "score_fecha": "2026-09-05"
+    },
+    "Centro Sismológico Nacional": {
+      "dominios": [
+        "sismologia.cl",
+        "csn.uchile.cl"
+      ],
+      "nivel": "oficial",
+      "ambito": "general",
+      "alias": [
+        "CSN",
+        "Sismología"
+      ],
+      "tipo": "universidad",
+      "autoridad": "alta",
+      "nota": "Magnitud y epicentro de sismos en Chile",
+      "score": 90,
+      "posicionamiento": "institucional",
+      "score_estado": "provisional",
+      "score_fecha": "2026-09-05"
+    },
+    "SENAPRED": {
+      "dominios": [
+        "senapred.cl"
+      ],
+      "nivel": "oficial",
+      "ambito": "general",
+      "alias": [
+        "Senapred",
+        "Servicio Nacional de Prevención y Respuesta ante Desastres"
+      ],
+      "tipo": "gobierno",
+      "autoridad": "alta",
+      "nota": "Alertas, evacuaciones, balances de emergencias",
+      "score": 90,
+      "posicionamiento": "institucional",
+      "score_estado": "provisional",
+      "score_fecha": "2026-09-05"
+    },
+    "Dirección Meteorológica de Chile": {
+      "dominios": [
+        "meteochile.gob.cl"
+      ],
+      "nivel": "oficial",
+      "ambito": [
+        "medio_ambiente_clima"
+      ],
+      "alias": [
+        "DMC",
+        "Meteochile"
+      ],
+      "tipo": "gobierno",
+      "autoridad": "alta",
+      "nota": "Pronósticos y avisos meteorológicos",
+      "score": 90,
+      "posicionamiento": "institucional",
+      "score_estado": "provisional",
+      "score_fecha": "2026-09-05"
+    },
+    "Universidad de Chile": {
+      "dominios": [
+        "uchile.cl"
+      ],
+      "nivel": "oficial",
+      "ambito": [
+        "investigacion_medica",
+        "tecnologia_futuro",
+        "medio_ambiente_clima",
+        "salud_bienestar",
+        "sociedad_tendencias"
+      ],
+      "alias": [
+        "U. de Chile"
+      ],
+      "tipo": "universidad",
+      "autoridad": "alta",
+      "nota": "Investigación propia y estudios",
+      "score": 90,
+      "posicionamiento": "institucional",
+      "score_estado": "provisional",
+      "score_fecha": "2026-09-05"
+    },
+    "Pontificia Universidad Católica de Chile": {
+      "dominios": [
+        "uc.cl"
+      ],
+      "nivel": "oficial",
+      "ambito": [
+        "investigacion_medica",
+        "tecnologia_futuro",
+        "medio_ambiente_clima",
+        "salud_bienestar",
+        "sociedad_tendencias"
+      ],
+      "alias": [
+        "UC",
+        "PUC"
+      ],
+      "tipo": "universidad",
+      "autoridad": "alta",
+      "nota": "Investigación propia y estudios (incl. encuesta Bicentenario)",
+      "score": 90,
+      "posicionamiento": "institucional",
+      "score_estado": "provisional",
+      "score_fecha": "2026-09-05"
+    },
+    "FMI": {
+      "dominios": [
+        "imf.org"
+      ],
+      "nivel": "oficial",
+      "ambito": [
+        "mercados_finanzas",
+        "economia_chile",
+        "empresas_negocios"
+      ],
+      "alias": [
+        "Fondo Monetario Internacional",
+        "IMF"
+      ],
+      "tipo": "organismo internacional",
+      "autoridad": "alta",
+      "nota": "Proyecciones y programas; atribuir",
+      "score": 90,
+      "posicionamiento": "institucional",
+      "score_estado": "provisional",
+      "score_fecha": "2026-09-05"
+    },
+    "Banco Mundial": {
+      "dominios": [
+        "worldbank.org",
+        "bancomundial.org"
+      ],
+      "nivel": "oficial",
+      "ambito": [
+        "mercados_finanzas",
+        "economia_chile",
+        "derechos_justicia"
+      ],
+      "alias": [
+        "World Bank"
+      ],
+      "tipo": "organismo internacional",
+      "autoridad": "alta",
+      "nota": "Datos y estimaciones",
+      "score": 90,
+      "posicionamiento": "institucional",
+      "score_estado": "provisional",
+      "score_fecha": "2026-09-05"
+    },
+    "OCDE": {
+      "dominios": [
+        "oecd.org"
+      ],
+      "nivel": "oficial",
+      "ambito": [
+        "mercados_finanzas",
+        "economia_chile",
+        "sociedad_tendencias"
+      ],
+      "alias": [
+        "OECD"
+      ],
+      "tipo": "organismo internacional",
+      "autoridad": "alta",
+      "nota": "Estadísticas comparadas e informes",
+      "score": 90,
+      "posicionamiento": "institucional",
+      "score_estado": "provisional",
+      "score_fecha": "2026-09-05"
+    },
+    "CEPAL": {
+      "dominios": [
+        "cepal.org"
+      ],
+      "nivel": "oficial",
+      "ambito": [
+        "mercados_finanzas",
+        "economia_chile",
+        "sociedad_tendencias",
+        "derechos_justicia"
+      ],
+      "alias": [
+        "ECLAC"
+      ],
+      "tipo": "organismo internacional",
+      "autoridad": "alta",
+      "nota": "Estadísticas e informes regionales",
+      "score": 90,
+      "posicionamiento": "institucional",
+      "score_estado": "provisional",
+      "score_fecha": "2026-09-05"
+    },
+    "Comisión Europea": {
+      "dominios": [
+        "ec.europa.eu",
+        "europa.eu",
+        "commission.europa.eu"
+      ],
+      "nivel": "oficial",
+      "ambito": [
+        "geopolitica_conflictos",
+        "mercados_finanzas",
+        "inteligencia_artificial",
+        "tecnologia_futuro",
+        "medio_ambiente_clima"
+      ],
+      "alias": [
+        "European Commission",
+        "Eurostat"
+      ],
+      "tipo": "organismo internacional",
+      "autoridad": "alta",
+      "nota": "Decisiones, sanciones, Eurostat",
+      "score": 90,
+      "posicionamiento": "institucional",
+      "score_estado": "provisional",
+      "score_fecha": "2026-09-05"
+    },
+    "BCE": {
+      "dominios": [
+        "ecb.europa.eu"
+      ],
+      "nivel": "oficial",
+      "ambito": [
+        "mercados_finanzas"
+      ],
+      "alias": [
+        "Banco Central Europeo",
+        "ECB"
+      ],
+      "tipo": "organismo internacional",
+      "autoridad": "alta",
+      "nota": "Tasas y comunicados",
+      "score": 90,
+      "posicionamiento": "institucional",
+      "score_estado": "provisional",
+      "score_fecha": "2026-09-05"
+    },
+    "Reserva Federal": {
+      "dominios": [
+        "federalreserve.gov"
+      ],
+      "nivel": "oficial",
+      "ambito": [
+        "mercados_finanzas"
+      ],
+      "alias": [
+        "Fed",
+        "Federal Reserve"
+      ],
+      "tipo": "gobierno",
+      "autoridad": "alta",
+      "nota": "Tasas y comunicados",
+      "score": 90,
+      "posicionamiento": "institucional",
+      "score_estado": "provisional",
+      "score_fecha": "2026-09-05"
+    },
+    "ESO": {
+      "dominios": [
+        "eso.org"
+      ],
+      "nivel": "oficial",
+      "ambito": [
+        "tecnologia_futuro"
+      ],
+      "alias": [
+        "Observatorio Europeo Austral"
+      ],
+      "tipo": "organismo internacional",
+      "autoridad": "alta",
+      "nota": "Astronomía desde Chile: descubrimientos propios",
+      "score": 90,
+      "posicionamiento": "institucional",
+      "score_estado": "provisional",
+      "score_fecha": "2026-09-05"
+    },
+    "UNICEF": {
+      "dominios": [
+        "unicef.org"
+      ],
+      "nivel": "oficial",
+      "ambito": [
+        "derechos_justicia",
+        "geopolitica_conflictos",
+        "salud_bienestar"
+      ],
+      "alias": [],
+      "tipo": "organismo internacional",
+      "autoridad": "alta",
+      "nota": "Cifras sobre infancia; atribuir",
+      "score": 90,
+      "posicionamiento": "institucional",
+      "score_estado": "provisional",
+      "score_fecha": "2026-09-05"
+    },
+    "OIT": {
+      "dominios": [
+        "ilo.org"
+      ],
+      "nivel": "oficial",
+      "ambito": [
+        "derechos_justicia",
+        "economia_chile",
+        "mercados_finanzas"
+      ],
+      "alias": [
+        "ILO"
+      ],
+      "tipo": "organismo internacional",
+      "autoridad": "alta",
+      "nota": "Empleo y trabajo; atribuir",
+      "score": 90,
+      "posicionamiento": "institucional",
+      "score_estado": "provisional",
+      "score_fecha": "2026-09-05"
+    },
+    "Senado de Berlín": {
+      "dominios": [
+        "berlin.de"
+      ],
+      "nivel": "oficial",
+      "ambito": "local",
+      "alias": [
+        "Land Berlin",
+        "Senatsverwaltung"
+      ],
+      "tipo": "municipio",
+      "autoridad": "alta",
+      "nota": "Decisiones de la ciudad-estado de Berlín (para la noticia local)",
+      "score": 90,
+      "posicionamiento": "institucional",
+      "score_estado": "provisional",
+      "score_fecha": "2026-09-05"
+    }
+  }
+}
