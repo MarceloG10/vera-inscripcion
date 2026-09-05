@@ -37,8 +37,8 @@
   nav { display:flex; flex-wrap:wrap; gap:6px; padding:14px 40px; border-bottom:1px solid var(--hair); }
   nav button { font-family:var(--sans); font-size:12px; letter-spacing:.5px; text-transform:uppercase; background:var(--papel); color:var(--tinta); border:2px solid var(--tinta); border-radius:3px; padding:7px 12px; cursor:pointer; }
   nav button.on { background:var(--tinta); color:#fff; }
-  section { display:none; padding:26px 40px 40px; }
-  section.on { display:block; }
+  #app > section { display:none; padding:26px 40px 40px; }
+  #app > section.on { display:block; }
   h2 { font-family:var(--serif); font-weight:normal; font-size:28px; line-height:1.1; margin:0 0 16px; }
   h3 { font-family:var(--sans); font-size:11px; font-weight:bold; letter-spacing:1.5px; text-transform:uppercase; margin:26px 0 10px; }
   p { font-size:17px; line-height:1.4; }
@@ -78,7 +78,7 @@
   .scroll { overflow-x:auto; -webkit-overflow-scrolling:touch; }
   .desliza { display:none; font-family:var(--sans); font-size:10px; letter-spacing:.5px; text-transform:uppercase; color:var(--gris); margin:0 0 6px; }
   @media (max-width:640px) {
-    .cab, nav, section, .pie { padding-left:18px; padding-right:18px; } .logo { font-size:36px; }
+    .cab, nav, #app > section, .pie { padding-left:18px; padding-right:18px; } .logo { font-size:36px; }
     .cab { flex-direction:column; align-items:flex-start; } .quien { text-align:left; }
     .bloque { padding:18px 16px 20px; }
     .kpis { grid-template-columns:1fr 1fr; gap:10px; } .kpi .n { font-size:28px; } .kpi .l { font-size:9px; }
@@ -181,7 +181,8 @@
         --serif:Georgia,'Times New Roman',Times,serif; --slab:Rockwell,'Roboto Slab',Georgia,serif; --sans:Helvetica,Arial,sans-serif;
         font-family:var(--serif); color:var(--tinta); line-height:1.45; background:var(--papel); }
   .mm * { box-sizing:border-box; }
-  .mm .cab { text-align:center; padding:40px 40px 28px; border-bottom:2px solid var(--tinta); }
+  .mm .cab { display:block; text-align:center; padding:40px 40px 28px; border-bottom:2px solid var(--tinta); }
+  .mm section { display:block; }
   .mm .wordmark { font-family:var(--slab); font-size:64px; line-height:1; letter-spacing:-1px; }
   .mm .kicker { font-family:var(--sans); font-size:11px; font-weight:bold; letter-spacing:2.5px; text-transform:uppercase; color:var(--gris); margin-top:20px; }
   .mm .fecha { font-size:17px; color:var(--gris); margin-top:8px; }
