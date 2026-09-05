@@ -240,6 +240,7 @@
       <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:10px 0">
         <input type="text" id="f-filtro" placeholder="Buscar por nombre, dominio o descripción…" style="flex:1;min-width:220px">
         <label class="hint" style="text-transform:none;letter-spacing:0;font-size:12px"><input type="checkbox" id="f-inactivos"> mostrar desactivadas</label>
+        <select id="f-orden" style="width:auto;font-size:13px;padding:7px 9px"><option value="score-desc">Score: mayor a menor</option><option value="score-asc">Score: menor a mayor</option><option value="nombre">Nombre A–Z</option><option value="citas">Más citadas primero</option><option value="modif">Modificadas recientemente</option></select>
         <button class="btn" id="f-nueva" style="margin:0;padding:9px 14px;font-size:12px">+ Agregar fuente</button>
       </div>
       <div id="f-form" class="bloque blanco" hidden></div>
@@ -789,13 +790,19 @@ async function cargar() {
   }
   document.querySelectorAll("[data-uso]").forEach(b => b.addEventListener("click", () => pintarUso(b.dataset.uso)));
   const ambTxt = (a) => Array.isArray(a) ? a.map(x => SUB_LABEL[x]||x) : [a || "general"];
+  const ordenFuentes = (a, b) => { const o = $("f-orden").value;
+    if (o === "score-asc") return (a.score ?? 999) - (b.score ?? 999) || a.nombre.localeCompare(b.nombre);
+    if (o === "nombre") return a.nombre.localeCompare(b.nombre);
+    if (o === "citas") return (citasPorMedio[b.nombre]||0) - (citasPorMedio[a.nombre]||0) || a.nombre.localeCompare(b.nombre);
+    if (o === "modif") return String(b.modificado_en||"").localeCompare(String(a.modificado_en||"")) || a.nombre.localeCompare(b.nombre);
+    return (b.score||0) - (a.score||0) || a.nombre.localeCompare(b.nombre); };
   function pintarFuentes() {
     const f = ($("f-filtro").value||"").toLowerCase(); const verInact = $("f-inactivos").checked;
     const vis = medios.filter(m => (verInact || m.activo) && (!f || [m.nombre, (m.dominios||[]).join(" "), m.linea, m.nivel, m.posicionamiento, ambTxt(m.ambito).join(" ")].join(" ").toLowerCase().includes(f)));
     const grupos = {}; for (const m of vis) (grupos[m.region] = grupos[m.region] || []).push(m);
     const orden = [...REGIONES, ...Object.keys(grupos).filter(r => !REGIONES.includes(r))];
     $("f-grupos").innerHTML = orden.filter(r => grupos[r]).map(r => `<div class="grupo-region">${esc(r)} <span class="hint" style="font-size:11px">${grupos[r].length} fuente${grupos[r].length>1?"s":""}</span></div>` +
-      grupos[r].sort((a,b) => (b.score||0)-(a.score||0) || a.nombre.localeCompare(b.nombre)).map(m => {
+      grupos[r].sort(ordenFuentes).map(m => {
         const h = historial.filter(x => x.medio === m.nombre).slice(0, 3);
         return `<div class="fuente ${m.activo ? "" : "inactiva"}" data-m="${esc(m.nombre)}">
           <div><div class="nom"><b>${esc(m.nombre)}</b>${m.activo ? "" : " <span class='chip gris'>desactivada</span>"}<small>${esc((m.dominios||[]).join(" · "))}${m.linea ? "<br>" + esc(m.linea) : ""}</small></div></div>
@@ -837,7 +844,7 @@ async function cargar() {
     if (b.dataset.toggle) { const m = medios.find(x => x.nombre === b.dataset.toggle); const motivo = prompt(`${m.activo ? "Desactivar" : "Reactivar"} «${m.nombre}». Motivo (queda en el historial):`); if (!motivo) return;
       try { await guardarCambios(m, { activo: !m.activo }, motivo); await cargarMedios(); } catch (err) { alert("No se pudo: " + (err.message||err)); } }
   });
-  $("f-filtro").addEventListener("input", pintarFuentes); $("f-inactivos").addEventListener("change", pintarFuentes);
+  $("f-filtro").addEventListener("input", pintarFuentes); $("f-inactivos").addEventListener("change", pintarFuentes); $("f-orden").addEventListener("change", pintarFuentes);
   $("f-nueva").addEventListener("click", () => { const box = $("f-form"); box.hidden = false; box.innerHTML = `<h3 style="margin-top:0">Agregar una fuente al pool</h3><div class="campos" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px 16px">
       <div><label class="f">Nombre</label><input type="text" id="n-nombre" placeholder="p. ej. La Segunda"></div>
       <div><label class="f">Dominios (separados por coma)</label><input type="text" id="n-dom" placeholder="lasegunda.com"></div>
