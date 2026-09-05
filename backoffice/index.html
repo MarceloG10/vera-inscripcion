@@ -73,6 +73,7 @@
   .sw div { border:1px solid var(--hair); border-radius:4px; overflow:hidden; font-family:var(--sans); font-size:11px; }
   .sw .m { height:54px; } .sw .d { padding:8px; line-height:1.5; }
   .pie { border-top:2px solid var(--tinta); padding:20px 40px 30px; font-family:var(--sans); font-size:10.5px; letter-spacing:.4px; text-transform:uppercase; color:var(--gris); text-align:center; }
+  .manual-marca { border:1px solid var(--hair); }
   .hint { font-family:var(--sans); font-size:11px; color:var(--gris); text-transform:uppercase; letter-spacing:.3px; line-height:1.6; }
   .scroll { overflow-x:auto; -webkit-overflow-scrolling:touch; }
   .desliza { display:none; font-family:var(--sans); font-size:10px; letter-spacing:.5px; text-transform:uppercase; color:var(--gris); margin:0 0 6px; }
@@ -174,22 +175,154 @@
 
     <section id="s-marca">
       <h2>Marca</h2>
-      <div class="bloque blanco">
-        <h3 style="margin-top:0">Paleta</h3>
-        <div class="sw">
-          <div><div class="m" style="background:#2f2129"></div><div class="d"><b>Tinta</b><br>#2f2129</div></div>
-          <div><div class="m" style="background:#d7eaff"></div><div class="d"><b>Azul Global</b><br>#d7eaff · acento #538fd1</div></div>
-          <div><div class="m" style="background:#fef79f"></div><div class="d"><b>Amarillo Chile</b><br>#fef79f · acento #aea100</div></div>
-          <div><div class="m" style="background:#e4cdff"></div><div class="d"><b>Lila Para ti</b><br>#e4cdff · acento #a07bcd</div></div>
-          <div><div class="m" style="background:#e3ff00;border-bottom:2px solid #2f2129"></div><div class="d"><b>Lima</b><br>#e3ff00 · chips Vera elige / Local</div></div>
-          <div><div class="m" style="background:#a6a6a6"></div><div class="d"><b>Gris lema</b><br>#a6a6a6</div></div>
-        </div>
-        <h3>Tipografías</h3>
-        <p><span style="font-family:var(--slab);font-size:30px">vera</span> — wordmark en slab (Rockwell → Roboto Slab → Georgia). Texto en <span style="font-family:var(--serif)">Georgia</span>; rótulos, tags y chips en <span style="font-family:var(--sans)">Helvetica/Arial</span> en mayúsculas.</p>
-        <h3>Componentes</h3>
-        <p><span class="chip">Fuente</span><span class="chip tinta">Subtema</span><span class="chip lima">Vera elige</span><span class="chip lima">Local</span> — tags de lugar en sans negrita sin recuadro; principal sobre el color del segmento, breves sobre blanco; el rótulo FUENTES siempre en el acento del segmento.</p>
-        <p>· <a href="docs/manual-de-marca-vera.pdf">Manual de marca (PDF)</a> · Diseño de referencia del equipo en Canva (DAHS8TQTauA).</p>
-      </div>
+      <div class="manual-marca"><style>
+  .mm { --papel:#ffffff; --tinta:#2f2129; --gris:#8a8a8a; --hair:#e2e2e2; --azul:#d7eaff; --azul-acento:#538fd1;
+        --amarillo:#fef79f; --mostaza:#aea100; --lila:#e4cdff; --purpura:#a07bcd; --lima:#e3ff00; --gris-lema:#a6a6a6;
+        --serif:Georgia,'Times New Roman',Times,serif; --slab:Rockwell,'Roboto Slab',Georgia,serif; --sans:Helvetica,Arial,sans-serif;
+        font-family:var(--serif); color:var(--tinta); line-height:1.45; background:var(--papel); }
+  .mm * { box-sizing:border-box; }
+  .mm .cab { text-align:center; padding:40px 40px 28px; border-bottom:2px solid var(--tinta); }
+  .mm .wordmark { font-family:var(--slab); font-size:64px; line-height:1; letter-spacing:-1px; }
+  .mm .kicker { font-family:var(--sans); font-size:11px; font-weight:bold; letter-spacing:2.5px; text-transform:uppercase; color:var(--gris); margin-top:20px; }
+  .mm .fecha { font-size:17px; color:var(--gris); margin-top:8px; }
+  .mm section { padding:30px 40px 36px; }
+  .mm section.azul { background:var(--azul); } .mm section.amarilla { background:var(--amarillo); } .mm section.lila { background:var(--lila); }
+  .mm section.blanca { background:var(--papel); border-top:2px solid var(--tinta); }
+  .mm h2 { font-family:var(--serif); font-size:28px; font-weight:normal; line-height:1.1; margin:0 0 16px; }
+  .mm h3 { font-family:var(--sans); font-size:11px; font-weight:bold; letter-spacing:1.5px; text-transform:uppercase; margin:26px 0 10px; }
+  .mm section > h3:first-of-type { margin-top:0; }
+  .mm p { font-size:17px; margin:0 0 12px; } .mm li { font-size:16px; margin-bottom:8px; } .mm ul { margin:0 0 14px; padding-left:22px; }
+  .mm .chip { display:inline-block; font-family:var(--sans); font-size:12px; line-height:16px; letter-spacing:.6px; text-transform:uppercase; background:var(--tinta); color:#fff; border-radius:3px; padding:5px 12px; margin:0 6px 6px 0; vertical-align:middle; }
+  .mm .chip.lima { background:var(--lima); color:var(--tinta); border:2px solid var(--tinta); padding:3px 10px; }
+  .mm .chip-claro { display:inline-block; font-family:var(--sans); font-size:12px; line-height:16px; letter-spacing:.5px; text-transform:uppercase; border-radius:3px; padding:4px 10px; margin:0 6px 6px 0; vertical-align:middle; }
+  .mm .sw { display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:12px; margin:8px 0 6px; }
+  .mm .sw .c { border:1px solid var(--hair); border-radius:4px; overflow:hidden; background:#fff; }
+  .mm .sw .m { height:58px; }
+  .mm .sw .d { padding:8px 10px; font-family:var(--sans); font-size:11px; line-height:1.6; letter-spacing:.3px; }
+  .mm .sw .d b { display:block; text-transform:uppercase; font-size:10.5px; letter-spacing:.8px; }
+  .mm .tipo { border:1px solid var(--hair); border-radius:4px; padding:14px 18px; margin-bottom:10px; background:#fff; }
+  .mm .tipo .n { font-family:var(--sans); font-size:10.5px; font-weight:bold; letter-spacing:1px; text-transform:uppercase; color:var(--gris); margin-bottom:6px; }
+  .mm table { border-collapse:collapse; width:100%; font-size:15px; }
+  .mm th { font-family:var(--sans); font-size:10.5px; letter-spacing:1px; text-transform:uppercase; text-align:left; padding:8px 10px 8px 0; border-bottom:2px solid var(--tinta); }
+  .mm td { padding:9px 10px 9px 0; border-bottom:1px solid var(--hair); vertical-align:top; }
+  .mm .demo { background:#fff; border:1px solid var(--hair); border-radius:4px; padding:16px 18px; margin:8px 0 16px; }
+  .mm .tag-lugar { font-family:var(--sans); font-size:13px; font-weight:bold; letter-spacing:.6px; text-transform:uppercase; margin-bottom:6px; }
+  .mm .dots { font-family:var(--sans); font-size:15px; letter-spacing:2px; vertical-align:middle; margin-right:8px; }
+  .mm .rotulo { font-family:var(--sans); font-size:12px; font-weight:bold; letter-spacing:.8px; text-transform:uppercase; margin-right:8px; }
+  .mm .version { display:grid; grid-template-columns:96px 1fr; gap:14px; padding:12px 0; border-bottom:1px solid var(--hair); font-size:15.5px; }
+  .mm .version .f { font-family:var(--sans); font-size:11px; font-weight:bold; letter-spacing:.6px; text-transform:uppercase; color:var(--gris); padding-top:3px; }
+  .mm .pie { border-top:2px solid var(--tinta); text-align:center; padding:26px 40px 32px; }
+  .mm .pie .meta { font-family:var(--sans); font-size:10.5px; letter-spacing:.8px; text-transform:uppercase; color:var(--gris); line-height:1.8; margin-top:10px; }
+  @media (max-width:560px) { .mm .cab, .mm section, .mm .pie { padding-left:20px; padding-right:20px; } .mm .wordmark { font-size:50px; } .mm .version { grid-template-columns:1fr; gap:2px; } }
+  @media print { .mm section { break-inside:auto; } .mm .sw .c, .mm .tipo, .mm .demo, .mm .version, .mm tr { break-inside:avoid; } }
+  
+</style><div class="mm">
+  <header class="cab">
+    <div class="wordmark">vera</div>
+    <div class="kicker">Manual de marca · v2.1</div>
+    <div class="fecha">5 de septiembre de 2026 · basado en el diseño de referencia del equipo (Canva DAHS8TQTauA, págs. 12–15 y 20–21)</div>
+  </header>
+
+  <section class="blanca" style="border-top:none;">
+    <h2>La marca en una frase</h2>
+    <p><b>Vera cuenta lo que pasó con la fuente a la vista.</b> La marca se ve como se lee: limpia, serena y sin ruido. Una sola tinta cálida sobre fondos de color suaves — el color organiza, nunca grita. Nada de degradados, sombras, íconos decorativos ni adornos.</p>
+    <p style="font-family:var(--sans);font-size:12px;text-transform:uppercase;letter-spacing:.4px;color:var(--gris);">Regla de oro: si un elemento no ayuda a leer, sobra.</p>
+  </section>
+
+  <section class="azul">
+    <h2>Color</h2>
+    <p>La tinta es una sola: <b>#2f2129</b>, un casi-negro cálido. Los colores viven en los fondos de sección y en los chips; el texto jamás va en color, salvo el rótulo FUENTES, que siempre usa el acento de su segmento.</p>
+    <h3>Paleta</h3>
+    <div class="sw">
+      <div class="c"><div class="m" style="background:#2f2129"></div><div class="d"><b>Tinta</b>#2f2129 · texto, chips llenos, reglas</div></div>
+      <div class="c"><div class="m" style="background:#fff;border-bottom:1px solid #e2e2e2"></div><div class="d"><b>Papel</b>#ffffff · fondo base, chips sobre color</div></div>
+      <div class="c"><div class="m" style="background:#8a8a8a"></div><div class="d"><b>Gris</b>#8a8a8a · pie, secundarios</div></div>
+      <div class="c"><div class="m" style="background:#a6a6a6"></div><div class="d"><b>Gris lema</b>#a6a6a6 · lema bajo la fecha</div></div>
+      <div class="c"><div class="m" style="background:#e3ff00;border:2px solid #2f2129"></div><div class="d"><b>Lima</b>#e3ff00 · chips «Vera elige» y «Local», con borde de tinta</div></div>
+      <div class="c"><div class="m" style="background:#d7eaff"></div><div class="d"><b>Azul Global</b>#d7eaff · fondo del segmento Global</div></div>
+      <div class="c"><div class="m" style="background:#fef79f"></div><div class="d"><b>Amarillo Chile</b>#fef79f · fondo del segmento Chile</div></div>
+      <div class="c"><div class="m" style="background:#e4cdff"></div><div class="d"><b>Lila Para ti</b>#e4cdff · fondo del segmento personalizado</div></div>
+      <div class="c"><div class="m" style="background:#538fd1"></div><div class="d"><b>Acento Global</b>#538fd1 · rótulo FUENTES</div></div>
+      <div class="c"><div class="m" style="background:#aea100"></div><div class="d"><b>Acento Chile</b>#aea100 · rótulo FUENTES</div></div>
+      <div class="c"><div class="m" style="background:#a07bcd"></div><div class="d"><b>Acento Para ti</b>#a07bcd · rótulo FUENTES</div></div>
+    </div>
+    <h3>Reglas de uso</h3>
+    <ul>
+      <li>Cada segmento es dueño de su color: azul = Global, amarillo = Chile, lila = Para ti. No se mezclan ni se reasignan.</li>
+      <li>La noticia principal va <b>sobre el fondo de color</b>; las breves van <b>sobre blanco</b>.</li>
+      <li>Los acentos nunca se usan para texto corrido ni titulares — solo para el rótulo FUENTES. El lima solo existe en dos chips: «Vera elige» y «Local».</li>
+      <li>La web (landing e inscripción) invierte el sistema: fondo de tinta y tarjetas blancas o azules; el wordmark va en blanco. El correo diario no: fondo claro.</li>
+    </ul>
+  </section>
+
+  <section class="blanca">
+    <h2>Tipografía</h2>
+    <div class="tipo"><div class="n">Wordmark · slab</div><div style="font-family:var(--slab);font-size:44px;line-height:1;">vera</div>
+      <p style="font-family:var(--sans);font-size:12px;color:var(--gris);margin:8px 0 0;">Rockwell (Roboto Slab o Georgia como caída). Siempre en minúsculas, peso normal, letra-espaciado −0.5px. Nunca en color: tinta sobre claro, blanco sobre tinta.</p></div>
+    <div class="tipo"><div class="n">Texto · serif</div><div style="font-size:22px;">Tim Cook entrega la dirección de Apple a John Ternus tras quince años.</div>
+      <p style="font-family:var(--sans);font-size:12px;color:var(--gris);margin:8px 0 0;">Georgia. Titulares de principal en 29–31px, breves en 19–20px, cuerpo en 18–19px con interlínea 1.4. Es la voz de Vera: lo que se lee.</p></div>
+    <div class="tipo"><div class="n">Rótulos · sans</div><div style="font-family:var(--sans);font-size:13px;font-weight:bold;letter-spacing:.6px;text-transform:uppercase;">Estados Unidos / Irán &nbsp;·&nbsp; Fuentes &nbsp;·&nbsp; Para ti</div>
+      <p style="font-family:var(--sans);font-size:12px;color:var(--gris);margin:8px 0 0;">Helvetica/Arial, mayúsculas, espaciado de letras. Para todo lo que organiza: lugares, fuentes, categorías, botones, avisos.</p></div>
+  </section>
+
+  <section class="amarilla">
+    <h2>Componentes</h2>
+    <h3>Cabecera de documento / correo</h3>
+    <p><b>Alineada a la izquierda</b>: wordmark slab (peso normal) + fecha en tinta + lema en gris #a6a6a6 en dos líneas («Lo importante de hoy. / Resumido y contrastado para ti.») + <b>línea de tinta de 2px</b> a todo el ancho. Margen lateral del 10 % del ancho.</p>
+    <h3>Cabecera de segmento</h3>
+    <div class="demo"><div style="font-size:26px;"><span style="border-bottom:2px solid #2f2129;">Global</span></div></div>
+    <p>Nombre en serif <b>subrayado</b> (2px, tinta), <b>alineado a la izquierda</b>, sobre el fondo del segmento. <b>Sin íconos</b>. «Para ti, Nombre» con el nombre de pila del lector.</p>
+    <h3>Tag de lugar</h3>
+    <div class="demo"><div class="tag-lugar">CONGRESO</div></div>
+    <p>Sans negrita mayúsculas en tinta, sin recuadro. Pone el marco; el titular no lo repite.</p>
+    <h3>Tag de subtema (solo Para ti)</h3>
+    <div class="demo"><span class="dots">●●●</span><span class="chip">Artes y creatividad</span> <span class="chip lima">Vera elige</span></div>
+    <div class="demo"><span class="dots">●●●</span><span class="chip lima">Local</span></div>
+    <p>Tres puntos + chip de tinta con texto blanco (peso normal, mayúsculas). Las <b>curadas</b> muestran su subtema real y, al lado, el chip lima <b>«Vera elige»</b>. La noticia de la ciudad del lector lleva solo el chip lima <b>«Local»</b>. El chip lima siempre lleva borde de tinta de 2px. <b>Regla fija: los puntos y los chips existen solo en Para ti</b> — en Global y Chile ninguna noticia los lleva, aunque tenga subtema; ahí solo va el tag de lugar.</p>
+    <h3>Fila de fuentes</h3>
+    <div class="demo" style="background:#d7eaff;border:none;"><span class="rotulo" style="color:#538fd1;">Fuentes</span><span class="chip-claro" style="background:#fff;color:#2f2129;">EFE</span><span class="chip-claro" style="background:#fff;color:#2f2129;">France 24</span></div>
+    <div class="demo"><span class="rotulo" style="color:#538fd1;">Fuentes</span><span class="chip-claro" style="background:#d7eaff;color:#2f2129;">EFE</span><span class="chip-claro" style="background:#d7eaff;color:#2f2129;">France 24</span></div>
+    <p>Chips sin borde, esquinas 3px, clicables. Rótulo siempre en el acento del segmento. Sobre color: chips blancos. Sobre blanco: chips del color del segmento.</p>
+    <h3>Web: landing e inscripción</h3>
+    <p>Fondo de tinta, wordmark blanco centrado y lema gris; contenido en <b>tarjetas redondeadas</b> (18px) blancas o azules; campos con borde de tinta de 2px; chips de subtema como píldoras (radio completo) coloreadas por categoría (azul → amarillo → lila); botones de tinta con texto blanco en mayúsculas.</p>
+  </section>
+
+  <section class="lila">
+    <h2>Dónde aplica</h2>
+    <table>
+      <tr><th>Pieza</th><th>Estado</th></tr>
+      <tr><td><b>Newsletter diario</b> (correo)</td><td>Tema `canva` v2.1 — bloques planos, cabecera clara. El formato de tarjetas (págs. 18–19) se probó el 1 sep y quedó guardado, pendiente de validar.</td></tr>
+      <tr><td><b>holavera.news/unete</b> (landing + formulario)</td><td>Págs. 20–21, aplicado 1 sep</td></tr>
+      <tr><td><b>holavera.news/encuesta</b></td><td>Sistema v2 (fondo claro), aplicado 21 ago</td></tr>
+      <tr><td><b>Página de baja</b> (un clic)</td><td>Aplicado 21 ago</td></tr>
+      <tr><td><b>Correos automáticos</b> (bienvenida, avisos de alta/cambio, encuesta, enlace de acceso al backoffice)</td><td>Aplicado 21 ago · 5 sep</td></tr>
+      <tr><td><b>Informe semanal de fundadores</b></td><td>Bloques v2, aplicado 21 ago</td></tr>
+      <tr><td><b>Backoffice</b> (holavera.news/backoffice)</td><td>Sistema v2.1 claro, aplicado 5 sep</td></tr>
+      <tr><td><b>Vista previa en WhatsApp</b> (og.png)</td><td>Wordmark + lema + tres franjas de color, aplicado 21 ago</td></tr>
+    </table>
+  </section>
+
+  <section class="blanca">
+    <h2>Voz</h2>
+    <ul>
+      <li><b>Serena y directa.</b> Sin alarma, sin ironía, sin emojis en el contenido editorial.</li>
+      <li><b>Explica más, adorna menos.</b> La personalidad está en la selección y en la claridad, no en convertir cada noticia en opinión.</li>
+      <li><b>Tutea y acompaña.</b> «Para ti, Marcelo», «¿Te sirvió? ¿Faltó algo?». Cercana sin ser informal.</li>
+      <li>Frase de cierre de la marca: <i>«Ya sé qué pasó, y sé de dónde sale.»</i></li>
+    </ul>
+    <h3>Historial de versiones</h3>
+    <div class="version"><div class="f">v2.1 · 5 sep</div><div>Fuente del manual reconstruida y guardada en el repo (`pipeline/web/manual-de-marca.html`); se muestra completo en el backoffice. Incorpora la web de dos pantallas (págs. 20–21), el correo de acceso al backoffice y la regla fija de chips solo en Para ti. El formato de tarjetas del newsletter (págs. 18–19) se probó el 1 sep y se revirtió a la espera de validación.</div></div>
+    <div class="version"><div class="f">v2 · 22 ago</div><div>Página 15 del diseño de referencia incorporada, solo newsletter: cabecera a la izquierda con fecha en tinta y lema gris; títulos de segmento subrayados y sin íconos; rótulo FUENTES siempre en acento; chips lima «Vera elige» (junto al subtema real de la curada) y «Local»; chip de subtema en peso normal; margen lateral 10 %.</div></div>
+    <div class="version"><div class="f">v1 · 21 ago</div><div>Sistema tomado de las páginas 12–14 del diseño de referencia del equipo: tinta única #2f2129, fondos azul/amarillo/lila, wordmark slab, cabeceras de segmento a la izquierda con ícono, chips sin borde, tags sin recuadro.</div></div>
+  </section>
+
+  <footer class="pie">
+    <div style="font-size:18px;">La marca se ve como se lee: sin ruido.</div>
+    <div class="meta">Vera · manual de marca v2.1 · se actualiza cuando el equipo lo decida<br>fuente técnica de los valores: pipeline/tema_canva.py</div>
+  </footer>
+</div>
+</div>
+      <p style="margin-top:22px;text-align:center;"><a href="docs/manual-de-marca-vera.pdf">Descargar el manual de marca (PDF)</a> · <a href="https://www.canva.com/design/DAHS8TQTauA/UCTAcLcipIRYkacfszqyPg/edit" target="_blank" rel="noopener">Diseño de referencia en Canva</a></p>
     </section>
     <div class="pie">Vera · backoffice · datos en vivo desde Supabase</div>
   </div>
