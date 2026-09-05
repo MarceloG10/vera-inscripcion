@@ -149,7 +149,7 @@
 
     <section id="s-lectores">
       <h2>Lectores</h2>
-      <p class="hint" style="margin:0 0 10px">«Temas que eligió» es lo que marcó en el formulario; «a qué le hace clic» son los temas de las noticias donde abrió una fuente en los últimos 30 días (con cuántas veces). Comparar las dos columnas es la forma de ir aprendiendo sus gustos reales.</p>
+      <p class="hint" style="margin:0 0 10px">«Temas que eligió» es lo que marcó en el formulario; «a qué le hace clic» son los temas de las noticias donde abrió una fuente, acumulados desde el primer envío (con cuántas veces). Comparar las dos columnas es la forma de ir aprendiendo sus gustos reales.</p>
       <div class="desliza">Desliza para ver toda la tabla →</div><div class="scroll"><table id="t-lectores" class="datos ancha"></table></div>
     </section>
 
@@ -508,7 +508,7 @@ $("nav").addEventListener("click", (e) => {
 async function q(p) { const { data, error } = await p; if (error) throw error; return data || []; }
 async function cargar() {
   const d30 = dias(30), d14 = dias(14), d7 = dias(7);
-  const [sends, events, evws, subs, ediciones, encuestas, correcciones, hist] = await Promise.all([
+  const [sends, events, evws, subs, ediciones, encuestas, correcciones, hist, clicsTodos, catalogo] = await Promise.all([
     q(sb.from("sends").select("fecha,edicion,email,resend_id,ok").gte("fecha", d30).order("fecha")),
     q(sb.from("events").select("resend_id,fecha,estado").gte("fecha", d30)),
     q(sb.from("email_events").select("tipo,destinatario,item,fecha_edicion,dispositivo,ocurrio_at,url").gte("received_at", d30 + "T00:00:00Z")),
@@ -517,6 +517,8 @@ async function cargar() {
     q(sb.from("encuestas").select("*").order("created_at", { ascending: false })),
     q(sb.from("correcciones").select("*").order("created_at", { ascending: false })),
     q(sb.from("subscriber_history").select("email,changed_at").order("changed_at", { ascending: false })),
+    q(sb.from("email_events").select("destinatario,item,fecha_edicion").eq("tipo", "email.clicked").not("item", "is", null)),
+    q(sb.from("items_edicion").select("fecha,item_id,segmento,tipo,subcategoria,etiqueta,ciudad,lugar,titular")),
   ]);
   const estados = Object.fromEntries(events.map(e => [e.resend_id, e.estado]));
   const nombres = Object.fromEntries(subs.map(s => [s.email, (s.nombre || s.email).split(" ")[0]]));
@@ -559,11 +561,9 @@ async function cargar() {
 
   // A qué le hacen clic (30 días): por segmento, por tema, por lector y noticia por noticia
   const meta = {};
-  for (const r of ediciones) { const sg = r.contenido.segmentos;
-    const reg = (it, seg, tipo) => { meta[r.fecha + "|" + it.id] = { seg, tipo, tema: it.subcategoria === "local" || it.etiqueta === "local" ? "Local · " + (it.ciudad || it.lugar || "") : (SUB_LABEL[it.subcategoria] || (it.etiqueta === "categoria" ? "Categoría del día" : "")), tit: it.titular, lugar: it.lugar || "" }; };
-    reg(sg.mundo.principal, "Global", "principal"); sg.mundo.breves.forEach(b => reg(b, "Global", "breve"));
-    reg(sg.chile.principal, "Chile", "principal"); sg.chile.breves.forEach(b => reg(b, "Chile", "breve"));
-    (sg.personalizado.curadas||[]).forEach(b => reg(b, "Para ti", "Vera elige")); (sg.personalizado.pool||[]).forEach(b => reg(b, "Para ti", "tema del lector")); }
+  for (const it of catalogo) meta[String(it.fecha) + "|" + it.item_id] = { seg: it.segmento, tipo: it.tipo,
+    tema: it.subcategoria === "local" || it.etiqueta === "local" ? "Local · " + (it.ciudad || it.lugar || "") : (SUB_LABEL[it.subcategoria] || (it.etiqueta === "categoria" ? "Categoría del día" : "")),
+    tit: it.titular, lugar: it.lugar || "" };
   const porSeg = {}, porTema = {}, porItem = {}, porLector = {};
   let totalClics = 0;
   for (const e of evws) if (e.tipo === "email.clicked" && e.item) { const k = String(e.fecha_edicion) + "|" + e.item; const m = meta[k]; totalClics++;
@@ -584,13 +584,13 @@ async function cargar() {
       items.map(([nom, p, bs]) => `<h3>${nom}</h3>` + [p, ...bs].filter(Boolean).map(it => `<div class="item"><div class="t">${esc(it.lugar||"")} · ${esc(it.estado||"")}${it.confianza != null ? " · confianza " + it.confianza + "%" : ""}</div>${esc(it.titular)}<br>${(it.fuentes||[]).map(f => `<a class="chip" href="${esc(f.url)}" target="_blank" rel="noopener">${esc(f.medio)}${f.via ? " · vía " + esc(f.via) : ""}${f.primaria ? " · primaria" : ""}</a>`).join("")}</div>`).join("")).join("") + `</details>`;
   }).join("") || "<p>Sin ediciones en 30 días.</p>";
 
-  // lectores: a qué temas le hace clic cada uno (30 días)
+  // lectores: a qué temas le hace clic cada uno (histórico completo, no se pierde con el tiempo)
   const gustos = {};
-  for (const e of evws) if (e.tipo === "email.clicked" && e.item) { const m = meta[String(e.fecha_edicion) + "|" + e.item]; const tema = m ? (m.tema || (m.seg + (m.tipo === "principal" ? " · principal" : ""))) : "sin clasificar";
+  for (const e of clicsTodos) { const m = meta[String(e.fecha_edicion) + "|" + e.item]; const tema = m ? (m.tema || (m.seg + (m.tipo === "principal" ? " · principal" : ""))) : "sin clasificar";
     gustos[e.destinatario] = gustos[e.destinatario] || {}; gustos[e.destinatario][tema] = (gustos[e.destinatario][tema]||0) + 1; }
   const gustosHtml = (em) => { const g = gustos[em]; if (!g) return `<span class="hint" style="text-transform:none">sin clics aún</span>`;
     const tot = Object.values(g).reduce((a,b)=>a+b,0);
-    return `<div class="hint" style="margin-bottom:4px">${tot} clic${tot>1?"s":""} en 30 días</div>` + Object.entries(g).sort((a,b) => b[1]-a[1]).map(([tema, n]) => `<span class="chip lila">${esc(tema)} ×${n}</span>`).join(""); };
+    return `<div class="hint" style="margin-bottom:4px">${tot} clic${tot>1?"s":""} desde el inicio</div>` + Object.entries(g).sort((a,b) => b[1]-a[1]).map(([tema, n]) => `<span class="chip lila">${esc(tema)} ×${n}</span>`).join(""); };
   const cambios = {}; for (const h of hist) cambios[h.email] = (cambios[h.email]||0)+1;
   $("t-lectores").innerHTML = `<tr><th>lector</th><th>ciudad · región</th><th>temas que eligió</th><th>a qué le hace clic</th><th>estado</th><th>alta</th></tr>` +
     subs.map(s => `<tr><td><b>${esc((s.nombre||"").split(" ")[0])}</b><br><span class="hint" style="text-transform:none;letter-spacing:0">${esc(s.email)}</span></td><td>${esc(s.ciudad||"")}${s.region ? " · " + esc(s.region) : ""}</td><td class="wrap">${(s.subcategorias||[]).map(x => `<span class="chip">${esc(SUB_LABEL[x]||x)}</span>`).join("")}</td><td class="wrap">${gustosHtml(s.email)}</td><td>${s.activo ? "activo" : "<span class='err'>baja</span>"}${cambios[s.email] ? ` · ${cambios[s.email]} cambio(s)` : ""}</td><td>${s.created_at.slice(0,10)}</td></tr>`).join("");
