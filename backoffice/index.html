@@ -74,7 +74,17 @@
   .sw .m { height:54px; } .sw .d { padding:8px; line-height:1.5; }
   .pie { border-top:2px solid var(--tinta); padding:20px 40px 30px; font-family:var(--sans); font-size:10.5px; letter-spacing:.4px; text-transform:uppercase; color:var(--gris); text-align:center; }
   .hint { font-family:var(--sans); font-size:11px; color:var(--gris); text-transform:uppercase; letter-spacing:.3px; line-height:1.6; }
-  @media (max-width:640px) { .cab, nav, section, .pie { padding-left:18px; padding-right:18px; } .logo { font-size:36px; } .cab { flex-direction:column; align-items:flex-start; } .quien { text-align:left; } }
+  .scroll { overflow-x:auto; -webkit-overflow-scrolling:touch; }
+  .desliza { display:none; font-family:var(--sans); font-size:10px; letter-spacing:.5px; text-transform:uppercase; color:var(--gris); margin:0 0 6px; }
+  @media (max-width:640px) {
+    .cab, nav, section, .pie { padding-left:18px; padding-right:18px; } .logo { font-size:36px; }
+    .cab { flex-direction:column; align-items:flex-start; } .quien { text-align:left; }
+    .bloque { padding:18px 16px 20px; }
+    .kpis { grid-template-columns:1fr 1fr; gap:10px; } .kpi .n { font-size:28px; } .kpi .l { font-size:9px; }
+    table.datos { min-width:560px; font-size:13px; } table.datos td, table.datos th { white-space:nowrap; }
+    table.datos.ancha { min-width:760px; } table.datos td.wrap { white-space:normal; min-width:260px; }
+    .desliza { display:block; } .linea { display:none; }
+  }
 </style>
 </head>
 <body>
@@ -104,7 +114,7 @@
     <section id="s-resumen" class="on">
       <h2>La semana</h2>
       <div class="bloque azul"><div class="kpis" id="kpis"></div></div>
-      <div class="bloque amarillo"><h3 style="margin-top:0">Lectura por edición (30 días)</h3><div style="overflow-x:auto"><table id="t-ediciones"></table></div></div>
+      <div class="bloque amarillo"><h3 style="margin-top:0">Lectura por edición (30 días)</h3><div class="desliza">Desliza para ver toda la tabla →</div><div class="scroll"><table id="t-ediciones" class="datos"></table></div></div>
       <div class="bloque lila"><h3 style="margin-top:0">Por lector (14 días)</h3><div class="hint" style="margin-bottom:10px">■ clic · ■ abrió · ■ entregado · ■ enviado · ■ rebote</div><div style="overflow-x:auto"><table class="grid-lectores" id="t-grid"></table></div></div>
       <div class="bloque blanco"><h3 style="margin-top:0">Lo más clickeado (7 días)</h3><div id="top"></div></div>
     </section>
@@ -117,7 +127,7 @@
 
     <section id="s-lectores">
       <h2>Lectores</h2>
-      <div style="overflow-x:auto"><table id="t-lectores"></table></div>
+      <div class="desliza">Desliza para ver toda la tabla →</div><div class="scroll"><table id="t-lectores" class="datos ancha"></table></div>
     </section>
 
     <section id="s-encuesta">
@@ -144,7 +154,7 @@
       <h2>Fuentes</h2>
       <p class="hint">Lista blanca con score de fiabilidad (bandas de 5, rúbrica de 8 dimensiones) y posicionamiento editorial. Los scores nacen «provisional» hasta la revisión de los socios.</p>
       <div style="margin:10px 0"><input type="text" id="f-filtro" placeholder="Filtrar por nombre, nivel, ámbito o posicionamiento…"></div>
-      <div style="overflow-x:auto"><table id="t-fuentes"></table></div>
+      <div class="desliza">Desliza para ver toda la tabla →</div><div class="scroll"><table id="t-fuentes" class="datos ancha"></table></div>
     </section>
 
     <section id="s-editorial">
@@ -181,7 +191,7 @@
         <p>· <a href="docs/manual-de-marca-vera.pdf">Manual de marca (PDF)</a> · Diseño de referencia del equipo en Canva (DAHS8TQTauA).</p>
       </div>
     </section>
-    <div class="pie">Vera · backoffice de socios · datos en vivo desde Supabase</div>
+    <div class="pie">Vera · backoffice · datos en vivo desde Supabase</div>
   </div>
 </div>
 
@@ -288,7 +298,7 @@ async function cargar() {
   // lectores
   const cambios = {}; for (const h of hist) cambios[h.email] = (cambios[h.email]||0)+1;
   $("t-lectores").innerHTML = `<tr><th>lector</th><th>correo</th><th>ciudad</th><th>región</th><th>temas</th><th>estado</th><th>alta</th></tr>` +
-    subs.map(s => `<tr><td><b>${esc(s.nombre)}</b></td><td>${esc(s.email)}</td><td>${esc(s.ciudad||"")}</td><td>${esc(s.region||"")}</td><td>${(s.subcategorias||[]).map(x => `<span class="chip">${esc(SUB_LABEL[x]||x)}</span>`).join("")}</td><td>${s.activo ? "activo" : "<span class='err'>baja</span>"}${cambios[s.email] ? ` · ${cambios[s.email]} cambio(s)` : ""}</td><td>${s.created_at.slice(0,10)}</td></tr>`).join("");
+    subs.map(s => `<tr><td><b>${esc(s.nombre)}</b></td><td>${esc(s.email)}</td><td>${esc(s.ciudad||"")}</td><td>${esc(s.region||"")}</td><td class="wrap">${(s.subcategorias||[]).map(x => `<span class="chip">${esc(SUB_LABEL[x]||x)}</span>`).join("")}</td><td>${s.activo ? "activo" : "<span class='err'>baja</span>"}${cambios[s.email] ? ` · ${cambios[s.email]} cambio(s)` : ""}</td><td>${s.created_at.slice(0,10)}</td></tr>`).join("");
 
   // encuesta
   $("encuesta").innerHTML = encuestas.length ? encuestas.map(e => `<div class="bloque blanco"><div class="t hint">${e.created_at.slice(0,16).replace("T"," ")} · ${esc(e.nombre||"anónimo")} · ${esc(e.edad||"")} · ${esc(e.ocupacion||"")} · ${esc(e.ciudad||"")}</div>` +
@@ -315,7 +325,7 @@ async function cargar() {
       const f = (filtro||"").toLowerCase();
       $("t-fuentes").innerHTML = `<tr><th>medio</th><th>nivel</th><th class="num">score</th><th>posicionamiento</th><th>ámbito</th><th>estado</th></tr>` +
         filasF.filter(x => !f || [x.n, x.nivel, x.posicionamiento, x.linea, JSON.stringify(x.ambito)].join(" ").toLowerCase().includes(f)).map(x =>
-          `<tr><td><b>${esc(x.n)}</b>${x.linea ? `<br><span class="hint" style="text-transform:none">${esc(x.linea)}</span>` : ""}</td><td>${esc(x.nivel)}${x.tipo ? " · " + esc(x.tipo) : ""}</td><td class="num">${x.score != null ? `<span class="barra" style="width:${x.score*0.6}px"></span> ${x.score}` : "—"}</td><td>${esc(x.posicionamiento||"")}</td><td>${Array.isArray(x.ambito) ? x.ambito.map(a => `<span class="chip gris">${esc(SUB_LABEL[a]||a)}</span>`).join("") : esc(x.ambito||"")}</td><td>${esc(x.score_estado||"")}</td></tr>`).join("");
+          `<tr><td><b>${esc(x.n)}</b>${x.linea ? `<br><span class="hint linea" style="text-transform:none">${esc(x.linea)}</span>` : ""}</td><td>${esc(x.nivel)}${x.tipo ? " · " + esc(x.tipo) : ""}</td><td class="num">${x.score != null ? `<span class="barra" style="width:${x.score*0.6}px"></span> ${x.score}` : "—"}</td><td>${esc(x.posicionamiento||"")}</td><td>${Array.isArray(x.ambito) ? x.ambito.map(a => `<span class="chip gris">${esc(SUB_LABEL[a]||a)}</span>`).join("") : esc(x.ambito||"")}</td><td>${esc(x.score_estado||"")}</td></tr>`).join("");
     };
     pintar(""); $("f-filtro").addEventListener("input", (e) => pintar(e.target.value));
   } catch (e) { $("t-fuentes").innerHTML = `<tr><td>No se pudo cargar medios.json</td></tr>`; }
