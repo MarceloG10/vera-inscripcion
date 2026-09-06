@@ -63,6 +63,25 @@
   .popover .acciones { margin-top:8px; padding-top:8px; border-top:1px solid var(--hair); } .popover .acciones a { margin-right:12px; color:var(--purpura); font-size:11px; text-transform:uppercase; letter-spacing:.4px; }
   .filtros-activos { margin:6px 0 10px; } .filtros-activos .chip { cursor:pointer; }
   .kpi { cursor:help; }
+  .tablero { display:grid; grid-template-columns:repeat(5, minmax(0, 1fr)); gap:10px; align-items:start; min-width:860px; padding-bottom:8px; }
+  .col { background:#f4f2f3; border-radius:6px; padding:10px; min-height:120px; }
+  .col.sobre { outline:2px dashed var(--purpura); }
+  .col h4 { font-family:var(--sans); font-size:11px; letter-spacing:1.2px; text-transform:uppercase; margin:2px 4px 10px; display:flex; justify-content:space-between; }
+  .col h4 span { color:var(--gris); font-weight:normal; }
+  .tarjeta { background:#fff; border:1px solid var(--hair); border-left:4px solid var(--tinta); border-radius:4px; padding:9px 10px; margin-bottom:8px; cursor:grab; font-size:14px; }
+  .tarjeta:hover { border-color:var(--tinta); }
+  .tarjeta.arrastrando { opacity:.5; }
+  .tarjeta .tn { font-family:var(--serif); font-size:14.5px; line-height:1.25; margin-bottom:6px; overflow-wrap:anywhere; }
+  .tarjeta .tm { font-family:var(--sans); font-size:10.5px; color:var(--gris); letter-spacing:.3px; line-height:1.6; }
+  .tarjeta .tu { font-size:12.5px; color:#5a5257; margin-top:6px; border-top:1px solid var(--hair); padding-top:6px; }
+  .tarjeta .mover { display:flex; justify-content:space-between; margin-top:6px; }
+  .tarjeta .mover button { font-family:var(--sans); font-size:12px; background:#fff; border:1px solid var(--hair); border-radius:3px; padding:2px 8px; cursor:pointer; color:var(--tinta); }
+  .col.c-ideas .tarjeta { border-left-color:#8a8a8a; } .col.c-por_hacer .tarjeta { border-left-color:#538fd1; } .col.c-en_curso .tarjeta { border-left-color:#aea100; } .col.c-en_pausa .tarjeta { border-left-color:#a07bcd; } .col.c-hecho .tarjeta { border-left-color:#5aa869; }
+  .detalle { border:2px solid var(--tinta); border-radius:6px; padding:18px 22px; margin-top:16px; background:#fff; }
+  .detalle .campos { display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:10px 16px; }
+  .bit { border-left:3px solid var(--hair); padding:4px 0 4px 12px; margin:6px 0; font-size:14px; }
+  .bit .t { font-family:var(--sans); font-size:10px; letter-spacing:.5px; text-transform:uppercase; color:var(--gris); }
+  .col { min-width:0; }
   .grupo-region { margin:26px 0 8px; font-family:var(--serif); font-size:22px; }
   .fuente { border-top:1px solid var(--hair); padding:12px 0; display:grid; grid-template-columns:1.6fr 1fr 1fr 1.2fr auto; gap:10px 16px; align-items:start; font-size:14px; }
   .fuente.inactiva { opacity:.5; }
@@ -130,7 +149,7 @@
       <button data-s="resumen" class="on">Resumen</button><button data-s="ediciones">Ediciones</button>
       <button data-s="lectores">Lectores</button><button data-s="encuesta">Encuesta</button>
       <button data-s="correcciones">Correcciones</button><button data-s="fuentes">Fuentes</button>
-      <button data-s="editorial">Editorial</button><button data-s="marca">Marca</button><button data-s="salud">Salud</button>
+      <button data-s="editorial">Editorial</button><button data-s="marca">Marca</button><button data-s="salud">Salud</button><button data-s="proyectos">Proyectos</button>
     </nav>
 
     <section id="s-resumen" class="on">
@@ -351,6 +370,18 @@
       <h3 style="margin-top:30px">Manual editorial completo (v1.9)</h3>
       <iframe id="manual-editorial" src="docs/manual-editorial.html" title="Manual editorial de Vera" style="width:100%;height:1200px;border:1px solid var(--hair);background:#fff;" loading="lazy" onload="try{this.style.height=(this.contentDocument.documentElement.scrollHeight+20)+'px'}catch(e){}"></iframe>
       <p style="margin-top:14px;text-align:center;"><a href="docs/manual-editorial-vera.pdf">Descargar el manual editorial (PDF)</a> · <a href="https://github.com/MarceloG10/vera/blob/main/docs/03-desarrollar.md" target="_blank" rel="noopener">Bitácora de decisiones</a> · <a href="https://github.com/MarceloG10/vera/blob/main/docs/fuentes.md" target="_blank" rel="noopener">Política de fuentes</a> (GitHub)</p>
+    </section>
+
+    <section id="s-proyectos">
+      <h2>Proyectos</h2>
+      <p class="hint" style="margin-bottom:12px">Tablero de iniciativas. Arrastra una tarjeta a otra columna (o usa las flechas), y ábrela para editar, llevar la bitácora o eliminarla.</p>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:12px">
+        <button class="btn" id="p-nuevo" style="margin:0;padding:9px 14px;font-size:12px">+ Nueva tarjeta</button>
+        <input type="text" id="p-filtro" placeholder="Buscar…" style="flex:1;min-width:180px">
+      </div>
+      <div id="p-form" class="bloque blanco" hidden></div>
+      <div class="tablero scroll" id="tablero"></div>
+      <div id="p-detalle"></div>
     </section>
 
     <section id="s-salud">
@@ -729,6 +760,70 @@ async function cargar() {
   const avisosPorFecha = {}; for (const r of ediciones) if (r.contenido.validacion) avisosPorFecha[r.fecha] = (r.contenido.validacion.avisos||[]).length;
   $("t-radio").innerHTML = `<tr><th>fecha</th><th class="num">nº</th><th>países en Global</th><th class="num">conflictos</th><th>categoría del día</th><th>certeza</th><th class="num">confianza</th><th class="num" title="avisos del validador al guardar (desde el 7 sep)">avisos</th></tr>` +
     Object.entries(porEd).sort((a,b) => b[0].localeCompare(a[0])).map(([f, r]) => `<tr><td>${f}</td><td class="num">${r.edicion}</td><td class="wrap">${[...r.paises].map(p => `<span class="chip gris">${esc(p)}</span>`).join("")}</td><td class="num" style="${r.conflictos>2?"color:#b3261e;font-weight:bold":""}">${r.conflictos}</td><td>${esc(r.cat)}</td><td>${Object.keys(r.estados).length ? Object.entries(r.estados).map(([k,v]) => `${k.replace("_"," ")} ${v}`).join(", ") : "<span class='hint' style='text-transform:none'>sin marcar</span>"}</td><td class="num">${r.conf.length ? Math.round(r.conf.reduce((a,b)=>a+b,0)/r.conf.length) + "%" : "—"}</td><td class="num">${avisosPorFecha[f] != null ? avisosPorFecha[f] : "—"}</td></tr>`).join("");
+
+  // ===== Proyectos (tablero tipo Trello) =====
+  const ESTADOS_P = [["ideas","Ideas"],["por_hacer","Por hacer"],["en_curso","En curso"],["en_pausa","En pausa"],["hecho","Hecho"]];
+  const nombreEstado = (k) => (ESTADOS_P.find(x => x[0] === k) || [k, k])[1];
+  const socioNombres = [...new Set([...subs.map(s => (s.nombre||"").split(" ")[0]), "Founders", "Socio"])].filter(Boolean);
+  let proyectos = [], bitacoras = [], abierto = null;
+  const fechaP = (iso) => iso ? new Intl.DateTimeFormat("es-ES", { timeZone: "Europe/Madrid", day: "2-digit", month: "short" }).format(new Date(iso.length === 10 ? iso + "T12:00:00Z" : iso)) : "";
+  async function cargarProyectos() { [proyectos, bitacoras] = await Promise.all([q(sb.from("proyectos").select("*").order("orden").order("created_at")), q(sb.from("proyectos_bitacora").select("*").order("cuando", { ascending: false }))]); pintarTablero(); if (abierto != null) pintarDetalle(abierto); }
+  function pintarTablero() {
+    const f = ($("p-filtro").value||"").toLowerCase();
+    const vis = proyectos.filter(p => !f || [p.nombre, p.descripcion, p.responsable].join(" ").toLowerCase().includes(f));
+    $("tablero").innerHTML = ESTADOS_P.map(([k, l]) => { const cs = vis.filter(p => p.estado === k); const idx = ESTADOS_P.findIndex(x => x[0] === k);
+      return `<div class="col c-${k}" data-estado="${k}"><h4>${l} <span>${cs.length}</span></h4>` + cs.map(p => { const ult = bitacoras.find(b => b.proyecto_id === p.id);
+        return `<div class="tarjeta" draggable="true" data-id="${p.id}"><div class="tn">${esc(p.nombre)}</div><div class="tm">${esc(p.responsable||"sin responsable")}${p.fecha_inicio ? " · desde " + fechaP(p.fecha_inicio) : ""} · ${bitacoras.filter(b => b.proyecto_id === p.id).length} nota${bitacoras.filter(b => b.proyecto_id === p.id).length===1?"":"s"}</div>${ult ? `<div class="tu">${esc(ult.nota.length > 110 ? ult.nota.slice(0,110) + "…" : ult.nota)}<div class="tm">${fechaP(ult.cuando)} · ${esc((ult.por||"").split("@")[0])}</div></div>` : ""}<div class="mover"><button data-mv="${p.id}" data-a="${idx > 0 ? ESTADOS_P[idx-1][0] : ""}" ${idx === 0 ? "disabled" : ""} title="mover a la izquierda">←</button><button data-abrir="${p.id}">abrir</button><button data-mv="${p.id}" data-a="${idx < ESTADOS_P.length-1 ? ESTADOS_P[idx+1][0] : ""}" ${idx === ESTADOS_P.length-1 ? "disabled" : ""} title="mover a la derecha">→</button></div></div>`; }).join("") + `</div>`; }).join("");
+    document.querySelectorAll(".tarjeta").forEach(el => { el.addEventListener("dragstart", (e) => { e.dataTransfer.setData("text/plain", el.dataset.id); el.classList.add("arrastrando"); }); el.addEventListener("dragend", () => el.classList.remove("arrastrando")); });
+    document.querySelectorAll(".col").forEach(col => { col.addEventListener("dragover", (e) => { e.preventDefault(); col.classList.add("sobre"); }); col.addEventListener("dragleave", () => col.classList.remove("sobre"));
+      col.addEventListener("drop", async (e) => { e.preventDefault(); col.classList.remove("sobre"); const id = parseInt(e.dataTransfer.getData("text/plain")); await moverProyecto(id, col.dataset.estado); }); });
+  }
+  async function moverProyecto(id, estado) { const p = proyectos.find(x => x.id === id); if (!p || !estado || p.estado === estado) return; const desde = p.estado;
+    const r = await sb.from("proyectos").update({ estado }).eq("id", id); if (r.error) { alert("No se pudo mover: " + r.error.message); return; }
+    await sb.from("proyectos_bitacora").insert({ proyecto_id: id, nota: `Movido de «${nombreEstado(desde)}» a «${nombreEstado(estado)}»`, estado, por: yo }); await cargarProyectos(); }
+  function pintarDetalle(id) { const p = proyectos.find(x => x.id === id); if (!p) { $("p-detalle").innerHTML = ""; abierto = null; return; } abierto = id;
+    const bs = bitacoras.filter(b => b.proyecto_id === id);
+    $("p-detalle").innerHTML = `<div class="detalle"><div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px"><h3 style="margin:0">Tarjeta · ${esc(nombreEstado(p.estado))}</h3><button class="btn" id="d-cerrar" style="margin:0;padding:6px 10px;font-size:11px;background:#fff;color:var(--tinta)">Cerrar</button></div>
+      <div class="campos" style="margin-top:12px">
+        <div style="grid-column:1/-1"><label class="f">Nombre del proyecto</label><input type="text" id="d-nombre" value="${esc(p.nombre)}"></div>
+        <div><label class="f">Responsable</label><input type="text" id="d-resp" list="d-resp-lista" value="${esc(p.responsable||"")}"><datalist id="d-resp-lista">${socioNombres.map(n => `<option value="${esc(n)}">`).join("")}</datalist></div>
+        <div><label class="f">Fecha de inicio</label><input type="date" id="d-fecha" value="${esc(p.fecha_inicio||"")}"></div>
+        <div><label class="f">Estado</label><select id="d-estado">${ESTADOS_P.map(([k,l]) => `<option value="${k}" ${p.estado===k?"selected":""}>${l}</option>`).join("")}</select></div>
+        <div style="grid-column:1/-1"><label class="f">Descripción</label><textarea id="d-desc" rows="4">${esc(p.descripcion||"")}</textarea></div>
+      </div>
+      <div style="margin-top:12px"><button class="btn" id="d-guardar" style="margin:0 8px 0 0;padding:9px 14px;font-size:12px">Guardar cambios</button><button class="btn" id="d-borrar" style="margin:0;padding:9px 14px;font-size:12px;background:#fff;color:#b3261e;border-color:#b3261e">Eliminar tarjeta</button><span class="msg" id="d-msg" style="margin-left:10px"></span></div>
+      <h3>Bitácora (${bs.length})</h3>
+      <div style="display:flex;gap:8px;align-items:flex-start"><textarea id="d-nota" rows="2" placeholder="¿En qué está? Escribe una nota de avance…" style="flex:1"></textarea><button class="btn" id="d-anotar" style="margin:0;padding:9px 14px;font-size:12px;white-space:nowrap">Anotar</button></div>
+      <div style="margin-top:10px">${bs.map(b => `<div class="bit"><div class="t">${fechaP(b.cuando)} · ${esc((b.por||"").split("@")[0])}${b.estado ? " · " + esc(nombreEstado(b.estado)) : ""}</div>${esc(b.nota)}</div>`).join("") || "<p class='hint' style='text-transform:none'>Sin notas todavía.</p>"}</div>
+      <p class="hint" style="margin-top:12px">Creada ${fechaP(p.created_at)} por ${esc((p.creado_por||"").split("@")[0])} · última actualización ${fechaP(p.updated_at)}</p></div>`;
+    $("d-cerrar").onclick = () => { abierto = null; $("p-detalle").innerHTML = ""; };
+    $("d-guardar").onclick = async () => { const msg = $("d-msg"); const cambios = { nombre: $("d-nombre").value.trim(), responsable: $("d-resp").value.trim() || null, fecha_inicio: $("d-fecha").value || null, estado: $("d-estado").value, descripcion: $("d-desc").value.trim() || null };
+      if (!cambios.nombre) { msg.className = "msg err"; msg.textContent = "Falta el nombre."; return; }
+      const desde = p.estado;
+      const r = await sb.from("proyectos").update(cambios).eq("id", id); if (r.error) { msg.className = "msg err"; msg.textContent = r.error.message; return; }
+      if (cambios.estado !== desde) await sb.from("proyectos_bitacora").insert({ proyecto_id: id, nota: `Movido de «${nombreEstado(desde)}» a «${nombreEstado(cambios.estado)}»`, estado: cambios.estado, por: yo });
+      await cargarProyectos(); const m2 = $("d-msg"); if (m2) { m2.className = "msg ok"; m2.textContent = "Guardado."; } };
+    $("d-borrar").onclick = async () => { if (!confirm(`¿Eliminar «${p.nombre}» y su bitácora? No se puede deshacer.`)) return; const r = await sb.from("proyectos").delete().eq("id", id); if (r.error) { alert(r.error.message); return; } abierto = null; $("p-detalle").innerHTML = ""; await cargarProyectos(); };
+    $("d-anotar").onclick = async () => { const nota = $("d-nota").value.trim(); if (!nota) return; const r = await sb.from("proyectos_bitacora").insert({ proyecto_id: id, nota, estado: p.estado, por: yo }); if (r.error) { alert(r.error.message); return; } await cargarProyectos(); };
+    $("p-detalle").scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+  $("tablero").addEventListener("click", async (e) => { const b = e.target.closest("button"); const card = e.target.closest(".tarjeta");
+    if (b && b.dataset.abrir) { pintarDetalle(parseInt(b.dataset.abrir)); return; }
+    if (b && b.dataset.mv) { await moverProyecto(parseInt(b.dataset.mv), b.dataset.a); return; }
+    if (card && !b) pintarDetalle(parseInt(card.dataset.id)); });
+  $("p-filtro").addEventListener("input", pintarTablero);
+  $("p-nuevo").addEventListener("click", () => { const box = $("p-form"); box.hidden = false; box.innerHTML = `<h3 style="margin-top:0">Nueva tarjeta</h3><div class="campos" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px 16px">
+      <div style="grid-column:1/-1"><label class="f">Nombre del proyecto</label><input type="text" id="n-p-nombre"></div>
+      <div><label class="f">Responsable</label><input type="text" id="n-p-resp" list="d-resp-lista2" value="${esc(socioNombres[0]||"")}"><datalist id="d-resp-lista2">${socioNombres.map(n => `<option value="${esc(n)}">`).join("")}</datalist></div>
+      <div><label class="f">Fecha de inicio</label><input type="date" id="n-p-fecha" value="${new Date().toISOString().slice(0,10)}"></div>
+      <div><label class="f">Columna</label><select id="n-p-estado">${ESTADOS_P.map(([k,l]) => `<option value="${k}">${l}</option>`).join("")}</select></div>
+      <div style="grid-column:1/-1"><label class="f">Descripción</label><textarea id="n-p-desc" rows="3"></textarea></div></div>
+      <div style="margin-top:12px"><button class="btn" id="n-p-guardar" style="margin:0 8px 0 0;padding:9px 14px;font-size:12px">Crear</button><button class="btn" id="n-p-cerrar" style="margin:0;padding:9px 14px;font-size:12px;background:#fff;color:var(--tinta)">Cerrar</button><span class="msg" id="n-p-msg" style="margin-left:10px"></span></div>`;
+    $("n-p-cerrar").onclick = () => { box.hidden = true; };
+    $("n-p-guardar").onclick = async () => { const msg = $("n-p-msg"); const nombre = $("n-p-nombre").value.trim(); if (!nombre) { msg.className = "msg err"; msg.textContent = "Falta el nombre."; return; }
+      const r = await sb.from("proyectos").insert({ nombre, responsable: $("n-p-resp").value.trim() || null, fecha_inicio: $("n-p-fecha").value || null, estado: $("n-p-estado").value, descripcion: $("n-p-desc").value.trim() || null, creado_por: yo, orden: proyectos.length }); if (r.error) { msg.className = "msg err"; msg.textContent = r.error.message; return; }
+      box.hidden = true; await cargarProyectos(); }; });
+  await cargarProyectos();
 
   // ===== Salud del sistema =====
   const hoyStr = new Date().toISOString().slice(0,10);
