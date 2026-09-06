@@ -86,6 +86,15 @@
   .detalle .campos { display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:10px 16px; }
   .detalle .kicker { margin:0 0 4px; }
   .bit { border-left:2px solid var(--tinta); padding:2px 0 2px 12px; margin:10px 0; font-size:14px; line-height:1.4; }
+  /* radiografía por edición */
+  #t-radio th { white-space:normal; vertical-align:bottom; line-height:1.25; }
+  #t-radio td { vertical-align:top; padding-top:10px; padding-bottom:10px; }
+  #t-radio .dia { white-space:nowrap; } #t-radio .dia small { display:block; font-family:var(--sans); font-size:10px; letter-spacing:1px; text-transform:uppercase; color:var(--gris); }
+  .lugares { font-family:var(--sans); font-size:11px; letter-spacing:.4px; text-transform:uppercase; line-height:1.7; color:var(--tinta); width:270px; max-width:270px; }
+  .lugares b { font-weight:normal; white-space:nowrap; } .lugares i { font-style:normal; color:var(--gris); }
+  .certeza { min-width:170px; max-width:210px; } .certeza .apilada { display:flex; height:8px; border-radius:2px; overflow:hidden; background:var(--hair); margin:5px 0 4px; }
+  .certeza .apilada span { display:block; height:100%; } .certeza .apilada .conf { background:var(--tinta); } .certeza .apilada .rep { background:var(--azul-acento); } .certeza .apilada .des { background:var(--mostaza); } .certeza .apilada .noc { background:#b3261e; }
+  .certeza .leyenda { font-family:var(--sans); font-size:10px; letter-spacing:.5px; text-transform:uppercase; color:var(--gris); white-space:normal; line-height:1.5; }
   .bit .t { font-family:var(--sans); font-size:10px; letter-spacing:1px; text-transform:uppercase; color:var(--gris); margin-bottom:2px; }
   .grupo-region { margin:26px 0 8px; font-family:var(--serif); font-size:22px; }
   .fuente { border-top:1px solid var(--hair); padding:12px 0; display:grid; grid-template-columns:1.6fr 1fr 1fr 1.2fr auto; gap:10px 16px; align-items:start; font-size:14px; }
@@ -128,7 +137,7 @@
     .bloque { padding:18px 16px 20px; }
     .kpis { grid-template-columns:1fr 1fr; gap:10px; } .kpi .n { font-size:28px; } .kpi .l { font-size:9px; }
     table.datos { min-width:560px; font-size:13px; } table.datos td, table.datos th { white-space:nowrap; }
-    table.datos.ancha { min-width:760px; } table.datos td.wrap { white-space:normal; min-width:260px; }
+    table.datos.ancha { min-width:760px; } table.datos td.texto { white-space:normal; min-width:220px; }
     .desliza { display:block; } .linea { display:none; }
   }
 </style>
@@ -763,8 +772,13 @@ async function cargar() {
     r.n++; if (it.estado) r.estados[it.estado] = (r.estados[it.estado]||0) + 1; if (it.confianza != null) r.conf.push(it.confianza);
     if (it.segmento === "Global") { if (it.lugar) r.paises.add(it.lugar.split("/")[0].trim()); if (conflicto.test(it.titular||"")) r.conflictos++; if (it.etiqueta === "categoria") r.cat = SUB_LABEL[it.subcategoria] || it.subcategoria || ""; } }
   const avisosPorFecha = {}; for (const r of ediciones) if (r.contenido.validacion) avisosPorFecha[r.fecha] = (r.contenido.validacion.avisos||[]).length;
-  $("t-radio").innerHTML = `<tr><th>fecha</th><th class="num">nº</th><th>países en Global</th><th class="num">conflictos</th><th>categoría del día</th><th>certeza</th><th class="num">confianza</th><th class="num" title="avisos del validador al guardar (desde el 7 sep)">avisos</th></tr>` +
-    Object.entries(porEd).sort((a,b) => b[0].localeCompare(a[0])).map(([f, r]) => `<tr><td>${f}</td><td class="num">${r.edicion}</td><td class="wrap">${[...r.paises].map(p => `<span class="chip gris">${esc(p)}</span>`).join("")}</td><td class="num" style="${r.conflictos>2?"color:#b3261e;font-weight:bold":""}">${r.conflictos}</td><td>${esc(r.cat)}</td><td>${Object.keys(r.estados).length ? Object.entries(r.estados).map(([k,v]) => `${k.replace("_"," ")} ${v}`).join(", ") : "<span class='hint' style='text-transform:none'>sin marcar</span>"}</td><td class="num">${r.conf.length ? Math.round(r.conf.reduce((a,b)=>a+b,0)/r.conf.length) + "%" : "—"}</td><td class="num">${avisosPorFecha[f] != null ? avisosPorFecha[f] : "—"}</td></tr>`).join("");
+  const diaRadio = (f) => new Intl.DateTimeFormat("es-ES", { day: "numeric", month: "short" }).format(new Date(f + "T12:00:00Z")).replace(".", "");
+  const ESTADO_ORDEN = [["confirmado", "conf", "confirmado"], ["reportado", "rep", "reportado"], ["en_desarrollo", "des", "en desarrollo"], ["no_confirmado", "noc", "no confirmado"]];
+  const certezaCelda = (r) => { const tot = Object.values(r.estados).reduce((a, b) => a + b, 0); if (!tot) return `<span class="hint" style="text-transform:none">sin marcar</span>`;
+    const partes = ESTADO_ORDEN.filter(([k]) => r.estados[k]);
+    return `<div class="apilada" title="${partes.map(([k, , l]) => `${l}: ${r.estados[k]}`).join(" · ")}">${partes.map(([k, c]) => `<span class="${c}" style="width:${100 * r.estados[k] / tot}%"></span>`).join("")}</div><div class="leyenda">${partes.map(([k, , l]) => `${r.estados[k]} ${l}`).join(" · ")}</div>`; };
+  $("t-radio").innerHTML = `<tr><th>edición</th><th>lugares en Global</th><th class="num" title="titulares de Global con vocabulario bélico">conflictos</th><th>categoría del día</th><th title="estado de certeza marcado por el editor en cada noticia (desde el 5 sep)">certeza</th><th class="num" title="story confidence promedio de la edición (desde el 5 sep)">confianza</th><th class="num" title="avisos del validador al guardar (desde el 6 sep)">avisos</th></tr>` +
+    Object.entries(porEd).sort((a,b) => b[0].localeCompare(a[0])).map(([f, r]) => `<tr><td class="dia" title="${f}">${diaRadio(f)}<small>nº ${r.edicion}</small></td><td class="texto"><div class="lugares">${[...r.paises].map(p => `<b>${esc(p)}</b>`).join(" <i>·</i> ")}</div></td><td class="num" style="${r.conflictos>2?"color:#b3261e;font-weight:bold":""}">${r.conflictos}</td><td>${esc(r.cat)}</td><td class="certeza">${certezaCelda(r)}</td><td class="num">${r.conf.length ? Math.round(r.conf.reduce((a,b)=>a+b,0)/r.conf.length) + "%" : "—"}</td><td class="num">${avisosPorFecha[f] != null ? avisosPorFecha[f] : "—"}</td></tr>`).join("");
 
   // ===== Proyectos (tablero tipo Trello) =====
   const ESTADOS_P = [["ideas","Ideas"],["por_hacer","Por hacer"],["en_curso","En curso"],["en_pausa","En pausa"],["hecho","Hecho"]];
