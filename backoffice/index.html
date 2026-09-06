@@ -99,6 +99,10 @@
   .grupo-region { margin:26px 0 8px; font-family:var(--serif); font-size:22px; }
   .fuente { border-top:1px solid var(--hair); padding:12px 0; display:grid; grid-template-columns:1.6fr 1fr 1fr 1.2fr auto; gap:10px 16px; align-items:start; font-size:14px; }
   .fuente.inactiva { opacity:.5; }
+  .fuente.cab { border-top:0; border-bottom:2px solid var(--tinta); padding:6px 0 8px; margin-top:14px; position:sticky; top:0; background:var(--papel); z-index:5; }
+  .fuente.cab .lab { margin:0; padding-top:4px; }
+  .cabbtn { font-family:var(--sans); font-size:9.5px; letter-spacing:.8px; text-transform:uppercase; color:var(--tinta); background:#fff; border:1.5px solid var(--tinta); border-radius:3px; padding:4px 8px; cursor:pointer; white-space:nowrap; }
+  .cabbtn.activo { background:var(--tinta); color:#fff; }
   .fuente .nom { font-family:var(--serif); font-size:16px; } .fuente .nom small { display:block; font-family:var(--sans); font-size:11px; color:var(--gris); letter-spacing:0; text-transform:none; margin-top:2px; }
   .fuente .lab { font-family:var(--sans); font-size:9.5px; letter-spacing:.8px; text-transform:uppercase; color:var(--gris); display:block; margin-bottom:3px; }
   .fuente .acc button { font-family:var(--sans); font-size:10.5px; letter-spacing:.5px; text-transform:uppercase; background:#fff; color:var(--tinta); border:1.5px solid var(--tinta); border-radius:3px; padding:5px 9px; cursor:pointer; margin:0 0 4px; display:block; width:100%; }
@@ -908,6 +912,26 @@ async function cargar() {
   }
   document.querySelectorAll("[data-uso]").forEach(b => b.addEventListener("click", () => pintarUso(b.dataset.uso)));
   const ambTxt = (a) => Array.isArray(a) ? a.map(x => SUB_LABEL[x]||x) : [a || "general"];
+  const nivelesDisp = () => [...new Set([...NIVELES, ...medios.map(m => m.nivel).filter(Boolean)])];
+  let nivelesSel = null;   // null = todos los niveles
+  let popoverAbierto = null;
+  const cerrarPopover = () => { if (popoverAbierto) { popoverAbierto.remove(); popoverAbierto = null; } document.removeEventListener("click", cerrarSiFuera); };
+  function cerrarSiFuera(e) { if (popoverAbierto && !popoverAbierto.contains(e.target) && !e.target.closest("[data-nivel]")) cerrarPopover(); }
+  function abrirPopoverNivel(btn) {
+    if (popoverAbierto) { cerrarPopover(); return; }
+    const r = btn.getBoundingClientRect(), niveles = nivelesDisp(), sel = nivelesSel || new Set(niveles);
+    const cnt = {}; for (const m of medios) if (m.activo || $("f-inactivos").checked) cnt[m.nivel] = (cnt[m.nivel] || 0) + 1;
+    const pop = document.createElement("div"); pop.className = "popover"; pop.style.top = (r.bottom + 4) + "px"; pop.style.left = Math.max(8, Math.min(r.left, window.innerWidth - 250)) + "px";
+    pop.innerHTML = `<div class="hint" style="margin-bottom:6px">Mostrar solo estos niveles</div>` + niveles.map(n => `<label><input type="checkbox" value="${esc(n)}" ${sel.has(n) ? "checked" : ""}> ${esc(n)} <span style="color:var(--gris)">(${cnt[n] || 0})</span></label>`).join("") +
+      `<div class="acciones"><a href="#" data-a="todos">todos</a><a href="#" data-a="ninguno">ninguno</a><a href="#" data-a="cerrar">cerrar</a></div>`;
+    const aplicar = () => { const marcados = [...pop.querySelectorAll("input:checked")].map(i => i.value); nivelesSel = marcados.length === niveles.length ? null : new Set(marcados); pintarFuentes(); };
+    pop.addEventListener("change", aplicar);
+    pop.addEventListener("click", (e) => { const a = e.target.closest("a[data-a]"); if (!a) return; e.preventDefault();
+      if (a.dataset.a === "cerrar") { cerrarPopover(); return; }
+      pop.querySelectorAll("input").forEach(i => i.checked = a.dataset.a === "todos"); aplicar(); });
+    document.body.appendChild(pop); popoverAbierto = pop;
+    setTimeout(() => document.addEventListener("click", cerrarSiFuera), 0);
+  }
   const ordenFuentes = (a, b) => { const o = $("f-orden").value;
     if (o === "score-asc") return (a.score ?? 999) - (b.score ?? 999) || a.nombre.localeCompare(b.nombre);
     if (o === "nombre") return a.nombre.localeCompare(b.nombre);
@@ -916,10 +940,12 @@ async function cargar() {
     return (b.score||0) - (a.score||0) || a.nombre.localeCompare(b.nombre); };
   function pintarFuentes() {
     const f = ($("f-filtro").value||"").toLowerCase(); const verInact = $("f-inactivos").checked;
-    const vis = medios.filter(m => (verInact || m.activo) && (!f || [m.nombre, (m.dominios||[]).join(" "), m.linea, m.nivel, m.posicionamiento, ambTxt(m.ambito).join(" ")].join(" ").toLowerCase().includes(f)));
+    const vis = medios.filter(m => (verInact || m.activo) && (!nivelesSel || nivelesSel.has(m.nivel)) && (!f || [m.nombre, (m.dominios||[]).join(" "), m.linea, m.nivel, m.posicionamiento, ambTxt(m.ambito).join(" ")].join(" ").toLowerCase().includes(f)));
     const grupos = {}; for (const m of vis) (grupos[m.region] = grupos[m.region] || []).push(m);
     const orden = [...REGIONES, ...Object.keys(grupos).filter(r => !REGIONES.includes(r))];
-    $("f-grupos").innerHTML = orden.filter(r => grupos[r]).map(r => `<div class="grupo-region">${esc(r)} <span class="hint" style="font-size:11px">${grupos[r].length} fuente${grupos[r].length>1?"s":""}</span></div>` +
+    const o = $("f-orden").value, porScore = o === "score-desc" || o === "score-asc";
+    const cab = `<div class="fuente cab"><div class="lab">fuente</div><div><button class="cabbtn ${porScore ? "activo" : ""}" data-orden-score title="ordenar por score">score ${o === "score-asc" ? "↑ menor a mayor" : "↓ mayor a menor"}</button></div><div><button class="cabbtn ${nivelesSel ? "activo" : ""}" data-nivel title="filtrar por nivel">nivel ${nivelesSel ? `· ${nivelesSel.size} de ${nivelesDisp().length}` : "· todos"} ▾</button></div><div class="lab">última modificación</div><div></div></div>`;
+    $("f-grupos").innerHTML = cab + (orden.filter(r => grupos[r]).map(r => `<div class="grupo-region">${esc(r)} <span class="hint" style="font-size:11px">${grupos[r].length} fuente${grupos[r].length>1?"s":""}</span></div>` +
       grupos[r].sort(ordenFuentes).map(m => {
         const h = historial.filter(x => x.medio === m.nombre).slice(0, 3);
         return `<div class="fuente ${m.activo ? "" : "inactiva"}" data-m="${esc(m.nombre)}">
@@ -928,7 +954,7 @@ async function cargar() {
           <div><span class="lab">nivel · ámbito</span>${esc(m.nivel)}${m.tipo ? " · " + esc(m.tipo) : ""}<br>${ambTxt(m.ambito).map(a => `<span class="chip gris" style="margin-top:4px">${esc(a)}</span>`).join("")}<br><span class="hint" style="text-transform:none">${citasPorMedio[m.nombre] ? citasPorMedio[m.nombre] + " citas en Vera" : "sin citas aún"}</span></div>
           <div><span class="lab">última modificación</span>${m.modificado_en ? `${fechaCorta(m.modificado_en)}<br><span class="hint" style="text-transform:none">${esc(m.modificado_por||"")}</span>` : "<span class='hint' style='text-transform:none'>sin cambios (evaluación IA 5 sep)</span>"}${h.length ? `<details style="margin-top:4px"><summary class="hint" style="cursor:pointer">historial (${historial.filter(x => x.medio === m.nombre).length})</summary>${h.map(x => `<div class="hint" style="text-transform:none;margin-top:4px">${fechaCorta(x.cuando)} · ${esc(x.campo)}: ${esc(x.anterior||"—")} → ${esc(x.nuevo||"—")} · ${esc(x.motivo)} <i>(${esc((x.por||"").split("@")[0])})</i></div>`).join("")}</details>` : ""}</div>
           <div class="acc"><button data-editar="${esc(m.nombre)}">Editar</button><button data-toggle="${esc(m.nombre)}">${m.activo ? "Desactivar" : "Reactivar"}</button></div>
-        </div>`; }).join("")).join("") || "<p>Ninguna fuente coincide.</p>";
+        </div>`; }).join("")).join("") || "<p style='margin-top:14px'>Ninguna fuente coincide.</p>");
   }
   function formEditor(m) {
     const amb = Array.isArray(m.ambito) ? m.ambito : (m.ambito === "general" || !m.ambito ? [] : [m.ambito]);
@@ -963,6 +989,9 @@ async function cargar() {
       try { await guardarCambios(m, { activo: !m.activo }, motivo); await cargarMedios(); } catch (err) { alert("No se pudo: " + (err.message||err)); } }
   });
   $("f-filtro").addEventListener("input", pintarFuentes); $("f-inactivos").addEventListener("change", pintarFuentes); $("f-orden").addEventListener("change", pintarFuentes);
+  $("f-grupos").addEventListener("click", (e) => { const b = e.target.closest("button"); if (!b) return;
+    if (b.hasAttribute("data-orden-score")) { $("f-orden").value = $("f-orden").value === "score-desc" ? "score-asc" : "score-desc"; pintarFuentes(); }
+    else if (b.hasAttribute("data-nivel")) { e.stopPropagation(); abrirPopoverNivel(b); } });
   $("f-nueva").addEventListener("click", () => { const box = $("f-form"); box.hidden = false; box.innerHTML = `<h3 style="margin-top:0">Agregar una fuente al pool</h3><div class="campos" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px 16px">
       <div><label class="f">Nombre</label><input type="text" id="n-nombre" placeholder="p. ej. La Segunda"></div>
       <div><label class="f">Dominios (separados por coma)</label><input type="text" id="n-dom" placeholder="lasegunda.com"></div>
