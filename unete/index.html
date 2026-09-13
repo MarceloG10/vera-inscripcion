@@ -24,52 +24,65 @@
 <meta name="twitter:description" content="Un digest diario con las noticias más relevantes de Chile y el mundo, más tus temas.">
 <meta name="twitter:image" content="https://holavera.news/og.png">
 <style>
-  /* Landing de inscripción — réplica de la pág. 20 del diseño de referencia (Canva DAHS8TQTauA, 2026-09-01). */
-  :root { --tinta:#2f2129; --papel:#fff; --gris-lema:#8a8186; --azul:#d7eaff;
-    --serif:Georgia,'Times New Roman',Times,serif; --slab:Rockwell,'Roboto Slab',Georgia,serif; --sans:Helvetica,Arial,sans-serif; }
+  /* Landing de inscripción — réplica 1:1 de la pág. 15 del diseño del equipo (Canva DAHS8TQTauA, 2026-09-13).
+     Todas las medidas salen del lienzo de 1080 px multiplicadas por --k (0.361 = 1:1 en un móvil de 390 px; 0.42 desde 431 px; 0.50 desde 600 px). */
+  :root { --k:0.361; --tinta:#2f2129; --gris:#858585; --azul:#d7eaff; --celeste:#a5c6eb;
+    --serif:Cambria,Georgia,'Times New Roman',Times,serif; --slab:Rockwell,'Roboto Slab',Georgia,serif; --sans:Helvetica,Arial,sans-serif; }
+  @media (min-width:431px) { :root { --k:0.42; } }
+  @media (min-width:600px) { :root { --k:0.50; } }
   * { box-sizing:border-box; }
-  body { margin:0; background:var(--tinta); font-family:var(--serif); color:var(--tinta); }
-  .wrap { max-width:640px; margin:0 auto; padding:0 16px 34px; }
-  .cab { text-align:center; padding:44px 24px 30px; }
-  .logo { font-family:var(--slab); font-size:56px; line-height:1; letter-spacing:-.5px; color:#fff; }
-  .lema { font-size:18px; line-height:1.3; color:var(--gris-lema); margin-top:14px; }
-  .card { background:var(--papel); border-radius:18px; padding:32px 34px 34px; margin:0 0 24px; }
-  .card.azul { background:var(--azul); }
-  .card h1 { font-family:var(--serif); font-weight:bold; font-size:26px; line-height:1.15; margin:0 0 18px; }
-  .card h1 i { font-style:italic; }
-  .card p { font-size:18px; line-height:1.4; margin:0 0 15px; }
-  .card p:last-of-type { margin-bottom:0; }
-  .btn { display:inline-block; font-family:var(--sans); font-size:13px; font-weight:bold; text-transform:uppercase;
-    letter-spacing:.8px; color:#fff; background:var(--tinta); border-radius:6px; padding:12px 24px;
-    text-decoration:none; margin-top:20px; }
-  .pie { font-family:var(--sans); font-size:10.5px; line-height:1.7; letter-spacing:.4px; text-transform:uppercase;
-    color:var(--gris-lema); text-align:center; padding:4px 24px 0; }
-  @media (max-width:480px) { .cab { padding:36px 16px 26px; } .logo { font-size:46px; } .lema { font-size:16px; }
-    .card { padding:26px 22px 28px; } .card h1 { font-size:23px; } .card p { font-size:17px; } }
+  html, body { margin:0; background:#fff; }
+  body { font-family:var(--serif); color:var(--tinta); -webkit-text-size-adjust:100%; }
+  .pag { max-width:calc(1080px * var(--k)); margin:0 auto; min-height:100vh; display:flex; flex-direction:column; }
+  .col { padding:0 calc(108px * var(--k)); }
+  .logo { font-family:var(--slab); font-size:calc(113px * var(--k)); line-height:1; padding-top:calc(72px * var(--k)); }
+  .lema { font-size:calc(40px * var(--k)); line-height:1.15; letter-spacing:-0.025em; color:var(--gris); margin-top:calc(30px * var(--k)); }
+  h1 { font-size:calc(57.33px * var(--k)); line-height:1; letter-spacing:-0.04em; font-weight:bold; margin:0; }
+  .t1 { margin-top:calc(77px * var(--k)); }
+  .t1 i { color:var(--celeste); }
+  p { font-size:calc(40px * var(--k)); line-height:1.15; letter-spacing:-0.025em; margin:0; }
+  .cuerpo { margin-top:calc(50px * var(--k)); }
+  .cuerpo + .cuerpo { margin-top:calc(46px * var(--k)); }
+  .pasos { display:flex; margin-top:calc(64px * var(--k)); }
+  .paso { flex:1; min-width:0; }
+  .fila { display:flex; align-items:center; }
+  .num { display:inline-flex; align-items:center; justify-content:center; flex:none; width:calc(70px * var(--k)); height:calc(66px * var(--k));
+    background:var(--azul); border-radius:calc(7px * var(--k)); font-family:var(--sans); font-weight:bold; font-size:calc(32px * var(--k)); }
+  .linea { flex:1; height:0; border-top:2px dotted var(--celeste); margin:0 calc(31px * var(--k)); position:relative; }
+  .linea:after { content:""; position:absolute; right:-2px; top:-5px; width:8px; height:8px; border-radius:50%; background:var(--celeste); }
+  .lbl { margin-top:calc(23px * var(--k)); font-size:min(calc(40px * var(--k)), 3.7vw); white-space:nowrap; line-height:1; letter-spacing:-0.04em; font-style:italic; }
+  .banda { background:var(--azul); margin-top:calc(88px * var(--k)); padding:calc(78px * var(--k)) 0; flex:1; }
+  .banda h1 { font-style:italic; }
+  .banda p { margin-top:calc(24px * var(--k)); }
+  .banda p + p { margin-top:calc(46px * var(--k)); }
+  .btn { display:inline-block; margin-top:calc(45px * var(--k)); min-width:calc(198px * var(--k)); height:calc(75px * var(--k)); line-height:calc(75px * var(--k));
+    padding:0 calc(40px * var(--k)); background:#fff; color:var(--tinta); border-radius:calc(7px * var(--k)); text-align:center; text-decoration:none;
+    font-family:var(--sans); font-weight:bold; font-size:calc(32px * var(--k)); letter-spacing:.02em; text-transform:uppercase; }
 </style>
 </head>
 <body>
-<div class="wrap">
-  <div class="cab">
+<div class="pag">
+  <div class="col">
     <div class="logo">vera</div>
-    <div class="lema">Lo importante de hoy. Resumido y contrastado para ti.</div>
+    <div class="lema">Lo importante de hoy.<br>Resumido y contrastado para ti.</div>
+
+    <h1 class="t1">Un <i>digest diario</i> con las noticias más relevantes de Chile y el mundo.</h1>
+    <p class="cuerpo">Seleccionamos y resumimos lo importante, <b>contrastando distintas fuentes</b> para darte información más fiable y fácil de leer. A través de herramientas de IA, revisamos un gran volumen de medios para ofrecerte una versión clara, con distintos puntos de vista. Y si quieres profundizar, puedes revisar la fuente original.</p>
+    <p class="cuerpo">Como no a todos nos interesa lo mismo, puedes <b>personalizar una sección</b> con los temas que más te importan. Estar al día nunca fue tan simple ni rápido.</p>
+
+    <div class="pasos">
+      <div class="paso"><div class="fila"><span class="num">1</span><span class="linea"></span></div><div class="lbl"><b>Fácil acceso</b><br>a la información</div></div>
+      <div class="paso"><div class="fila"><span class="num">2</span><span class="linea"></span></div><div class="lbl">Información<br><b>confiable</b></div></div>
+      <div class="paso"><div class="fila"><span class="num">3</span></div><div class="lbl"><b>Personalización</b><br>del contenido</div></div>
+    </div>
   </div>
 
-  <div class="card">
-    <h1>Un <i>digest</i> diario con las noticias más relevantes de Chile y el mundo.</h1>
-    <p>Utilizamos IA para seleccionar y resumir noticias, <b>contrastándolas entre distintas fuentes</b> para ofrecerte información más fiable y fácil de entender. Además, siempre puedes consultar la fuente original.</p>
-    <p>Y como no a todos nos interesa lo mismo, puedes <b>personalizar una sección especialmente para ti</b>, según tus temas e intereses.</p>
-    <p>Una forma simple de estar al día y no llegar tarde a ninguna conversación.</p>
-  </div>
-
-  <div class="card azul">
-    <h1>Estamos empezando…</h1>
+  <div class="banda"><div class="col">
+    <h1>Estamos empezando...</h1>
     <p>Por eso queremos compartirla con un grupo pequeño de amig@s y descubrir qué podemos mejorar.</p>
-    <p>Únete desde el principio, infórmate sin esfuerzo y ayúdanos a darle forma. <b>Tú pones el feedback, nosotros las noticias.</b></p>
+    <p>Únete desde el principio y ayúdanos a darle forma.<br><b>Tú pones el feedback, nosotros las noticias.</b></p>
     <a class="btn" href="formulario/">Únete</a>
-  </div>
-
-  <div class="pie">Vera es un editor: seleccionamos y resumimos noticias de fuentes confiables y las linkeamos. No escribimos artículos ni opinamos.</div>
+  </div></div>
 </div>
 </body>
 </html>

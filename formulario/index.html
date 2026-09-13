@@ -13,7 +13,7 @@
 <meta property="og:site_name" content="Vera">
 <meta property="og:title" content="Vera — Empecemos">
 <meta property="og:description" content="Inscríbete en Vera: tu digest diario de noticias, personalizado según tus temas.">
-<meta property="og:url" content="https://holavera.news/formulario/">
+<meta property="og:url" content="https://holavera.news/unete/formulario/">
 <meta property="og:image" content="https://holavera.news/og.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -23,109 +23,104 @@
 <meta name="twitter:title" content="Vera — Empecemos">
 <meta name="twitter:image" content="https://holavera.news/og.png">
 <style>
-  /* Formulario de inscripción — réplica de la pág. 21 del diseño de referencia (Canva DAHS8TQTauA, 2026-09-01). */
-  :root { --tinta:#2f2129; --papel:#fff; --gris:#8a8a8a; --gris-lema:#8a8186;
-    --azul:#d7eaff; --amarillo:#fef79f; --lila:#e4cdff; --purpura:#a07bcd;
-    --serif:Georgia,'Times New Roman',Times,serif; --slab:Rockwell,'Roboto Slab',Georgia,serif; --sans:Helvetica,Arial,sans-serif; }
+  /* Formulario de inscripción — réplica 1:1 de las págs. 16–17 del diseño del equipo (Canva DAHS8TQTauA, 2026-09-13).
+     Medidas del lienzo de 1080 px multiplicadas por --k (0.361 = 1:1 en un móvil de 390 px; 0.42 desde 431 px; 0.50 desde 600 px); los textos pequeños tienen piso de legibilidad. */
+  :root { --k:0.361; --tinta:#2f2129; --gris:#858585; --azul:#d7eaff; --campo:#ededed;
+    --serif:Cambria,Georgia,'Times New Roman',Times,serif; --slab:Rockwell,'Roboto Slab',Georgia,serif; --sans:Helvetica,Arial,sans-serif; }
+  @media (min-width:431px) { :root { --k:0.42; } }
+  @media (min-width:600px) { :root { --k:0.50; } }
   * { box-sizing:border-box; }
-  body { margin:0; background:var(--tinta); font-family:var(--serif); color:var(--tinta); }
-  .wrap { max-width:640px; margin:0 auto; padding:0 16px 14px; }
-  .cab { text-align:center; padding:44px 24px 30px; }
-  .cab a { text-decoration:none; }
-  .logo { font-family:var(--slab); font-size:56px; line-height:1; letter-spacing:-.5px; color:#fff; }
-  .lema { font-size:18px; line-height:1.3; color:var(--gris-lema); margin-top:14px; }
-  .card { background:var(--papel); border-radius:18px; padding:32px 34px 36px; margin:0 0 24px; }
-  .card h1 { font-family:var(--serif); font-weight:bold; font-size:28px; line-height:1.1; margin:0 0 22px; }
-  .intro { font-size:19px; line-height:1.35; color:var(--gris); margin:-8px 0 22px; }
-  .intro b { color:var(--tinta); }
-  .grid { display:grid; grid-template-columns:1fr 1fr; gap:2px 26px; }
-  .campo { margin-bottom:16px; }
-  label.f { display:block; font-family:var(--sans); font-size:12px; font-weight:bold; text-transform:uppercase; letter-spacing:.6px; margin:0 0 8px; }
-  input[type=text], input[type=email], select { width:100%; font:inherit; font-size:17px; padding:10px 12px;
-    border:2px solid var(--tinta); border-radius:6px; color:var(--tinta); background:#fff; }
-  select { appearance:none; -webkit-appearance:none;
-    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%238a8a8a' stroke-width='2'/%3E%3C/svg%3E");
-    background-repeat:no-repeat; background-position:right 12px center; padding-right:34px; }
-  input:focus, select:focus { outline:none; box-shadow:0 0 0 3px var(--azul); }
-  .hint { font-family:var(--sans); font-size:10.5px; line-height:1.6; letter-spacing:.4px; text-transform:uppercase; color:var(--gris); margin-top:7px; }
-  .hint i { font-style:italic; }
-  .cat { font-family:var(--sans); font-size:13px; font-weight:bold; letter-spacing:.5px; text-transform:uppercase; margin:22px 0 12px; }
-  .subs label { display:inline-block; margin:0 8px 10px 0; font-family:var(--sans); font-size:13px; line-height:15px;
-    text-transform:uppercase; letter-spacing:.3px; color:var(--tinta); border-radius:999px; padding:9px 16px; cursor:pointer; user-select:none; }
-  .subs .g0 label { background:var(--azul); } .subs .g1 label { background:var(--amarillo); } .subs .g2 label { background:var(--lila); }
+  html, body { margin:0; background:#fff; }
+  body { font-family:var(--serif); color:var(--tinta); -webkit-text-size-adjust:100%; }
+  .pag { max-width:calc(1080px * var(--k)); margin:0 auto; padding-bottom:calc(120px * var(--k)); }
+  .col { padding:0 calc(108px * var(--k)); }
+  a { color:inherit; text-decoration:none; }
+  .logo { font-family:var(--slab); font-size:calc(113px * var(--k)); line-height:1; padding-top:calc(72px * var(--k)); }
+  .lema { font-size:calc(40px * var(--k)); line-height:1.15; letter-spacing:-0.025em; color:var(--gris); margin-top:calc(30px * var(--k)); }
+  h1 { font-size:calc(57.33px * var(--k)); line-height:1; letter-spacing:-0.04em; font-weight:bold; font-style:italic; margin:0; }
+  .t1 { margin-top:calc(76px * var(--k)); }
+  .t2 { margin-top:calc(108px * var(--k)); }
+  p { font-size:calc(40px * var(--k)); line-height:1.15; letter-spacing:-0.025em; margin:0; }
+  .intro { font-style:italic; margin-top:calc(21px * var(--k)); }
+  label.f { display:block; font-family:var(--sans); font-weight:bold; font-size:max(11px, calc(26.67px * var(--k))); line-height:1.4; letter-spacing:.02em;
+    text-transform:uppercase; margin:calc(25px * var(--k)) 0 calc(6px * var(--k)); }
+  .t1 + .campo label.f { margin-top:calc(34px * var(--k)); }
+  .inp { display:block; width:100%; height:calc(60px * var(--k)); background:var(--campo); border:0; border-radius:calc(7px * var(--k));
+    font:inherit; font-size:calc(40px * var(--k)); letter-spacing:-0.025em; color:var(--tinta); padding:0 calc(24px * var(--k)); }
+  .inp:focus { outline:none; box-shadow:0 0 0 2px var(--tinta); }
+  select.inp { appearance:none; -webkit-appearance:none; padding-right:calc(70px * var(--k));
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%236c6c6c' stroke-width='2'/%3E%3C/svg%3E");
+    background-repeat:no-repeat; background-position:right calc(20px * var(--k)) center; }
+  .hint { font-family:var(--sans); font-size:max(10px, calc(16px * var(--k))); line-height:1.4; letter-spacing:.02em; text-transform:uppercase; margin-top:calc(16px * var(--k)); }
+  .cat { font-family:var(--sans); font-weight:bold; font-size:max(11px, calc(26.67px * var(--k))); line-height:1.4; letter-spacing:.02em; text-transform:uppercase;
+    margin:calc(61px * var(--k)) 0 calc(19px * var(--k)); }
+  .intro + .subs .cat:first-child { margin-top:calc(45px * var(--k)); }
+  .subs .fila { display:flex; flex-wrap:wrap; gap:calc(10px * var(--k)) calc(12px * var(--k)); }
+  .subs label { display:inline-block; position:relative; font-family:var(--sans); font-size:max(10px, calc(26.67px * var(--k))); text-transform:uppercase;
+    height:calc(57px * var(--k)); line-height:calc(53px * var(--k)); padding:0 calc(32px * var(--k)); border:2px solid var(--tinta); border-radius:999px;
+    cursor:pointer; user-select:none; white-space:nowrap; }
   .subs input { position:absolute; opacity:0; width:0; height:0; }
-  .subs label:has(input:checked) { background:var(--tinta) !important; color:#fff; font-weight:bold; }
-  .subs label:has(input:disabled:not(:checked)) { opacity:.4; cursor:default; }
-  button { display:block; margin-top:26px; font-family:var(--sans); font-size:14px; font-weight:bold; text-transform:uppercase;
-    letter-spacing:.8px; background:var(--tinta); color:#fff; border:2px solid var(--tinta); padding:13px 26px; border-radius:6px; cursor:pointer; }
+  .subs label:has(input:checked) { background:var(--azul); border-color:var(--azul); }
+  .subs label:has(input:disabled:not(:checked)) { opacity:.35; cursor:default; }
+  button { display:block; margin-top:calc(41px * var(--k)); min-width:calc(545px * var(--k)); height:calc(75px * var(--k)); padding:0 calc(40px * var(--k));
+    font-family:var(--sans); font-weight:bold; font-size:max(11px, calc(26.67px * var(--k))); letter-spacing:.02em; text-transform:uppercase;
+    background:var(--tinta); color:#fff; border:0; border-radius:calc(7px * var(--k)); cursor:pointer; }
   button:disabled { opacity:.5; cursor:default; }
-  .msg { margin-top:14px; font-size:17px; line-height:1.4; }
-  .ok { color:var(--purpura); } .err { color:#b3261e; }
-  .nota-baja { font-family:var(--sans); font-size:10.5px; line-height:1.7; letter-spacing:.4px; text-transform:uppercase;
-    color:var(--gris-lema); padding:0 12px 34px; }
-  .pill-out { display:inline-block; font-family:var(--sans); font-size:12px; line-height:14px; text-transform:uppercase;
-    letter-spacing:.4px; color:var(--tinta); background:var(--azul); border-radius:999px; padding:7px 13px; margin:0 6px 6px 0; }
-  .listo .etq { font-family:var(--sans); font-size:12px; font-weight:bold; text-transform:uppercase; letter-spacing:.4px; color:var(--gris); margin-bottom:8px; }
-  .listo .titulo { font-family:var(--serif); font-weight:bold; font-size:34px; line-height:1; margin:0 0 18px; }
-  .listo p { font-size:18px; line-height:1.35; margin:0 0 14px; }
-  .listo .hint { margin-top:14px; }
-  @media (max-width:560px) { .grid { grid-template-columns:1fr; gap:0; }
-    .cab { padding:36px 16px 26px; } .logo { font-size:46px; } .lema { font-size:16px; }
-    .card { padding:26px 22px 30px; } .card h1 { font-size:25px; } }
+  .msg { margin-top:calc(24px * var(--k)); }
+  .err { color:#b3261e; }
+  .nota-baja { font-family:var(--sans); font-size:max(10px, calc(16px * var(--k))); line-height:1.4; letter-spacing:.02em; text-transform:uppercase;
+    max-width:max(calc(524px * var(--k)), 300px); margin-top:calc(22px * var(--k)); }
+  .pill-out { display:inline-block; font-family:var(--sans); font-size:max(10px, calc(26.67px * var(--k))); text-transform:uppercase; background:var(--azul);
+    border-radius:999px; height:calc(53px * var(--k)); line-height:calc(53px * var(--k)); padding:0 calc(40px * var(--k)); margin:0 calc(12px * var(--k)) calc(10px * var(--k)) 0; }
+  .listo p { margin-top:calc(24px * var(--k)); }
+  .listo .pills { margin-top:calc(30px * var(--k)); }
+  @media (max-width:360px) { .subs label { white-space:normal; height:auto; line-height:1.3; padding-top:calc(16px * var(--k)); padding-bottom:calc(16px * var(--k)); } }
 </style>
 </head>
 <body>
-<div class="wrap">
-  <div class="cab">
-    <a href="../"><div class="logo">vera</div></a>
-    <div class="lema">Lo importante de hoy. Resumido y contrastado para ti.</div>
-  </div>
+<div class="pag"><div class="col">
+  <a href="../"><div class="logo">vera</div></a>
+  <div class="lema">Lo importante de hoy.<br>Resumido y contrastado para ti.</div>
 
   <form id="f" novalidate>
-  <div class="card" id="card-datos">
-    <h1>Empecemos</h1>
-    <div class="grid">
-      <div class="campo">
-        <label class="f" for="nombre">Nombre</label>
-        <input type="text" id="nombre" name="nombre" required autocomplete="name">
-      </div>
-      <div class="campo">
-        <label class="f" for="email">Correo</label>
-        <input type="email" id="email" name="email" required autocomplete="email">
-        <div class="hint">Aquí recibirás el <i>digest</i>. Si ya estás inscrito, usa el mismo correo para actualizar tus temas.</div>
-      </div>
-      <div class="campo">
-        <label class="f" for="ciudad">Ciudad donde vives</label>
-        <input type="text" id="ciudad" name="ciudad" autocomplete="address-level2">
-        <div class="hint">Para incluir noticias de tu entorno.</div>
-      </div>
-      <div class="campo">
-        <label class="f" for="region">Región de Chile</label>
-        <select id="region" name="region">
-          <option value="" selected></option>
-          <option>Arica y Parinacota</option><option>Tarapacá</option><option>Antofagasta</option>
-          <option>Atacama</option><option>Coquimbo</option><option>Valparaíso</option>
-          <option>Metropolitana de Santiago</option><option>O'Higgins</option><option>Maule</option>
-          <option>Ñuble</option><option>Biobío</option><option>La Araucanía</option>
-          <option>Los Ríos</option><option>Los Lagos</option><option>Aysén</option><option>Magallanes</option>
-          <option value="fuera">Vivo fuera de Chile</option>
-        </select>
-        <div class="hint">Para personalizar tus noticias de Chile.</div>
-      </div>
+    <h1 class="t1">Empecemos...</h1>
+    <div class="campo">
+      <label class="f" for="nombre">Nombre</label>
+      <input class="inp" type="text" id="nombre" name="nombre" required autocomplete="name">
     </div>
-  </div>
+    <div class="campo">
+      <label class="f" for="email">Correo</label>
+      <input class="inp" type="email" id="email" name="email" required autocomplete="email">
+      <div class="hint">Aquí recibirás el digest. Si ya estás inscrito, usa el mismo correo para actualizar tus temas.</div>
+    </div>
+    <div class="campo">
+      <label class="f" for="ciudad">Ciudad donde vives</label>
+      <input class="inp" type="text" id="ciudad" name="ciudad" autocomplete="address-level2">
+      <div class="hint">Para incluir noticias de tu entorno.</div>
+    </div>
+    <div class="campo">
+      <label class="f" for="region">Región de Chile</label>
+      <select class="inp" id="region" name="region">
+        <option value="" selected></option>
+        <option>Arica y Parinacota</option><option>Tarapacá</option><option>Antofagasta</option>
+        <option>Atacama</option><option>Coquimbo</option><option>Valparaíso</option>
+        <option>Metropolitana de Santiago</option><option>O'Higgins</option><option>Maule</option>
+        <option>Ñuble</option><option>Biobío</option><option>La Araucanía</option>
+        <option>Los Ríos</option><option>Los Lagos</option><option>Aysén</option><option>Magallanes</option>
+        <option value="fuera">Vivo fuera de Chile</option>
+      </select>
+      <div class="hint">Para personalizar tus noticias de Chile.</div>
+    </div>
 
-  <div class="card" id="card-temas">
-    <h1>Lo que te interesa</h1>
+    <h1 class="t2">Lo que te interesa</h1>
     <p class="intro">Elige <b>dos o tres</b> de las sub-categorías. Usaremos tus preferencias para personalizar tu edición diaria.</p>
     <div class="subs" id="subs"></div>
     <button type="submit" id="btn">Suscribirme al newsletter</button>
     <div class="msg" id="msg"></div>
-  </div>
   </form>
 
   <div class="nota-baja">Puedes darte de baja en cualquier momento respondiendo cualquier correo con «baja».</div>
-</div>
+</div></div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
 <script>
@@ -140,10 +135,9 @@ const CATS = {
   "Deportes": [["deporte_nacional", "Deporte nacional"], ["deporte_internacional", "Deporte internacional"], ["chilenos_exterior", "Chilenos en el deporte mundial"]],
 };
 const cont = document.getElementById("subs");
-let gi = 0;
 for (const [cat, subs] of Object.entries(CATS)) {
   const h = document.createElement("div"); h.className = "cat"; h.textContent = cat; cont.appendChild(h);
-  const row = document.createElement("div"); row.className = "g" + (gi % 3); gi++;
+  const row = document.createElement("div"); row.className = "fila";
   for (const [k, lbl] of subs) {
     const l = document.createElement("label");
     l.innerHTML = `<input type="checkbox" name="sub" value="${k}"> ${lbl}`;
@@ -176,16 +170,15 @@ document.getElementById("f").addEventListener("submit", async (ev) => {
     msg.textContent = "No pudimos guardar tu inscripción. Intenta de nuevo o escríbenos.";
     return;
   }
-  // Confirmación: reemplaza las dos tarjetas por una tarjeta blanca en el mismo lenguaje visual
+  // Confirmación: reemplaza el formulario por el mismo lenguaje visual (título itálico, párrafos, chips azules)
   const pills = subs.map(s => `<span class="pill-out">${document.querySelector(`input[value="${s}"]`).parentElement.textContent.trim()}</span>`).join("");
   const ok = document.createElement("div");
-  ok.className = "card listo";
-  ok.innerHTML = `<div class="etq">${ciudad ? ciudad : "Bienvenida/o"}</div>
-    <div class="titulo">Listo, ${nombre.split(" ")[0]}.</div>
+  ok.className = "listo";
+  ok.innerHTML = `<h1 class="t1">Listo, ${nombre.split(" ")[0]}.</h1>
     <p>Vera te llega a <b>${email}</b>: un correo al día, todos los días. Si ya estabas inscrito, reemplazamos tus preferencias anteriores por estas.</p>
-    <div>${pills}</div>
-    <p class="hint">Importante: Vera llega desde <b>diario@holavera.news</b>. Si el primer correo cae en Promociones o Notificaciones, arrástralo a Principal y responde «Sí» cuando tu correo pregunte — así te llegará siempre a la bandeja principal.</p>
-    <p class="hint">Para cambiar tus temas o darte de baja, responde cualquier correo de Vera con «temas» o «baja».</p>`;
+    <div class="pills">${pills}</div>
+    <div class="hint">Importante: Vera llega desde <b>diario@holavera.news</b>. Si el primer correo cae en Promociones o Notificaciones, arrástralo a Principal y responde «Sí» cuando tu correo pregunte, así te llegará siempre a la bandeja principal.</div>
+    <div class="hint">Para cambiar tus temas o darte de baja, responde cualquier correo de Vera con «temas» o «baja».</div>`;
   const form = document.getElementById("f");
   form.parentElement.replaceChild(ok, form);
   ok.scrollIntoView({ block: "start", behavior: "smooth" });

@@ -1,6 +1,6 @@
 {
   "_doc": "Lista blanca de Vera. FUENTE DE VERDAD: tabla `medios` en Supabase (se edita desde el backoffice → Fuentes). Este archivo es una exportación diaria de respaldo; medios.py lo usa solo si la base no responde.",
-  "exportado": "2026-09-09",
+  "exportado": "2026-09-12",
   "medios": {
     "24Horas": {
       "dominios": [
