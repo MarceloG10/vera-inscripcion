@@ -164,7 +164,8 @@ document.getElementById("f").addEventListener("submit", async (ev) => {
   if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) { msg.className = "msg err"; msg.textContent = "Ese correo no se ve bien."; return; }
   if (subs.length < 2 || subs.length > 3) { msg.className = "msg err"; msg.textContent = "Elige 2 o 3 sub-categorías."; return; }
   btn.disabled = true; msg.textContent = "Guardando…";
-  const { error } = await sb.from("subscribers").insert({ nombre, email, ciudad: ciudad || null, region, subcategorias: subs, origen: "form" });
+  let zona = null; try { zona = Intl.DateTimeFormat().resolvedOptions().timeZone || null; } catch (e) {}
+  const { error } = await sb.from("subscribers").insert({ nombre, email, ciudad: ciudad || null, region, subcategorias: subs, origen: "form", zona });
   if (error) {
     btn.disabled = false; msg.className = "msg err";
     msg.textContent = "No pudimos guardar tu inscripción. Intenta de nuevo o escríbenos.";
