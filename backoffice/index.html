@@ -580,7 +580,7 @@
   </div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.117.3/dist/umd/supabase.js" integrity="sha384-BWcjm9OdFth9TbhCxZPdm+gAOUMAzQy9nmTs12ioXdCcbVnJaPMn+fMUoQCLt60R" crossorigin="anonymous"></script>
 <script>
 const SUPABASE_URL = "https://vahnmlibwwaxddeafdzt.supabase.co";
 const SUPABASE_ANON = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZhaG5tbGlid3dheGRkZWFmZHp0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODY5ODY0NzIsImV4cCI6MjEwMjU2MjQ3Mn0.FSH9rc3HUBlKsqFmswOp50j_bGlj2UYhjIY0_2c8xN4";
@@ -598,7 +598,7 @@ $("lbtn").addEventListener("click", async () => {
   const m = $("lmsg"); m.className = "msg";
   if (!email) { m.className = "msg err"; m.textContent = "Escribe tu correo."; return; }
   $("lbtn").disabled = true; m.textContent = "Enviando…";
-  const { error } = await sb.auth.signInWithOtp({ email, options: { emailRedirectTo: location.origin + location.pathname } });
+  const { error } = await sb.auth.signInWithOtp({ email, options: { shouldCreateUser: false, emailRedirectTo: location.origin + location.pathname } });
   $("lbtn").disabled = false;
   if (error) { m.className = "msg err"; m.textContent = "No pudimos enviar el enlace: " + error.message; return; }
   m.className = "msg ok"; m.textContent = "Listo: revisa tu correo y abre el enlace (vale una hora).";
@@ -863,7 +863,7 @@ async function cargar() {
   const horaLocal = (iso) => iso ? new Intl.DateTimeFormat("es-ES", { timeZone: "Europe/Madrid", hour: "2-digit", minute: "2-digit" }).format(new Date(iso)) : "—";
   const fechaHora = (iso) => iso ? new Intl.DateTimeFormat("es-ES", { timeZone: "Europe/Madrid", day: "2-digit", month: "short", hour: "2-digit", minute: "2-digit" }).format(new Date(iso)) : "—";
   const sem = (estado) => ({ ok: "#9bd39b", ambar: "#fef79f", rojo: "#f3a6a6" })[estado];
-  const tarjeta = (titulo, valor, estado, nota) => `<div class="kpi" style="background:${sem(estado)}" title="${esc(nota||"")}"><div class="n" style="font-size:24px">${valor}</div><div class="l">${titulo}</div>${nota ? `<div class="hint" style="margin-top:6px;text-transform:none;letter-spacing:0">${esc(nota)}</div>` : ""}</div>`;
+  const tarjeta = (titulo, valor, estado, nota) => `<div class="kpi" style="background:${sem(estado)}" title="${esc(nota||"")}"><div class="n" style="font-size:24px">${esc(valor)}</div><div class="l">${titulo}</div>${nota ? `<div class="hint" style="margin-top:6px;text-transform:none;letter-spacing:0">${esc(nota)}</div>` : ""}</div>`;
   const h = salud.hoy || {}; const ue = salud.ultima_edicion || {}; const ahora = new Date();
   const esperada = ahora.getUTCHours() >= 5 || ahora.getUTCHours() < 4;   // después de las 07:00 Barcelona
   const edHoy = ue.fecha === hoyStr;

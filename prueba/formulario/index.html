@@ -122,11 +122,12 @@
   <div class="nota-baja">Puedes darte de baja en cualquier momento respondiendo cualquier correo con «baja».</div>
 </div></div>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.117.3/dist/umd/supabase.js" integrity="sha384-BWcjm9OdFth9TbhCxZPdm+gAOUMAzQy9nmTs12ioXdCcbVnJaPMn+fMUoQCLt60R" crossorigin="anonymous"></script>
 <script>
 // Config pública (anon key: solo permite INSERT en subscribers por RLS).
 const SUPABASE_URL = "https://vahnmlibwwaxddeafdzt.supabase.co";
 const SUPABASE_ANON = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZhaG5tbGlid3dheGRkZWFmZHp0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODY5ODY0NzIsImV4cCI6MjEwMjU2MjQ3Mn0.FSH9rc3HUBlKsqFmswOp50j_bGlj2UYhjIY0_2c8xN4";
+const esc = (s) => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const CATS = {
   "Política y Sociedad": [["geopolitica_conflictos", "Geopolítica y conflictos"], ["derechos_justicia", "Derechos y justicia social"], ["sociedad_tendencias", "Sociedad y tendencias"]],
   "Economía y Negocios": [["mercados_finanzas", "Mercados y finanzas"], ["empresas_negocios", "Empresas y negocios"], ["empresas_emprendimiento", "Emprendimiento e innovación"]],
@@ -172,11 +173,11 @@ document.getElementById("f").addEventListener("submit", async (ev) => {
     return;
   }
   // Confirmación: reemplaza el formulario por el mismo lenguaje visual (título itálico, párrafos, chips azules)
-  const pills = subs.map(s => `<span class="pill-out">${document.querySelector(`input[value="${s}"]`).parentElement.textContent.trim()}</span>`).join("");
+  const pills = subs.map(s => `<span class="pill-out">${esc(document.querySelector(`input[value="${s}"]`).parentElement.textContent.trim())}</span>`).join("");
   const ok = document.createElement("div");
   ok.className = "listo";
-  ok.innerHTML = `<h1 class="t1">Listo, ${nombre.split(" ")[0]}.</h1>
-    <p>Vera te llega a <b>${email}</b>: un correo al día, todos los días. Si ya estabas inscrito, reemplazamos tus preferencias anteriores por estas.</p>
+  ok.innerHTML = `<h1 class="t1">Listo, ${esc(nombre.split(" ")[0])}.</h1>
+    <p>Vera te llega a <b>${esc(email)}</b>: un correo al día, todos los días. Si ya estabas inscrito, reemplazamos tus preferencias anteriores por estas.</p>
     <div class="pills">${pills}</div>
     <div class="hint">Importante: Vera llega desde <b>diario@holavera.news</b>. Si el primer correo cae en Promociones o Notificaciones, arrástralo a Principal y responde «Sí» cuando tu correo pregunte, así te llegará siempre a la bandeja principal.</div>
     <div class="hint">Para cambiar tus temas o darte de baja, responde cualquier correo de Vera con «temas» o «baja».</div>`;

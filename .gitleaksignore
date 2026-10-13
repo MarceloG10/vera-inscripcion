@@ -1,0 +1,27 @@
+# gitleaks: the only detection in this repo is the Supabase ANON key (JWT with "role":"anon", exp 2036) that the
+# public pages embed on purpose. It is public by design; what it can do is limited by RLS (insert-only on
+# subscribers/encuestas). Ignored BY FINGERPRINT, not by value, so a different secret in the same files is still flagged.
+# Generated from the vera repo (pipeline/web/sitio/). Fingerprints are <commit>:<file>:<rule>:<line> for history scans
+# and <file>:<rule>:<line> for `gitleaks dir`. New publish commits from vera-bot get new SHAs: add them when a
+# history scan reports the same anon key again (audit 2026-10).
+
+# history scan (gitleaks detect)
+045a36005f6bfe9dce5c2e2f91fb88d04832bc82:unete/index.html:jwt:82
+58af5aeb46630db9d7d948609c541458aedcb100:formulario/index.html:jwt:118
+58af5aeb46630db9d7d948609c541458aedcb100:hola/formulario/index.html:jwt:118
+58af5aeb46630db9d7d948609c541458aedcb100:prueba/formulario/index.html:jwt:118
+58af5aeb46630db9d7d948609c541458aedcb100:unete/formulario/index.html:jwt:118
+5ff4c11bef49c60a826a73af60ee594f7b50cb36:socios/index.html:jwt:176
+80fb98cff009e0f69a0a514fbc2b63dcf40c20de:prueba/index.html:jwt:102
+aa5f873598024a958668a2a6cfc9e921c1b69e9f:index.html:jwt:67
+abd8941fc5232014564befa5ee401e4d773dc805:backoffice/index.html:jwt:176
+af7eb1fb3e5fcca1532808a00ecb940c45c6f8a4:encuesta/index.html:jwt:118
+c81a460d2f6e111d069ac5f67ad9e4edfa6cf12f:hola/index.html:jwt:102
+
+# working-tree scan (gitleaks dir)
+backoffice/index.html:jwt:586
+encuesta/index.html:jwt:123
+formulario/index.html:jwt:129
+hola/formulario/index.html:jwt:129
+prueba/formulario/index.html:jwt:129
+unete/formulario/index.html:jwt:129
