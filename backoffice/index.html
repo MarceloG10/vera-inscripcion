@@ -213,7 +213,7 @@
       <button data-s="resumen" class="on">Resumen</button><button data-s="ediciones">Ediciones</button>
       <button data-s="lectores">Lectores</button><button data-s="encuesta">Encuesta</button>
       <button data-s="correcciones">Correcciones</button><button data-s="fuentes">Fuentes</button>
-      <button data-s="editorial">Editorial</button><button data-s="marca">Marca</button><button data-s="salud">Salud</button><button data-s="proyectos">Proyectos</button>
+      <button data-s="editorial">Editorial</button><button data-s="marca">Marca</button><button data-s="salud">Salud</button><button data-s="proyectos">Proyectos</button><button data-s="proceso">Proceso</button>
     </nav>
 
     <section id="s-resumen" class="on">
@@ -449,6 +449,422 @@
       <div id="p-form" class="bloque blanco" hidden></div>
       <div class="tablero scroll" id="tablero"></div>
       <div id="p-detalle"></div>
+    </section>
+
+    <section id="s-proceso">
+      <h2>Proceso</h2>
+      <!-- Pestaña Proceso (2026-11-23): repetición animada de ~90 s de cómo se hizo una edición real.
+     No ejecuta nada. Las cifras vienen de proceso-datos.json (proceso.py instantanea <fecha>), que publicar.py
+     incrusta en {"fecha": "2026-11-23", "edicion": 98, "asunto": "Lun 23 nov — La cumbre del clima termina sin acuerdo sobre los fósiles", "fuentes": {"total": 122, "feeds": 62, "gnews": 60}, "segmentos": {"global": 5, "chile": 5, "temas": 19, "local": 10, "vera_elige": 5}, "noticias": 44, "estados": {"confirmado": 28, "en_desarrollo": 4, "reportado": 12}, "citas": 105, "medios_distintos": 34, "errores": 0, "avisos": 93, "confianza": 78, "medios_lista": 116, "lectores": 19, "ciudades": ["Berlín", "Madrid", "Oxford", "Barcelona", "San Pedro de la Paz", "Las Condes", "Vancouver", "Concepción", "Santiago", "Puerto Aysén", "Viena", "Huépil"], "zonas": [{"zona": "Europe/Berlin", "nombre": "Berlín", "utc": "06:00", "lectores": 2}, {"zona": "Europe/Madrid", "nombre": "Madrid", "utc": "06:00", "lectores": 5}, {"zona": "Europe/Paris", "nombre": "París", "utc": "06:00", "lectores": 1}, {"zona": "Europe/Vienna", "nombre": "Viena", "utc": "06:00", "lectores": 1}, {"zona": "America/Punta_Arenas", "nombre": "Aysén", "utc": "10:00", "lectores": 1}, {"zona": "America/Santiago", "nombre": "Santiago", "utc": "10:00", "lectores": 8}, {"zona": "America/Vancouver", "nombre": "Vancouver", "utc": "14:00", "lectores": 1}], "mapa": [{"nombre": "Barcelona", "lon": 2.17, "lat": 41.39, "lectores": 4, "zona": "Europe/Madrid", "region": "Europa", "utc": "06:00"}, {"nombre": "Berlín", "lon": 13.4, "lat": 52.52, "lectores": 2, "zona": "Europe/Berlin", "region": "Europa", "utc": "06:00"}, {"nombre": "Madrid", "lon": -3.7, "lat": 40.42, "lectores": 1, "zona": "Europe/Madrid", "region": "Europa", "utc": "06:00"}, {"nombre": "Oxford", "lon": -1.26, "lat": 51.75, "lectores": 1, "zona": "Europe/Paris", "region": "Europa", "utc": "06:00"}, {"nombre": "Viena", "lon": 16.37, "lat": 48.21, "lectores": 1, "zona": "Europe/Vienna", "region": "Europa", "utc": "06:00"}, {"nombre": "Concepción", "lon": -73.05, "lat": -36.83, "lectores": 4, "zona": "America/Santiago", "region": "Chile", "utc": "10:00"}, {"nombre": "Huépil", "lon": -71.95, "lat": -37.23, "lectores": 1, "zona": "America/Santiago", "region": "Chile", "utc": "10:00"}, {"nombre": "Las Condes", "lon": -70.58, "lat": -33.41, "lectores": 1, "zona": "America/Santiago", "region": "Chile", "utc": "10:00"}, {"nombre": "Puerto Aysén", "lon": -72.69, "lat": -45.4, "lectores": 1, "zona": "America/Punta_Arenas", "region": "Chile", "utc": "10:00"}, {"nombre": "San Pedro de la Paz", "lon": -73.11, "lat": -36.84, "lectores": 1, "zona": "America/Santiago", "region": "Chile", "utc": "10:00"}, {"nombre": "Santiago", "lon": -70.67, "lat": -33.45, "lectores": 1, "zona": "America/Santiago", "region": "Chile", "utc": "10:00"}, {"nombre": "Vancouver", "lon": -123.12, "lat": 49.28, "lectores": 1, "zona": "America/Vancouver", "region": "Canadá", "utc": "14:00"}], "entregados": 19, "principal": {"lugar": "Turquía", "titular": "La COP31 terminó en Antalya sin pacto político final", "estado": "confirmado", "fuentes": ["El País", "The Guardian", "ONU Noticias"]}, "enfoques": [{"medio": "El País", "frase": "el choque con los productores de petróleo"}, {"medio": "The Guardian", "frase": "una ruptura entre bloques"}, {"medio": "ONU Noticias", "frase": "una profunda frustración"}], "muestra_fuentes": ["BBC Mundo", "France 24", "Deutsche Welle", "El País Internacional", "El País Portada", "The Guardian World", "Al Jazeera", "ONU Noticias", "La Tercera", "CIPER", "Cooperativa"]}. Todo el CSS va prefijado .pr para no chocar con el backoffice.
+     Para grabar: «Pantalla completa» (o tecla F) y barra espaciadora para lanzar. -->
+<script src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/topojson-client@3.1.0/dist/topojson-client.min.js"></script>
+<style>
+  .pr-barra-sup { display:flex; gap:10px; align-items:center; margin:0 0 12px; flex-wrap:wrap; }
+  .pr-barra-sup .pr-ayuda { font-size:13px; color:var(--gris); }
+  .pr-marco { position:relative; width:100%; aspect-ratio:16/9; background:#2f2129; border-radius:12px; overflow:hidden; }
+  .pr-marco:fullscreen { border-radius:0; display:grid; place-items:center; }
+  .pr { --t:#2f2129; --t2:#3b2c35; --t3:#4a3a44; --g:#a99ca4; --pa:#fff;
+    --az:#d7eaff; --am:#fef79f; --li:#e4cdff; --lm:#e3ff00;
+    --serif:Georgia,'Times New Roman',Times,serif; --slab:Rockwell,'Roboto Slab',Georgia,serif; --sans:Helvetica,Arial,sans-serif;
+    position:absolute; left:0; top:0; width:1440px; height:810px; transform-origin:0 0; background:var(--t); color:var(--pa); font-family:var(--sans); overflow:hidden; }
+  .pr * { box-sizing:border-box; margin:0; }
+  .pr-esc { position:absolute; inset:0; display:grid; grid-template-rows:auto auto 1fr auto; padding:28px 48px 24px; gap:22px; }
+  .pr-cab { display:flex; align-items:baseline; gap:20px; }
+  .pr-logo { font-family:var(--slab); font-weight:700; font-size:40px; letter-spacing:-1px; }
+  .pr-tit { font-family:var(--serif); font-size:22px; color:var(--g); }
+  .pr-meta { margin-left:auto; font-size:14px; color:var(--g); text-align:right; line-height:1.5; }
+  .pr-meta b { color:var(--pa); font-weight:600; }
+
+  .pr-diag { position:relative; display:grid; grid-template-columns:repeat(9,1fr); }
+  .pr-riel, .pr-riel-lleno { position:absolute; top:27px; left:5.5%; right:5.5%; height:3px; background:var(--t3); border-radius:2px; }
+  .pr-riel-lleno { background:var(--lm); right:auto; width:0; transition:width .9s ease; }
+  .pr-nodo { position:relative; display:flex; flex-direction:column; align-items:center; gap:10px; text-align:center; }
+  .pr-bola { width:56px; height:56px; border-radius:50%; background:var(--t2); border:2px solid var(--t3); display:grid; place-items:center; font-family:var(--slab); font-size:20px; color:var(--g); transition:all .4s; z-index:1; }
+  .pr-nom { font-size:13px; color:var(--g); line-height:1.25; max-width:120px; transition:color .4s; }
+  .pr-quien { font-size:10px; letter-spacing:.08em; text-transform:uppercase; padding:2px 7px; border-radius:10px; opacity:.55; background:var(--t3); }
+  .pr-q-py { color:var(--az); } .pr-q-ia { color:var(--li); }
+  .pr-nodo.pr-act .pr-bola { background:var(--lm); border-color:var(--lm); color:var(--t); transform:scale(1.15); box-shadow:0 0 0 10px rgba(227,255,0,.14); animation:pr-latido 1.4s infinite; }
+  .pr-nodo.pr-act .pr-nom { color:var(--pa); font-weight:600; }
+  .pr-nodo.pr-act .pr-quien { opacity:1; }
+  .pr-nodo.pr-ok .pr-bola { background:var(--pa); border-color:var(--pa); color:var(--t); }
+  .pr-nodo.pr-ok .pr-nom { color:var(--pa); }
+  @keyframes pr-latido { 50% { box-shadow:0 0 0 18px rgba(227,255,0,0); } }
+
+  .pr-panel { position:relative; background:var(--t2); border-radius:22px; overflow:hidden; }
+  .pr-etapa { position:absolute; inset:0; display:grid; grid-template-columns:34% 1fr; gap:40px; padding:40px 48px; opacity:0; transform:translateY(14px); transition:opacity .5s, transform .5s; pointer-events:none; }
+  .pr-etapa.pr-on { opacity:1; transform:none; }
+  .pr-paso { font-size:13px; letter-spacing:.14em; text-transform:uppercase; color:var(--lm); margin-bottom:14px; }
+  .pr-h { font-family:var(--serif); font-size:42px; line-height:1.08; font-weight:400; margin-bottom:18px; color:var(--pa); }
+  .pr-p { font-size:17px; line-height:1.5; color:#e6dde2; }
+  .pr-code { display:inline-block; margin-top:20px; font-family:ui-monospace,Menlo,monospace; font-size:13px; color:var(--az); background:var(--t); padding:6px 10px; border-radius:8px; }
+  .pr-vis { position:relative; display:flex; flex-direction:column; justify-content:center; gap:14px; }
+
+  .pr-in { opacity:0; transform:translateY(10px); }
+  .pr-on .pr-in { animation:pr-entra .5s forwards; animation-delay:calc(var(--d,0) * 1s); }
+  @keyframes pr-entra { to { opacity:1; transform:none; } }
+  .pr-big { font-family:var(--slab); font-size:96px; line-height:1; color:var(--lm); }
+  .pr-big small { font-family:var(--sans); font-size:20px; color:var(--g); margin-left:12px; }
+  .pr-chips { display:flex; flex-wrap:wrap; gap:8px; }
+  .pr-chip { font-size:14px; padding:7px 12px; border-radius:20px; background:var(--t); color:var(--pa); border:1px solid var(--t3); }
+  .pr-chip.az { background:var(--az); color:var(--t); border:0; } .pr-chip.am { background:var(--am); color:var(--t); border:0; } .pr-chip.li { background:var(--li); color:var(--t); border:0; }
+  .pr-fila3 { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; }
+  .pr-tile { background:var(--t); border-radius:16px; padding:22px; }
+  .pr-tile .n { font-family:var(--slab); font-size:56px; color:var(--pa); }
+  .pr-tile .l { font-size:14px; color:var(--g); margin-top:6px; }
+
+  .pr-embudo { position:relative; height:280px; border-radius:16px; background:var(--t); overflow:hidden; }
+  .pr-pared { position:absolute; left:50%; top:0; bottom:0; width:6px; margin-left:-3px; background:var(--lm); opacity:.9; }
+  .pr-etq { position:absolute; top:14px; font-size:13px; color:var(--g); }
+  .pr-punto { position:absolute; left:4%; width:14px; height:14px; border-radius:50%; background:var(--az); }
+  .pr-on .pr-punto { animation:pr-cruza 2.6s ease-in-out forwards; animation-delay:calc(var(--d) * 1s); }
+  .pr-on .pr-punto.rep { background:#ff8c8c; animation-name:pr-rebota; }
+  @keyframes pr-cruza { to { left:92%; } }
+  @keyframes pr-rebota { 45% { left:46%; } 60% { left:44%; opacity:1; } 100% { left:40%; top:110%; opacity:0; } }
+
+  .pr-medios3 { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
+  .pr-medio { background:var(--t); border-radius:14px; padding:18px; border-top:4px solid var(--az); }
+  .pr-medio:nth-child(2) { border-color:var(--am); } .pr-medio:nth-child(3) { border-color:var(--li); }
+  .pr-medio b { display:block; font-size:15px; margin-bottom:8px; }
+  .pr-medio span { font-size:14px; color:#d9ced4; line-height:1.4; font-family:var(--serif); font-style:italic; }
+  .pr-nota { background:var(--pa); color:var(--t); border-radius:16px; padding:22px 24px; }
+  .pr-nota .lug { font-size:12px; letter-spacing:.12em; text-transform:uppercase; color:#7a6c74; }
+  .pr-nota .tt { font-family:var(--serif); font-size:24px; font-weight:400; margin:6px 0 10px; color:var(--t); }
+  .pr-nota .est { display:inline-block; font-size:12px; background:var(--lm); padding:4px 10px; border-radius:12px; font-weight:600; }
+  .pr-nota .fts { font-size:13px; color:#7a6c74; margin-left:10px; }
+
+  .pr-barra { display:grid; grid-template-columns:150px 1fr 60px; align-items:center; gap:14px; font-size:15px; }
+  .pr-barra .tr { height:16px; background:var(--t); border-radius:8px; overflow:hidden; }
+  .pr-barra .tr i { display:block; height:100%; width:0; border-radius:8px; transition:width 1.4s ease; }
+  .pr-barra .v { font-family:var(--slab); font-size:22px; text-align:right; }
+
+  .pr-check { display:flex; align-items:center; gap:14px; font-size:16px; padding:6px 0; border-bottom:1px solid var(--t3); }
+  .pr-check .ok { width:28px; height:28px; border-radius:50%; background:var(--lm); color:var(--t); display:grid; place-items:center; font-weight:700; font-size:15px; }
+  .pr-check small { margin-left:auto; color:var(--g); font-size:14px; }
+  .pr-ver { display:flex; gap:16px; margin-top:4px; }
+  .pr-ver .pr-tile { flex:1; padding:10px 20px; display:flex; align-items:center; gap:14px; }
+  .pr-ver .pr-tile .n { font-size:36px; } .pr-ver .pr-tile .l { margin:0; }
+
+  .pr-sobres { display:grid; grid-template-columns:repeat(10,1fr); gap:10px; }
+  .pr-sobre { aspect-ratio:3/4; border-radius:10px; background:var(--pa); position:relative; padding:8px 7px; display:flex; flex-direction:column; gap:4px; }
+  .pr-sobre i { display:block; height:5px; border-radius:3px; }
+  .pr-sobre i.g { background:var(--az); } .pr-sobre i.c { background:var(--am); } .pr-sobre i.p { background:var(--li); }
+  .pr-sobre em { position:absolute; bottom:6px; left:7px; font-size:10px; color:#7a6c74; font-style:normal; }
+
+  .pr-vis-globo { margin:-40px -48px -40px 0; }
+  .pr-globo { position:absolute; inset:0; width:100%; height:100%; }
+  .pr-cont { margin-top:34px; font-family:var(--slab); font-size:96px; line-height:1; color:var(--lm); }
+  .pr-cont small { font-family:var(--sans); font-size:20px; color:var(--g); margin-left:12px; }
+
+  .pr-final { position:absolute; inset:0; display:grid; place-items:center; background:var(--t); opacity:0; pointer-events:none; transition:opacity .8s; z-index:5; text-align:center; }
+  .pr-final.pr-on { opacity:1; }
+  .pr-final .pr-logo { font-size:110px; }
+  .pr-final .lema { font-family:var(--serif); font-size:26px; color:var(--g); margin-top:10px; }
+  .pr-final .res { margin-top:34px; font-size:18px; color:var(--pa); font-family:var(--sans); }
+  .pr-franjas { display:flex; gap:10px; justify-content:center; margin-top:30px; }
+  .pr-franjas span { width:70px; height:8px; border-radius:4px; }
+
+  .pr-pie { display:flex; align-items:center; gap:20px; }
+  .pr-lanzar { font:600 17px var(--sans); background:var(--lm); color:var(--t); border:0; border-radius:30px; padding:14px 28px; cursor:pointer; }
+  .pr.pr-corriendo .pr-lanzar { visibility:hidden; }
+  .pr-prog { flex:1; height:4px; background:var(--t3); border-radius:2px; overflow:hidden; }
+  .pr-prog i { display:block; height:100%; width:0; background:var(--lm); }
+  .pr-reloj-utc { font-family:ui-monospace,Menlo,monospace; font-size:14px; color:var(--g); min-width:170px; text-align:right; }
+</style>
+
+<div class="pr-barra-sup">
+  <button class="btn" id="pr-full" type="button">Pantalla completa</button>
+  <span class="pr-ayuda">Repetición de una edición real, sin ejecutar nada. Para grabar: pantalla completa (o tecla F), luego barra espaciadora o «Lanzar edición». Esc para salir.</span>
+</div>
+<div class="pr-marco" id="pr-marco">
+  <div class="pr" id="pr">
+    <div class="pr-esc">
+      <div class="pr-cab">
+        <div class="pr-logo">vera</div>
+        <div class="pr-tit">Así se hace una edición</div>
+        <div class="pr-meta" id="pr-meta"></div>
+      </div>
+      <div class="pr-diag" id="pr-diag"><div class="pr-riel"></div><div class="pr-riel-lleno" id="pr-riel"></div></div>
+      <div class="pr-panel" id="pr-panel"></div>
+      <div class="pr-pie">
+        <button class="pr-lanzar" id="pr-lanzar" type="button">▶ Lanzar edición</button>
+        <div class="pr-prog"><i id="pr-prog"></i></div>
+        <div class="pr-reloj-utc" id="pr-utc">05:00 UTC</div>
+      </div>
+    </div>
+    <div class="pr-final" id="pr-final"></div>
+  </div>
+</div>
+
+<script>
+(function () {
+  const D = {"fecha": "2026-11-23", "edicion": 98, "asunto": "Lun 23 nov — La cumbre del clima termina sin acuerdo sobre los fósiles", "fuentes": {"total": 122, "feeds": 62, "gnews": 60}, "segmentos": {"global": 5, "chile": 5, "temas": 19, "local": 10, "vera_elige": 5}, "noticias": 44, "estados": {"confirmado": 28, "en_desarrollo": 4, "reportado": 12}, "citas": 105, "medios_distintos": 34, "errores": 0, "avisos": 93, "confianza": 78, "medios_lista": 116, "lectores": 19, "ciudades": ["Berlín", "Madrid", "Oxford", "Barcelona", "San Pedro de la Paz", "Las Condes", "Vancouver", "Concepción", "Santiago", "Puerto Aysén", "Viena", "Huépil"], "zonas": [{"zona": "Europe/Berlin", "nombre": "Berlín", "utc": "06:00", "lectores": 2}, {"zona": "Europe/Madrid", "nombre": "Madrid", "utc": "06:00", "lectores": 5}, {"zona": "Europe/Paris", "nombre": "París", "utc": "06:00", "lectores": 1}, {"zona": "Europe/Vienna", "nombre": "Viena", "utc": "06:00", "lectores": 1}, {"zona": "America/Punta_Arenas", "nombre": "Aysén", "utc": "10:00", "lectores": 1}, {"zona": "America/Santiago", "nombre": "Santiago", "utc": "10:00", "lectores": 8}, {"zona": "America/Vancouver", "nombre": "Vancouver", "utc": "14:00", "lectores": 1}], "mapa": [{"nombre": "Barcelona", "lon": 2.17, "lat": 41.39, "lectores": 4, "zona": "Europe/Madrid", "region": "Europa", "utc": "06:00"}, {"nombre": "Berlín", "lon": 13.4, "lat": 52.52, "lectores": 2, "zona": "Europe/Berlin", "region": "Europa", "utc": "06:00"}, {"nombre": "Madrid", "lon": -3.7, "lat": 40.42, "lectores": 1, "zona": "Europe/Madrid", "region": "Europa", "utc": "06:00"}, {"nombre": "Oxford", "lon": -1.26, "lat": 51.75, "lectores": 1, "zona": "Europe/Paris", "region": "Europa", "utc": "06:00"}, {"nombre": "Viena", "lon": 16.37, "lat": 48.21, "lectores": 1, "zona": "Europe/Vienna", "region": "Europa", "utc": "06:00"}, {"nombre": "Concepción", "lon": -73.05, "lat": -36.83, "lectores": 4, "zona": "America/Santiago", "region": "Chile", "utc": "10:00"}, {"nombre": "Huépil", "lon": -71.95, "lat": -37.23, "lectores": 1, "zona": "America/Santiago", "region": "Chile", "utc": "10:00"}, {"nombre": "Las Condes", "lon": -70.58, "lat": -33.41, "lectores": 1, "zona": "America/Santiago", "region": "Chile", "utc": "10:00"}, {"nombre": "Puerto Aysén", "lon": -72.69, "lat": -45.4, "lectores": 1, "zona": "America/Punta_Arenas", "region": "Chile", "utc": "10:00"}, {"nombre": "San Pedro de la Paz", "lon": -73.11, "lat": -36.84, "lectores": 1, "zona": "America/Santiago", "region": "Chile", "utc": "10:00"}, {"nombre": "Santiago", "lon": -70.67, "lat": -33.45, "lectores": 1, "zona": "America/Santiago", "region": "Chile", "utc": "10:00"}, {"nombre": "Vancouver", "lon": -123.12, "lat": 49.28, "lectores": 1, "zona": "America/Vancouver", "region": "Canadá", "utc": "14:00"}], "entregados": 19, "principal": {"lugar": "Turquía", "titular": "La COP31 terminó en Antalya sin pacto político final", "estado": "confirmado", "fuentes": ["El País", "The Guardian", "ONU Noticias"]}, "enfoques": [{"medio": "El País", "frase": "el choque con los productores de petróleo"}, {"medio": "The Guardian", "frase": "una ruptura entre bloques"}, {"medio": "ONU Noticias", "frase": "una profunda frustración"}], "muestra_fuentes": ["BBC Mundo", "France 24", "Deutsche Welle", "El País Internacional", "El País Portada", "The Guardian World", "Al Jazeera", "ONU Noticias", "La Tercera", "CIPER", "Cooperativa"]};
+  const $ = (id) => document.getElementById(id);
+  const MESES = ["enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre"];
+  const DIAS = ["domingo","lunes","martes","miércoles","jueves","viernes","sábado"];
+  const f = new Date(D.fecha + "T12:00:00Z");
+  const fechaLarga = `${DIAS[f.getUTCDay()]} ${f.getUTCDate()} de ${MESES[f.getUTCMonth()]} de ${f.getUTCFullYear()}`;
+  const s = D.segmentos, est = D.estados, chipC = ["az", "am", "li", ""];
+  const IATA = { "Europe/Madrid": "MAD", "Europe/Berlin": "BER", "Europe/Paris": "PAR", "Europe/Vienna": "VIE", "America/Santiago": "SCL", "America/Punta_Arenas": "AYS", "America/Vancouver": "YVR" };
+  const sobres = D.zonas.flatMap(z => Array(z.lectores).fill(IATA[z.zona] || z.nombre.slice(0, 3).toUpperCase()));
+  const max = Math.max(...Object.values(s));
+
+  // Etapas reales del pipeline (SKILL.md pasos 0–9 + despacho.py). quien: py = código, ia = el modelo.
+  const ETAPAS = [
+    { nom: "Contexto", quien: "py", utc: "05:00",
+      h: "Qué necesita la edición de hoy",
+      p: "Vera revisa a sus lectores: qué temas eligieron, en qué ciudades viven y qué número de edición toca.",
+      code: "edicion.py · subs_necesarias() · ciudades() · esqueleto()",
+      vis: `<div class="pr-fila3">
+        <div class="pr-tile pr-in" style="--d:.2"><div class="n">${D.edicion}</div><div class="l">número de edición</div></div>
+        <div class="pr-tile pr-in" style="--d:.5"><div class="n">${D.lectores}</div><div class="l">lectores activos</div></div>
+        <div class="pr-tile pr-in" style="--d:.8"><div class="n">${s.local}</div><div class="l">noticias locales, una por ciudad</div></div></div>
+        <div class="pr-chips">${D.ciudades.map((c, i) => `<span class="pr-chip pr-in" style="--d:${1.2 + i * .12}">${c}</span>`).join("")}</div>` },
+    { nom: "Recolectar", quien: "py", utc: "05:02",
+      h: "Ir a buscar las noticias",
+      p: `Descarga lo publicado en las últimas 36 horas por ${D.fuentes.total} fuentes: medios del mundo, de Chile, locales y de cada tema.`,
+      code: "fetch_portales.py · recolectar() · sources.json",
+      vis: `<div class="pr-big"><span data-cuenta="${D.fuentes.total}">0</span><small>fuentes consultadas</small></div>
+        <div class="pr-chips">${D.muestra_fuentes.map((c, i) => `<span class="pr-chip ${chipC[i % 4]} pr-in" style="--d:${.6 + i * .18}">${c}</span>`).join("")}<span class="pr-chip pr-in" style="--d:4.8">+${D.fuentes.total - D.muestra_fuentes.length} más</span></div>
+        <div class="pr-chips"><span class="pr-chip pr-in" style="--d:5.2">${D.fuentes.feeds} feeds RSS</span><span class="pr-chip pr-in" style="--d:5.4">${D.fuentes.gnews} búsquedas en Google News</span><span class="pr-chip pr-in" style="--d:5.6">ventana de 36 h</span></div>` },
+    { nom: "No repetir", quien: "py", utc: "05:08",
+      h: "Fuera lo que ya contamos",
+      p: "Cada candidata se compara con todo lo enviado en los últimos 30 días. Si es el mismo link o un titular casi igual (75 % o más), no pasa.",
+      code: "historial.py · filtrar()",
+      // puntos ilustrativos: la cantidad de descartes no se guarda, así que no se muestra ninguna cifra
+      vis: `<div class="pr-embudo"><span class="pr-etq" style="left:4%">candidatas</span><span class="pr-etq" style="left:52%">historial de 30 días</span><span class="pr-etq" style="right:4%">nuevas</span><div class="pr-pared"></div>
+        ${Array.from({ length: 22 }, (_, i) => `<span class="pr-punto ${[3, 7, 12, 16, 19].includes(i) ? "rep" : ""}" style="top:${40 + ((i * 37) % 210)}px;--d:${.3 + i * .28}"></span>`).join("")}</div>
+        <div class="pr-chips"><span class="pr-chip pr-in" style="--d:1">misma URL → fuera</span><span class="pr-chip pr-in" style="--d:1.3">titular ≥ 75 % parecido → fuera</span></div>` },
+    { nom: "Seleccionar y contrastar", quien: "ia", utc: "05:10",
+      h: "Un hecho, varias miradas",
+      p: "Se elige lo importante y cada hecho se busca en varios medios de la lista blanca. Lo que cada uno enfatiza se cuenta dentro de la noticia.",
+      code: "SKILL.md · paso 3 (el modelo)",
+      vis: `<div class="pr-medios3">${D.enfoques.map((e, i) => `<div class="pr-medio pr-in" style="--d:${.3 + i * .7}"><b>${e.medio}</b><span>«${e.frase}»</span></div>`).join("")}</div>
+        <div class="pr-nota pr-in" style="--d:3"><div class="lug">Global · ${D.principal.lugar}</div><div class="tt">${D.principal.titular}</div><span class="est">${D.principal.estado === "confirmado" ? "Confirmado" : D.principal.estado}</span><span class="fts">${D.principal.fuentes.length} fuentes: ${D.principal.fuentes.join(" · ")}</span></div>` },
+    { nom: "Escribir", quien: "ia", utc: "05:25",
+      h: "La edición toma forma",
+      p: "Global y Chile son iguales para todos. Para ti se arma con un pool por tema y una noticia local por ciudad. Cada nota lleva su estado de certeza.",
+      code: `data/ediciones/${D.fecha}.json`,
+      vis: `${[["Global", s.global, "var(--az)"], ["Chile", s.chile, "var(--am)"], ["Para ti · temas", s.temas, "var(--li)"], ["Para ti · local", s.local, "var(--li)"], ["Vera elige", s.vera_elige, "var(--pa)"]].map(([l, n, c], i) => `<div class="pr-barra pr-in" style="--d:${.3 + i * .4}"><span>${l}</span><span class="tr"><i data-w="${n / max * 100}" style="background:${c}"></i></span><span class="v">${n}</span></div>`).join("")}
+        <div class="pr-chips"><span class="pr-chip pr-in" style="--d:2.6">${D.noticias} noticias</span><span class="pr-chip az pr-in" style="--d:2.9">${est.confirmado || 0} confirmadas</span><span class="pr-chip am pr-in" style="--d:3.2">${est.reportado || 0} reportadas</span><span class="pr-chip li pr-in" style="--d:3.5">${est.en_desarrollo || 0} en desarrollo</span></div>` },
+    { nom: "Verificar", quien: "py", utc: "05:34",
+      h: "Nada sale sin pasar el control",
+      p: "Un validador revisa cada noticia contra las reglas de Vera. Un error bloquea la edición; los avisos quedan guardados para mejorar.",
+      code: "edicion.py · validar() · medios.py · confianza.py",
+      vis: `${[["Solo medios de la lista blanca", `${D.medios_lista} medios verificados`], ["Mínimo 2 fuentes por noticia", "objetivo: 3"], ["Orígenes independientes", "un cable de agencia cuenta una vez"], ["Rotación de regiones en Global", ""], ["Español neutro", "sin modismos de España"], ["Confianza de fuentes", `promedio ${D.confianza} / 100`]].map(([a, b], i) => `<div class="pr-check pr-in" style="--d:${.3 + i * .55}"><span class="ok">✓</span>${a}<small>${b}</small></div>`).join("")}
+        <div class="pr-ver"><div class="pr-tile pr-in" style="--d:4"><div class="n" style="color:var(--lm)">${D.errores}</div><div class="l">errores bloqueantes</div></div><div class="pr-tile pr-in" style="--d:4.3"><div class="n">${D.avisos}</div><div class="l">avisos guardados con la edición</div></div></div>` },
+    { nom: "Componer", quien: "py", utc: "05:38",
+      h: "Un correo distinto para cada lector",
+      p: "Con la edición aprobada, Vera arma el correo de cada persona: lo común arriba y su Para ti según sus temas y su ciudad. Esto ya no usa IA.",
+      code: "compose.py · elegir_personalizado() · render()",
+      vis: `<div class="pr-sobres">${sobres.map((z, i) => `<div class="pr-sobre pr-in" style="--d:${.2 + i * .16}"><i class="g"></i><i class="g" style="width:70%"></i><i class="c"></i><i class="c" style="width:60%"></i>${Array.from({ length: 1 + (i * 7) % 3 }, () => `<i class="p" style="width:${50 + (i * 13) % 45}%"></i>`).join("")}<em>${z}</em></div>`).join("")}</div>
+        <div class="pr-chips"><span class="pr-chip li pr-in" style="--d:3.6">${D.lectores} correos personalizados</span><span class="pr-chip pr-in" style="--d:3.9">mismo Global y Chile para todos</span></div>` },
+    { nom: "Registrar", quien: "py", utc: "05:40",
+      h: "Memoria para mañana",
+      p: "Se guarda cada fuente citada para no repetir mañana, y se actualizan las métricas de apertura de los días anteriores.",
+      code: "historial.py · registrar_edicion() · metricas.py",
+      vis: `<div class="pr-big"><span data-cuenta="${D.citas}">0</span><small>citas registradas en el historial</small></div>
+        <div class="pr-fila3"><div class="pr-tile pr-in" style="--d:1.4"><div class="n">${D.medios_distintos}</div><div class="l">medios distintos</div></div><div class="pr-tile pr-in" style="--d:1.7"><div class="n">30</div><div class="l">días de memoria</div></div><div class="pr-tile pr-in" style="--d:2"><div class="n">✓</div><div class="l">edición guardada en la nube</div></div></div>` },
+    { nom: "Enviar a las 07:00", quien: "py", utc: D.zonas[0].utc,
+      h: "Llega a las 7 de la mañana, en cada ciudad",
+      p: "El despachador envía la edición a las 07:00 de la hora local de cada lector, de Europa a Chile y Canadá.",
+      code: "despacho.py · plan() · enviar()", globo: true,
+      extra: `<div class="pr-cont"><span id="pr-enviados">0</span><small>de ${D.lectores} entregados</small></div>`,
+      vis: `<canvas class="pr-globo" id="pr-globo"></canvas>` },
+  ];
+
+  $("pr-meta").innerHTML = `<b>Edición ${D.edicion}</b> · ${fechaLarga}<br>Repetición con los datos reales de esa mañana`;
+  $("pr-final").innerHTML = `<div><div class="pr-logo">vera</div><div class="lema">Lo importante de hoy. Resumido y contrastado para ti.</div>
+    <div class="res">Edición ${D.edicion} · ${D.fuentes.total} fuentes · ${D.noticias} noticias · ${D.citas} citas de ${D.medios_distintos} medios · ${D.entregados} de ${D.lectores} lectores a las 07:00</div>
+    <div class="pr-franjas"><span style="background:var(--az)"></span><span style="background:var(--am)"></span><span style="background:var(--li)"></span></div></div>`;
+  ETAPAS.forEach((e, i) => {
+    $("pr-diag").insertAdjacentHTML("beforeend", `<div class="pr-nodo" id="pr-n${i}"><div class="pr-bola">${i + 1}</div><div class="pr-nom">${e.nom}</div><span class="pr-quien pr-q-${e.quien}">${e.quien === "ia" ? "modelo" : "código"}</span></div>`);
+    $("pr-panel").insertAdjacentHTML("beforeend", `<div class="pr-etapa" id="pr-e${i}"><div><div class="pr-paso">Paso ${i + 1} de ${ETAPAS.length}</div><div class="pr-h">${e.h}</div><div class="pr-p">${e.p}</div><div class="pr-code">${e.code}</div>${e.extra || ""}</div><div class="pr-vis${e.globo ? " pr-vis-globo" : ""}">${e.vis}</div></div>`);
+  });
+
+  // escala: el diseño mide 1440×810 y se ajusta al marco (también en pantalla completa)
+  const marco = $("pr-marco"), pr = $("pr");
+  function escalar() {
+    const k = Math.min(marco.clientWidth / 1440, marco.clientHeight / 810) || 1;
+    pr.style.transform = `scale(${k})`;
+    pr.style.left = (marco.clientWidth - 1440 * k) / 2 + "px";
+    pr.style.top = (marco.clientHeight - 810 * k) / 2 + "px";
+  }
+  new ResizeObserver(escalar).observe(marco);
+  document.addEventListener("fullscreenchange", escalar);
+
+  function contar(el, hasta, ms, desde = 0) {
+    const t0 = performance.now();
+    (function f(t) { const k = Math.min(1, (t - t0) / ms); el.textContent = Math.round(desde + (hasta - desde) * (1 - Math.pow(1 - k, 3))); if (k < 1) requestAnimationFrame(f); })(t0);
+  }
+  let timers = [];
+  function mostrar(i) {
+    ETAPAS.forEach((_, j) => {
+      $("pr-n" + j).className = "pr-nodo" + (j < i ? " pr-ok" : j === i ? " pr-act" : "");
+      $("pr-e" + j).classList.toggle("pr-on", j === i);
+    });
+    $("pr-riel").style.width = (i / (ETAPAS.length - 1)) * 89 + "%";
+    $("pr-utc").textContent = ETAPAS[i].utc + " UTC";
+    const sec = $("pr-e" + i);
+    sec.querySelectorAll("[data-cuenta]").forEach(el => contar(el, +el.dataset.cuenta, 2600));
+    sec.querySelectorAll("[data-w]").forEach((el, k) => timers.push(setTimeout(() => el.style.width = el.dataset.w + "%", 400 + k * 400)));
+    if (ETAPAS[i].globo) globo.iniciar();
+  }
+
+  // Paso 9: planeta. Cada ciudad de los lectores se enciende a sus 07:00 locales (tandas por hora UTC); la noche es la
+  // real de esa fecha. dibujar(t) es función pura del tiempo t (s) dentro de la etapa, igual que en el video.
+  const globo = (function () {
+    const cv = $("pr-globo"), ctx = cv.getContext("2d");
+    const horas = [...new Set(D.mapa.map(c => c.utc))].sort();
+    const TANDAS = horas.map((u, i) => {
+      const cs = D.mapa.filter(c => c.utc === u);
+      return { utc: u, t: horas.length > 1 ? 1.2 + i * 4.8 / (horas.length - 1) : 1.2, cs, region: cs[0].region,
+               n: cs.reduce((a, c) => a + c.lectores, 0), lon: d3.mean(cs, c => c.lon), lat: d3.mean(cs, c => c.lat) };
+    });
+    const f = new Date(D.fecha + "T12:00:00Z"), dia = (f - Date.UTC(f.getUTCFullYear(), 0, 1)) / 864e5;
+    const DECL = -23.44 * Math.cos(2 * Math.PI / 365 * (dia + 10));   // declinación solar aproximada de esa fecha
+    const ease = (x) => x < 0 ? 0 : x > 1 ? 1 : x * x * (3 - 2 * x), lerp = (a, b, k) => a + (b - a) * k;
+    let tierra = null, bordes = null, raf = 0, W = 0, H = 0;
+    fetch("https://cdn.jsdelivr.net/npm/world-atlas@2.0.2/land-110m.json").then(r => r.json()).then(w => {
+      tierra = topojson.feature(w, w.objects.land); bordes = topojson.mesh(w, w.objects.land);
+    }).catch(() => {});
+    function medir() {
+      const r = cv.getBoundingClientRect(), k = devicePixelRatio || 1, s = (pr.getBoundingClientRect().width / 1440) || 1;
+      W = r.width / s; H = r.height / s; cv.width = W * k * s; cv.height = H * k * s; ctx.setTransform(k * s, 0, 0, k * s, 0, 0);
+    }
+    function camara(t) {
+      let lon = TANDAS[0].lon, lat = TANDAS[0].lat;
+      for (let i = 1; i < TANDAS.length; i++) {
+        const k = ease((t - TANDAS[i - 1].t - .6) / (TANDAS[i].t - TANDAS[i - 1].t - .9));
+        lon = lerp(lon, TANDAS[i].lon, k); lat = lerp(lat, TANDAS[i].lat, k);
+      }
+      let z = 1.3;
+      for (let i = 1; i < TANDAS.length; i++) { const m = (TANDAS[i - 1].t + TANDAS[i].t) / 2; z -= .3 * Math.max(0, 1 - Math.abs(t - m) / 1.1); }
+      const kf = ease((t - 8.2) / 1.1);
+      return { lon: lerp(lon, d3.mean(TANDAS, x => x.lon), kf), lat: lerp(lat, 6, kf), zoom: lerp(z, .98, kf) };
+    }
+    function hora(t) {
+      const h = (u) => +u.slice(0, 2) + +u.slice(3) / 60;
+      if (t <= TANDAS[0].t) return h(TANDAS[0].utc);
+      for (let i = 1; i < TANDAS.length; i++) if (t <= TANDAS[i].t) return lerp(h(TANDAS[i - 1].utc), h(TANDAS[i].utc), (t - TANDAS[i - 1].t) / (TANDAS[i].t - TANDAS[i - 1].t));
+      return h(TANDAS[TANDAS.length - 1].utc);
+    }
+    function rr(x, y, w, h, r) { ctx.beginPath(); ctx.moveTo(x + r, y); ctx.arcTo(x + w, y, x + w, y + h, r); ctx.arcTo(x + w, y + h, x, y + h, r); ctx.arcTo(x, y + h, x, y, r); ctx.arcTo(x, y, x + w, y, r); ctx.closePath(); }
+    function dibujar(t) {
+      const cam = camara(t), R = Math.min(W, H) * .46 * cam.zoom, cx = W / 2, cy = H / 2;
+      const proy = d3.geoOrthographic().scale(R).translate([cx, cy]).rotate([-cam.lon, -cam.lat]).clipAngle(90);
+      const path = d3.geoPath(proy, ctx);
+      ctx.clearRect(0, 0, W, H);
+      const g = ctx.createRadialGradient(cx, cy, R * .9, cx, cy, R * 1.25);
+      g.addColorStop(0, "rgba(227,255,0,.10)"); g.addColorStop(1, "rgba(227,255,0,0)");
+      ctx.fillStyle = g; ctx.beginPath(); ctx.arc(cx, cy, R * 1.25, 0, 7); ctx.fill();
+      ctx.fillStyle = "#271b22"; ctx.beginPath(); path({ type: "Sphere" }); ctx.fill();
+      ctx.strokeStyle = "rgba(255,255,255,.05)"; ctx.lineWidth = 1; ctx.beginPath(); path(d3.geoGraticule10()); ctx.stroke();
+      if (tierra) {
+        ctx.fillStyle = "#5e4a56"; ctx.beginPath(); path(tierra); ctx.fill();
+        ctx.strokeStyle = "rgba(255,255,255,.32)"; ctx.lineWidth = .7; ctx.beginPath(); path(bordes); ctx.stroke();
+      }
+      const h = hora(t), noche = [(12 - h) * 15 + 180, -DECL];
+      ctx.fillStyle = "rgba(16,9,13,.62)"; ctx.beginPath(); path(d3.geoCircle().center(noche).radius(90)()); ctx.fill();
+      ctx.fillStyle = "rgba(20,12,17,.25)"; ctx.beginPath(); path(d3.geoCircle().center(noche).radius(96)()); ctx.fill();
+      ctx.strokeStyle = "rgba(227,255,0,.35)"; ctx.lineWidth = 1.2; ctx.beginPath(); path({ type: "Sphere" }); ctx.stroke();
+      const visible = (lon, lat) => d3.geoDistance([lon, lat], [cam.lon, cam.lat]) < Math.PI / 2 - .05;
+      let entregados = 0;
+      TANDAS.forEach(td => td.cs.forEach((c, i) => {
+        const dt = t - td.t - (i % 6) * .08;
+        if (dt >= 0) entregados += c.lectores;
+        if (!visible(c.lon, c.lat)) return;
+        const [x, y] = proy([c.lon, c.lat]);
+        if (dt < 0) { ctx.fillStyle = "rgba(255,255,255,.35)"; ctx.beginPath(); ctx.arc(x, y, 2.5, 0, 7); ctx.fill(); return; }
+        if (dt < .6) {   // sobre que cae
+          const yy = y - 60 * (1 - ease(dt / .6));
+          ctx.fillStyle = "#fff"; rr(x - 11, yy - 8, 22, 16, 3); ctx.fill();
+          ctx.strokeStyle = "#a07bcd"; ctx.lineWidth = 1.5; ctx.beginPath(); ctx.moveTo(x - 10, yy - 7); ctx.lineTo(x, yy + 1); ctx.lineTo(x + 10, yy - 7); ctx.stroke();
+        }
+        for (let w = 0; w < 2; w++) { const k = dt - .5 - w * .35; if (k > 0 && k < 1.6) { ctx.strokeStyle = `rgba(227,255,0,${.7 * (1 - k / 1.6)})`; ctx.lineWidth = 2; ctx.beginPath(); ctx.arc(x, y, 6 + k * 26, 0, 7); ctx.stroke(); } }
+        if (dt >= .5) {
+          const r = 4 + Math.min(c.lectores, 4) * 1.2;
+          ctx.fillStyle = "rgba(227,255,0,.25)"; ctx.beginPath(); ctx.arc(x, y, r * 2.2, 0, 7); ctx.fill();
+          ctx.fillStyle = "#e3ff00"; ctx.beginPath(); ctx.arc(x, y, r, 0, 7); ctx.fill();
+        }
+      }));
+      // una tarjeta por tanda (solo la vigente): región, lectores y ciudades
+      TANDAS.forEach((td, i) => {
+        const dt = t - td.t - .7; if (dt < 0) return;
+        const sig = TANDAS[i + 1], fuera = sig ? Math.max(0, 1 - (t - sig.t + .9) / .5) : Math.max(0, 1 - (t - 8.7) / .5);
+        if (fuera <= 0 || !visible(td.lon, td.lat)) return;
+        const [x, y] = proy([td.lon, td.lat]);
+        const filas = []; let fl = "";
+        td.cs.map(c => c.lectores > 1 ? `${c.nombre} ${c.lectores}` : c.nombre).forEach(l => { if ((fl + " · " + l).length > 34 && fl) { filas.push(fl); fl = l; } else fl = fl ? fl + " · " + l : l; });
+        filas.push(fl);
+        ctx.globalAlpha = Math.min(1, dt / .4) * fuera;
+        ctx.font = "13px Helvetica, Arial, sans-serif";
+        const w = Math.max(170, ...filas.map(r => ctx.measureText(r).width)) + 28, hh = 50 + filas.length * 18;
+        const der = x < cx, bx = der ? x + 34 : x - 34 - w, by = Math.max(14, Math.min(H - hh - 14, y - hh / 2));
+        ctx.strokeStyle = "rgba(227,255,0,.6)"; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(x, y); ctx.lineTo(der ? bx : bx + w, by + hh / 2); ctx.stroke();
+        ctx.fillStyle = "rgba(47,33,41,.92)"; rr(bx, by, w, hh, 14); ctx.fill(); ctx.strokeStyle = "rgba(227,255,0,.5)"; ctx.stroke();
+        ctx.fillStyle = "#e3ff00"; ctx.font = "600 12px Helvetica, Arial, sans-serif"; ctx.fillText(`07:00 · ${td.region.toUpperCase()}`, bx + 14, by + 20);
+        ctx.fillStyle = "#fff"; ctx.font = "700 18px Helvetica, Arial, sans-serif"; ctx.fillText(`+${td.n} lector${td.n > 1 ? "es" : ""}`, bx + 14, by + 42);
+        ctx.fillStyle = "#cbbfc6"; ctx.font = "13px Helvetica, Arial, sans-serif"; filas.forEach((r, k) => ctx.fillText(r, bx + 14, by + 62 + k * 18));
+        ctx.globalAlpha = 1;
+      });
+      const ka = ease((t - 8.4) / .9);   // cierre: arcos que unen las regiones
+      if (ka > 0 && TANDAS.length > 1) {
+        const pts = TANDAS.map(td => [td.lon, td.lat]);
+        ctx.strokeStyle = "rgba(227,255,0,.7)"; ctx.lineWidth = 1.6; ctx.setLineDash([4, 5]);
+        pts.forEach((p, i) => { const ip = d3.geoInterpolate(p, pts[(i + 1) % pts.length]); ctx.beginPath(); path({ type: "LineString", coordinates: d3.range(0, ka + .001, .02).map(ip) }); ctx.stroke(); });
+        ctx.setLineDash([]);
+      }
+      $("pr-enviados").textContent = Math.min(entregados, D.entregados);
+      const hh2 = Math.floor(h), mm = Math.floor((h - hh2) * 6) * 10;
+      $("pr-utc").textContent = `${String(hh2).padStart(2, "0")}:${String(mm).padStart(2, "0")} UTC`;
+    }
+    function iniciar() {
+      detener(); medir();
+      const t0 = performance.now();
+      (function f(now) { const t = Math.min(DUR, (now - t0) / 1000); dibujar(t); if (t < DUR) raf = requestAnimationFrame(f); })(t0);
+    }
+    function detener() { cancelAnimationFrame(raf); }
+    function ver(t) { detener(); medir(); dibujar(t); }   // para revisar un instante desde la consola
+    return { iniciar, detener, ver };
+  })();
+
+  function reiniciar() {
+    timers.forEach(clearTimeout); timers = []; globo.detener();
+    ETAPAS.forEach((_, j) => { $("pr-n" + j).className = "pr-nodo"; $("pr-e" + j).classList.remove("pr-on"); });
+    $("pr-panel").querySelectorAll("[data-w]").forEach(el => el.style.width = 0);
+    $("pr-riel").style.width = 0; $("pr-prog").style.width = 0; $("pr-utc").textContent = "05:00 UTC";
+    $("pr-final").classList.remove("pr-on");
+  }
+
+  const DUR = 9.4;
+  let corriendo = false;
+  function lanzar() {
+    if (corriendo) return;
+    reiniciar(); corriendo = true; pr.classList.add("pr-corriendo");
+    const t0 = performance.now(), total = DUR * ETAPAS.length * 1000;
+    let actual = -1;
+    (function tick(t) {
+      const ms = t - t0, i = Math.floor(ms / (DUR * 1000));
+      $("pr-prog").style.width = Math.min(100, ms / total * 100) + "%";
+      if (i !== actual && i < ETAPAS.length) { actual = i; mostrar(i); }
+      if (ms < total) return requestAnimationFrame(tick);
+      ETAPAS.forEach((_, j) => $("pr-n" + j).className = "pr-nodo pr-ok");
+      timers.push(setTimeout(() => { $("pr-final").classList.add("pr-on"); corriendo = false; pr.classList.remove("pr-corriendo"); }, 800));
+    })(t0);
+  }
+  $("pr-lanzar").onclick = lanzar;
+  $("pr-final").onclick = reiniciar;
+  $("pr-full").onclick = () => marco.requestFullscreen && marco.requestFullscreen();
+  document.addEventListener("keydown", (e) => {
+    if (!$("s-proceso")?.classList.contains("on") || /INPUT|TEXTAREA|SELECT/.test(e.target.tagName)) return;
+    if (e.code === "Space") { e.preventDefault(); lanzar(); }
+    else if (e.key === "f" || e.key === "F") { document.fullscreenElement ? document.exitFullscreen() : marco.requestFullscreen(); }
+  });
+  window.__proceso = { mostrar, lanzar, reiniciar, globo };   // para revisar cada etapa desde la consola
+})();
+</script>
+
     </section>
 
     <section id="s-salud">
