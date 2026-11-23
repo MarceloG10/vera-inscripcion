@@ -66,6 +66,12 @@
   .popover .acciones { margin-top:8px; padding-top:8px; border-top:1px solid var(--hair); } .popover .acciones a { margin-right:12px; color:var(--purpura); font-size:11px; text-transform:uppercase; letter-spacing:.4px; }
   .filtros-activos { margin:6px 0 10px; } .filtros-activos .chip { cursor:pointer; }
   .kpi { cursor:help; }
+  .priv { white-space:nowrap; } .priv .dato { filter:blur(5px); user-select:none; transition:filter .15s; }
+  .priv.visible .dato, body.ver-datos .priv .dato { filter:none; user-select:auto; }
+  .priv .ojo { border:0; background:none; cursor:pointer; font-size:11px; padding:0 0 0 4px; opacity:.55; vertical-align:middle; }
+  .priv .ojo:hover { opacity:1; }
+  #ver-datos { font-family:var(--sans); font-size:10px; letter-spacing:.8px; text-transform:uppercase; background:#fff; color:var(--tinta); border:1.5px solid var(--tinta); border-radius:3px; padding:3px 8px; cursor:pointer; margin-right:8px; }
+  body.ver-datos #ver-datos { background:var(--tinta); color:#fff; }
   /* Proyectos: tablero con la paleta de Vera (tinta única; el color vive en los fondos de columna, no en el texto) */
   .tablero { display:grid; grid-template-columns:repeat(5, minmax(0, 1fr)); gap:10px; align-items:start; min-width:860px; padding-bottom:8px; }
   .col { min-width:0; border-radius:0; padding:12px 10px 6px; min-height:140px; background:var(--papel); border:1px solid var(--hair); }
@@ -122,6 +128,34 @@
   .leyenda span { display:inline-flex; align-items:center; gap:6px; } .leyenda i { flex:none; margin:0; }
   .c4 { background:var(--tinta); } .c3 { background:var(--purpura); } .c2 { background:var(--azul-acento); } .c1 { background:#cfcfcf; } .c0 { background:#e07b7b; } .cx { background:#f3f3f3; }
   .login { max-width:460px; margin:60px auto; padding:0 24px; }
+  /* Login: solo aplica mientras #login está visible; la app ya autenticada no cambia */
+  .wrap:has(> #login:not([hidden])) { max-width:none; background:var(--tinta); }
+  .wrap:has(> #login:not([hidden])) > .cab { display:none; }
+  #login:not([hidden]) { max-width:1120px; min-height:100vh; margin:0 auto; padding:56px 48px; display:grid; grid-template-columns:1.1fr minmax(0,440px); gap:64px; align-items:center; }
+  .login-marca { color:#fff; }
+  .login-logo { font-family:var(--slab); font-size:104px; line-height:.9; letter-spacing:-2px; color:#fff; }
+  .login-kicker { font-family:var(--sans); font-size:11px; letter-spacing:2.5px; text-transform:uppercase; color:#a6a6a6; margin-top:18px; }
+  .login-lema { font-family:var(--serif); font-size:30px; line-height:1.25; color:#a6a6a6; margin:40px 0 0; text-wrap:balance; }
+  .login-franjas { display:flex; gap:10px; margin-top:44px; max-width:360px; }
+  .login-franjas span { flex:1; height:14px; border-radius:7px; }
+  .login-franjas .f-azul { background:var(--azul); } .login-franjas .f-amarillo { background:var(--amarillo); } .login-franjas .f-lila { background:var(--lila); }
+  .login-tarjeta { background:var(--papel); border-radius:18px; padding:40px 40px 36px; box-shadow:0 24px 60px rgba(0,0,0,.28); position:relative; overflow:hidden; }
+  .login-tarjeta:before { content:""; position:absolute; inset:0 0 auto 0; height:8px; background:linear-gradient(90deg, var(--azul) 0 33.3%, var(--amarillo) 33.3% 66.6%, var(--lila) 66.6%); }
+  .login-tarjeta h2 { font-size:34px; margin:4px 0 10px; }
+  .login-tarjeta p { font-size:16px; line-height:1.5; margin:0 0 22px; text-wrap:pretty; }
+  .login-tarjeta label.f { margin:0 0 8px; letter-spacing:1px; }
+  .login-tarjeta input[type=email] { padding:13px 14px; border-radius:10px; transition:box-shadow .15s, border-color .15s; }
+  .login-tarjeta input[type=email]:focus { outline:none; border-color:var(--azul-acento); box-shadow:0 0 0 4px var(--azul); }
+  .login-tarjeta button.btn { width:100%; margin-top:18px; padding:14px 20px; border-radius:10px; transition:background .15s, transform .1s; }
+  .login-tarjeta button.btn:hover:not(:disabled) { opacity:.88; }
+  .login-tarjeta button.btn:active:not(:disabled) { transform:translateY(1px); }
+  .login-tarjeta button.btn:focus-visible { outline:none; box-shadow:0 0 0 4px var(--azul); }
+  .login-tarjeta .msg:empty { display:none; } .login-tarjeta .msg { margin-top:14px; }
+  @media (max-width:820px) {
+    #login:not([hidden]) { grid-template-columns:1fr; gap:36px; padding:40px 16px 32px; align-content:start; }
+    .login-logo { font-size:72px; } .login-lema { font-size:22px; margin-top:22px; } .login-franjas { margin-top:26px; max-width:240px; }
+    .login-tarjeta { padding:32px 22px 26px; }
+  }
   input[type=email], input[type=text], select, textarea { width:100%; font:inherit; font-size:16px; padding:9px 11px; border:2px solid var(--tinta); border-radius:3px; }
   label.f { display:block; font-family:var(--sans); font-size:11px; font-weight:bold; text-transform:uppercase; letter-spacing:.5px; margin:14px 0 6px; }
   button.btn { font-family:var(--sans); font-size:13px; font-weight:bold; text-transform:uppercase; letter-spacing:.8px; background:var(--tinta); color:#fff; border:2px solid var(--tinta); padding:11px 20px; border-radius:3px; cursor:pointer; margin-top:16px; }
@@ -156,13 +190,22 @@
     <div class="quien" id="quien"></div>
   </div>
 
+  <!-- Login: sistema de la web (fondo de tinta, wordmark blanco, lema gris, tarjeta blanca redondeada). 2026-11-23 -->
   <div id="login" class="login" hidden>
-    <h2>Entrar</h2>
-    <p>Escribe tu correo de socio y te enviamos un enlace de acceso. Sin contraseñas.</p>
-    <label class="f" for="lemail">Correo</label>
-    <input type="email" id="lemail" autocomplete="email">
-    <button class="btn" id="lbtn">Enviarme el enlace</button>
-    <div class="msg" id="lmsg"></div>
+    <div class="login-marca">
+      <div class="login-logo">vera</div>
+      <div class="login-kicker">Backoffice · solo founders</div>
+      <p class="login-lema">Lo importante de hoy.<br>Resumido y contrastado para ti.</p>
+      <div class="login-franjas" aria-hidden="true"><span class="f-azul"></span><span class="f-amarillo"></span><span class="f-lila"></span></div>
+    </div>
+    <div class="login-tarjeta">
+      <h2>Entrar</h2>
+      <p>Escribe tu correo de socio y te enviamos un enlace de acceso. Sin contraseñas.</p>
+      <label class="f" for="lemail">Correo</label>
+      <input type="email" id="lemail" autocomplete="email" placeholder="tu@correo.com">
+      <button class="btn" id="lbtn">Enviarme el enlace</button>
+      <div class="msg" id="lmsg"></div>
+    </div>
   </div>
 
   <div id="app" hidden>
@@ -590,6 +633,10 @@ const PREGUNTAS = {1:"¿Cómo te informaste ayer de lo que pasa en Chile y el mu
 const ORDEN = {"sent":1,"delivery_delayed":1,"delivered":2,"opened":3,"clicked":4,"bounced":0,"complained":0};
 const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
 const $ = (id) => document.getElementById(id);
+// Modo privado (2026-11-23): nombres y correos de lectores ocultos por defecto (para grabar o compartir pantalla).
+// Cada dato tiene un ojo para verlo; el botón «Mostrar datos» de la cabecera los muestra todos.
+document.addEventListener("click", (e) => { const o = e.target.closest(".ojo"); if (o) { e.preventDefault(); o.parentElement.classList.toggle("visible"); } });
+const P = (s) => `<span class="priv"><span class="dato">${esc(s)}</span><button type="button" class="ojo" title="Ver u ocultar">👁</button></span>`;
 const esc = (s) => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const dias = (n) => { const d = new Date(); d.setDate(d.getDate() - n); return d.toISOString().slice(0,10); };
 
@@ -613,7 +660,8 @@ async function arrancar() {
     $("lmsg").className = "msg err"; $("lmsg").textContent = `${session.user.email} no está en la lista de socios. Pídele a Marcelo que te agregue.`;
     return;
   }
-  $("quien").innerHTML = `${esc(socio.nombre || socio.email)} · <a href="#" id="salir">salir</a>`;
+  $("quien").innerHTML = `<button type="button" id="ver-datos" title="Nombres y correos de lectores">Mostrar datos</button>${esc(socio.nombre || socio.email)} · <a href="#" id="salir">salir</a>`;
+  $("ver-datos").onclick = (() => { const on = document.body.classList.toggle("ver-datos"); $("ver-datos").textContent = on ? "Ocultar datos" : "Mostrar datos"; });
   $("salir").addEventListener("click", async (e) => { e.preventDefault(); await sb.auth.signOut(); location.reload(); });
   $("login").hidden = true; $("app").hidden = false;
   cargar().catch(err => { $("kpis").innerHTML = `<div class="err">Error cargando datos: ${esc(err.message || err)}</div>`; });
@@ -703,7 +751,7 @@ async function cargar() {
   const f14 = fechas.filter(f => f >= d14);
   const emails = [...new Set([...mejor.keys()].map(k => k.split("|")[1]))].sort((a,b) => (nombres[a]||a).localeCompare(nombres[b]||b));
   $("t-grid").innerHTML = `<tr><th></th>${f14.map(f => `<th style="font-size:9px">${f.slice(5)}</th>`).join("")}</tr>` +
-    emails.map(em => `<tr><td><b>${esc(nombres[em] || em)}</b></td>${f14.map(f => { const v = mejor.get(key(f, em)); return `<td><span class="cel ${v === undefined ? "cx" : "c" + v}" title="${f} · ${({4:"clic",3:"abrió",2:"entregado",1:"enviado",0:"rebote"})[v] || "sin envío"}"></span></td>`; }).join("")}</tr>`).join("");
+    emails.map(em => `<tr><td><b>${P(nombres[em] || em)}</b></td>${f14.map(f => { const v = mejor.get(key(f, em)); return `<td><span class="cel ${v === undefined ? "cx" : "c" + v}" title="${f} · ${({4:"clic",3:"abrió",2:"entregado",1:"enviado",0:"rebote"})[v] || "sin envío"}"></span></td>`; }).join("")}</tr>`).join("");
   const titulares = {};
   for (const it of catalogo) titulares[String(it.fecha) + "|" + it.item_id] = it.titular;
   const cnt = {};
@@ -722,8 +770,8 @@ async function cargar() {
     porItem[k] = (porItem[k]||0) + 1; porLector[e.destinatario] = (porLector[e.destinatario]||0) + 1;
     const seg = m ? m.seg + (m.tipo === "principal" ? " · principal" : " · breves") : "otro"; porSeg[seg] = (porSeg[seg]||0) + 1;
     const tema = m && m.tema ? m.tema : (m ? m.seg : "sin clasificar"); porTema[tema] = (porTema[tema]||0) + 1; }
-  const barras = (obj) => { const max = Math.max(1, ...Object.values(obj)); return Object.entries(obj).sort((a,b) => b[1]-a[1]).map(([k, n]) => `<div style="display:grid;grid-template-columns:200px 1fr 40px;gap:10px;align-items:center;margin:5px 0;font-size:14px;"><span>${esc(k)}</span><span class="barra" style="width:${Math.round(100*n/max)}%;max-width:100%;"></span><b style="text-align:right">${n}</b></div>`).join(""); };
-  $("clics-tipo").innerHTML = totalClics ? `<h3 style="margin-top:0">Por segmento</h3>${barras(porSeg)}<h3>Por tema</h3>${barras(porTema)}<h3>Por lector</h3>${barras(Object.fromEntries(Object.entries(porLector).map(([e,n]) => [nombres[e]||e, n])))}<h3>Noticia por noticia</h3>` +
+  const barras = (obj, priv) => { const max = Math.max(1, ...Object.values(obj)); return Object.entries(obj).sort((a,b) => b[1]-a[1]).map(([k, n]) => `<div style="display:grid;grid-template-columns:200px 1fr 40px;gap:10px;align-items:center;margin:5px 0;font-size:14px;"><span>${priv ? P(k) : esc(k)}</span><span class="barra" style="width:${Math.round(100*n/max)}%;max-width:100%;"></span><b style="text-align:right">${n}</b></div>`).join(""); };
+  $("clics-tipo").innerHTML = totalClics ? `<h3 style="margin-top:0">Por segmento</h3>${barras(porSeg)}<h3>Por tema</h3>${barras(porTema)}<h3>Por lector</h3>${barras(Object.fromEntries(Object.entries(porLector).map(([e,n]) => [nombres[e]||e, n])), true)}<h3>Noticia por noticia</h3>` +
     Object.entries(porItem).sort((a,b) => b[1]-a[1]).map(([k, n]) => { const m = meta[k] || {}; return `<div class="item"><div class="t">${k.slice(0,10)} · ${esc(m.seg||"")}${m.tema ? " · " + esc(m.tema) : ""}${m.lugar ? " · " + esc(m.lugar) : ""}</div><span class="chip tinta">${n} clic${n>1?"s":""}</span> ${esc(m.tit || titulares[k] || k)}</div>`; }).join("")
     : "<p>Sin clics en 30 días.</p>";
 
@@ -752,11 +800,11 @@ async function cargar() {
   const llegada = (s) => { const u = ultimoEnvio[s.email]; const hh = u ? horaEn(u.sent_at, s.zona) : null; const tarde = hh && hh > "07:30";
     return `${esc(ZONA_TXT(s.zona))}<br><span class="hint" style="text-transform:none;letter-spacing:0">${hh ? `último: <b style="color:${tarde ? "#b3261e" : "inherit"}">${hh}</b> · ${u.fecha.slice(5)}` : "sin envíos"}</span>`; };
   $("t-lectores").innerHTML = `<tr><th>lector</th><th>ciudad · región</th><th>zona · llega a las</th><th>temas que eligió</th><th>a qué le hace clic</th><th>estado</th><th>alta</th></tr>` +
-    subs.map(s => `<tr><td><b>${esc((s.nombre||"").split(" ")[0])}</b><br><span class="hint" style="text-transform:none;letter-spacing:0">${esc(s.email)}</span></td><td>${esc(s.ciudad||"")}${s.region ? " · " + esc(s.region) : ""}</td><td>${llegada(s)}</td><td class="wrap">${(s.subcategorias||[]).map(x => `<span class="chip">${esc(SUB_LABEL[x]||x)}</span>`).join("")}</td><td class="wrap">${gustosHtml(s.email)}</td><td>${s.activo ? "activo" : "<span class='err'>baja</span>"}${cambios[s.email] ? ` · ${cambios[s.email]} cambio(s)` : ""}</td><td>${s.created_at.slice(0,10)}</td></tr>`).join("");
+    subs.map(s => `<tr><td><b>${P((s.nombre||"").split(" ")[0])}</b><br><span class="hint" style="text-transform:none;letter-spacing:0">${P(s.email)}</span></td><td>${esc(s.ciudad||"")}${s.region ? " · " + esc(s.region) : ""}</td><td>${llegada(s)}</td><td class="wrap">${(s.subcategorias||[]).map(x => `<span class="chip">${esc(SUB_LABEL[x]||x)}</span>`).join("")}</td><td class="wrap">${gustosHtml(s.email)}</td><td>${s.activo ? "activo" : "<span class='err'>baja</span>"}${cambios[s.email] ? ` · ${cambios[s.email]} cambio(s)` : ""}</td><td>${s.created_at.slice(0,10)}</td></tr>`).join("");
 
   // encuesta
   $("encuesta-titulo").textContent = `Respuestas (${encuestas.length})`;
-  $("encuesta").innerHTML = encuestas.length ? encuestas.map(e => `<div class="bloque blanco"><div class="t hint">${e.created_at.slice(0,10)} · ${esc(e.nombre||"anónimo")}${e.edad ? " · " + esc(e.edad) : ""}${e.ocupacion ? " · " + esc(e.ocupacion) : ""}${e.ciudad ? " · " + esc(e.ciudad) : ""} · <b>${e.origen === "entrevista" ? "entrevista por WhatsApp" : "encuesta web"}</b></div>` +
+  $("encuesta").innerHTML = encuestas.length ? encuestas.map(e => `<div class="bloque blanco"><div class="t hint">${e.created_at.slice(0,10)} · ${e.nombre ? P(e.nombre) : "anónimo"}${e.edad ? " · " + esc(e.edad) : ""}${e.ocupacion ? " · " + esc(e.ocupacion) : ""}${e.ciudad ? " · " + esc(e.ciudad) : ""} · <b>${e.origen === "entrevista" ? "entrevista por WhatsApp" : "encuesta web"}</b></div>` +
     [1,2,3,4,5,6,7].filter(i => e["r"+i]).map(i => `<div style="margin:0 0 12px"><div class="hint" style="text-transform:none;letter-spacing:0;font-size:12px">R${i} · ${PREGUNTAS[i]}</div><p style="margin:2px 0 0">${esc(e["r"+i])}</p></div>`).join("") + `</div>`).join("") : "<p>Todavía no hay respuestas.</p>";
 
   // correcciones
@@ -776,7 +824,7 @@ async function cargar() {
   const aper = evAll.filter(e => e.tipo === "email.opened" && e.ocurrio_at);
   const porHora = {}, porDia = {}, totalHora = Array(24).fill(0);
   for (const e of aper) { const { h, wd } = HORA_BCN(e.ocurrio_at); porHora[e.destinatario] = porHora[e.destinatario] || Array(24).fill(0); porHora[e.destinatario][h]++; totalHora[h]++; porDia[wd] = (porDia[wd]||0) + 1; }
-  const filaHoras = (arr, nombre) => { const max = Math.max(1, ...arr); return `<tr><td style="white-space:nowrap;padding-right:10px"><b>${esc(nombre)}</b></td>${arr.map((n, h) => `<td title="${h}:00 · ${n} apertura${n===1?"":"s"}" style="padding:2px"><span style="display:block;width:14px;height:14px;border-radius:2px;background:${n ? `rgba(47,33,41,${0.15 + 0.85*n/max})` : "#fff"}"></span></td>`).join("")}<td class="num" style="padding-left:8px">${arr.reduce((a,b)=>a+b,0)}</td></tr>`; };
+  const filaHoras = (arr, nombre) => { const max = Math.max(1, ...arr); return `<tr><td style="white-space:nowrap;padding-right:10px"><b>${nombre === "Todos" ? "Todos" : P(nombre)}</b></td>${arr.map((n, h) => `<td title="${h}:00 · ${n} apertura${n===1?"":"s"}" style="padding:2px"><span style="display:block;width:14px;height:14px;border-radius:2px;background:${n ? `rgba(47,33,41,${0.15 + 0.85*n/max})` : "#fff"}"></span></td>`).join("")}<td class="num" style="padding-left:8px">${arr.reduce((a,b)=>a+b,0)}</td></tr>`; };
   // demora media entre envío y primera apertura, por lector
   const envio = {}; for (const s of sendsAll) if (s.sent_at) envio[s.fecha + "|" + s.email] = new Date(s.sent_at).getTime();
   const primera = {}; for (const e of aper) { const k = String(e.fecha_edicion) + "|" + e.destinatario; const tm = new Date(e.ocurrio_at).getTime(); if (!primera[k] || tm < primera[k]) primera[k] = tm; }
@@ -785,11 +833,11 @@ async function cargar() {
   const mediana = (a) => { const s = [...a].sort((x,y)=>x-y); return s.length ? s[Math.floor(s.length/2)] : null; };
   $("cuando").innerHTML = aper.length ? `<table class="grid-lectores"><tr><td></td>${[...Array(24).keys()].map(h => `<td style="font-size:9px;color:#8a8a8a;text-align:center">${h%3===0?h:""}</td>`).join("")}<td class="num" style="font-size:9px;color:#8a8a8a">total</td></tr>` +
     Object.entries(porHora).sort((a,b) => (nombres[a[0]]||a[0]).localeCompare(nombres[b[0]]||b[0])).map(([em, arr]) => filaHoras(arr, nombres[em] || em)).join("") + filaHoras(totalHora, "Todos") + `</table>` +
-    `<div style="margin-top:12px;font-size:14px">${Object.entries(demora).map(([em, a]) => `<span class="chip lila">${esc(nombres[em]||em)}: abre ${fmtMin(mediana(a))} después del envío</span>`).join("")}</div>` +
+    `<div style="margin-top:12px;font-size:14px">${Object.entries(demora).map(([em, a]) => `<span class="chip lila">${P(nombres[em]||em)}: abre ${fmtMin(mediana(a))} después del envío</span>`).join("")}</div>` +
     `<div style="margin-top:8px;font-size:14px"><b>Por día de la semana:</b> ${["lun","mar","mié","jue","vie","sáb","dom"].map(d => `${d} ${porDia[d]||0}`).join(" · ")}</div>` : "<p>Sin aperturas registradas todavía.</p>";
   const disp = {};
   for (const e of evAll) if (e.tipo === "email.opened" || e.tipo === "email.clicked") { disp[e.destinatario] = disp[e.destinatario] || { desktop:0, movil:0, otro:0, clics_movil:0, clics:0 }; const d = e.dispositivo === "movil" ? "movil" : e.dispositivo === "desktop" ? "desktop" : "otro"; disp[e.destinatario][d]++; if (e.tipo === "email.clicked") { disp[e.destinatario].clics++; if (d === "movil") disp[e.destinatario].clics_movil++; } }
-  $("dispositivos").innerHTML = Object.keys(disp).length ? `<table class="datos"><tr><th>lector</th><th class="num">escritorio</th><th class="num">móvil</th><th class="num">clics desde móvil</th></tr>` + Object.entries(disp).sort((a,b) => (nombres[a[0]]||a[0]).localeCompare(nombres[b[0]]||b[0])).map(([em, d]) => `<tr><td><b>${esc(nombres[em]||em)}</b></td><td class="num">${d.desktop}</td><td class="num">${d.movil}</td><td class="num">${d.clics_movil} de ${d.clics}</td></tr>`).join("") + `</table>` : "<p>Sin datos todavía.</p>";
+  $("dispositivos").innerHTML = Object.keys(disp).length ? `<table class="datos"><tr><th>lector</th><th class="num">escritorio</th><th class="num">móvil</th><th class="num">clics desde móvil</th></tr>` + Object.entries(disp).sort((a,b) => (nombres[a[0]]||a[0]).localeCompare(nombres[b[0]]||b[0])).map(([em, d]) => `<tr><td><b>${P(nombres[em]||em)}</b></td><td class="num">${d.desktop}</td><td class="num">${d.movil}</td><td class="num">${d.clics_movil} de ${d.clics}</td></tr>`).join("") + `</table>` : "<p>Sin datos todavía.</p>";
 
   // ===== Retención (histórico) =====
   const mejorAll = new Map(); const estAll = Object.fromEntries(eventsAll.map(e => [e.resend_id, e.estado]));
@@ -800,10 +848,10 @@ async function cargar() {
     subs.filter(s => s.activo).map(s => { const fs = fechasAll.filter(f => mejorAll.has(key(f, s.email))); const ult7 = fs.slice(-7); const ab7 = ult7.filter(f => (mejorAll.get(key(f, s.email))||0) >= 3).length;
       let racha = 0; for (let i = fs.length - 1; i >= 0; i--) { if ((mejorAll.get(key(fs[i], s.email))||0) >= 3) racha++; else break; }
       const abiertas = fs.filter(f => (mejorAll.get(key(f, s.email))||0) >= 3); const ultima = abiertas.length ? abiertas[abiertas.length-1] : "—";
-      return `<tr><td><b>${esc((s.nombre||"").split(" ")[0])}</b></td><td class="num">${ab7} / ${ult7.length}</td><td class="num">${racha}</td><td>${ultima}</td><td class="num">${abiertas.length} / ${fs.length}</td></tr>`; }).join("");
-  const eventos = [...subs.map(s => ({ t: s.created_at, txt: `<b>${esc((s.nombre||"").split(" ")[0])}</b> se inscribió${s.ciudad ? " desde " + esc(s.ciudad) : ""}` })),
-    ...subs.filter(s => !s.activo).map(s => ({ t: s.created_at, txt: `<b>${esc((s.nombre||"").split(" ")[0])}</b> se dio de baja (fecha de alta ${s.created_at.slice(0,10)})` })),
-    ...hist.map(h => ({ t: h.changed_at, txt: `<b>${esc(nombres[h.email]||h.email)}</b> cambió sus temas` }))].sort((a,b) => b.t.localeCompare(a.t));
+      return `<tr><td><b>${P((s.nombre||"").split(" ")[0])}</b></td><td class="num">${ab7} / ${ult7.length}</td><td class="num">${racha}</td><td>${ultima}</td><td class="num">${abiertas.length} / ${fs.length}</td></tr>`; }).join("");
+  const eventos = [...subs.map(s => ({ t: s.created_at, txt: `<b>${P((s.nombre||"").split(" ")[0])}</b> se inscribió${s.ciudad ? " desde " + esc(s.ciudad) : ""}` })),
+    ...subs.filter(s => !s.activo).map(s => ({ t: s.created_at, txt: `<b>${P((s.nombre||"").split(" ")[0])}</b> se dio de baja (fecha de alta ${s.created_at.slice(0,10)})` })),
+    ...hist.map(h => ({ t: h.changed_at, txt: `<b>${P(nombres[h.email]||h.email)}</b> cambió sus temas` }))].sort((a,b) => b.t.localeCompare(a.t));
   $("altas").innerHTML = eventos.map(e => `<div class="item"><div class="t">${e.t.slice(0,10)}</div>${e.txt}</div>`).join("");
 
   // ===== Radiografía por edición =====
@@ -926,7 +974,7 @@ async function cargar() {
   const ur = salud.ultimo_respaldo;
   $("salud-respaldo").innerHTML = (ur ? `<p><b>Último respaldo:</b> ${fechaHora(ur.cuando)} · ${ur.filas} filas · ${Math.round((ur.bytes||0)/1024)} KB · <a href="https://github.com/MarceloG10/vera/tree/main/respaldos" target="_blank" rel="noopener">ver en GitHub</a></p>` : `<p><b>Sin respaldos todavía.</b> El primero corre mañana a las 08:30.</p>`) +
     `<p class="hint">Supabase gratis no hace copias de seguridad; por eso cada día se vuelcan todas las tablas al repo privado. Si el último respaldo tiene más de 2 días, algo falló en GitHub Actions.</p>` +
-    ((salud.alertas_7d||[]).length ? `<h3>Alertas de la semana</h3>` + salud.alertas_7d.map(a => `<div class="item"><div class="t">${fechaHora(a.cuando)} · ${esc(a.tipo)}</div>${esc(a.mensaje)}</div>`).join("") : `<p style="margin-top:10px">Sin alertas en los últimos 7 días.</p>`);
+    ((salud.alertas_7d||[]).length ? `<h3>Alertas de la semana</h3>` + salud.alertas_7d.map(a => `<div class="item"><div class="t">${fechaHora(a.cuando)} · ${esc(a.tipo)}</div>${P(a.mensaje)}</div>`).join("") : `<p style="margin-top:10px">Sin alertas en los últimos 7 días.</p>`);
 
   // ===== Pool de fuentes: tabla `medios` (fuente de verdad), editable por los founders =====
   const NIVELES = ["agencia","publico","establecido","especializado","oficial"];
