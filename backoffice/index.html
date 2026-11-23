@@ -412,7 +412,8 @@
       <h2>Salud del sistema</h2>
       <p class="hint" style="margin-bottom:14px">¿Salió la edición de hoy? ¿Llegó? ¿Hay algo cerca de un límite? Verde = bien · ámbar = mirar · rojo = actuar.</p>
       <div class="kpis" id="salud-kpis"></div>
-      <div class="bloque amarillo" style="margin-top:18px"><h3 style="margin-top:0">Límites de los planes gratuitos</h3><div id="salud-limites"></div></div>
+      <div class="bloque lila" style="margin-top:18px"><h3 style="margin-top:0">Puntualidad: ¿llegó a las 07:00 de cada lector?</h3><div id="salud-puntual"></div></div>
+      <div class="bloque amarillo"><h3 style="margin-top:0">Límites de los planes gratuitos</h3><div id="salud-limites"></div></div>
       <div class="bloque azul"><h3 style="margin-top:0">Respaldo y alertas</h3><div id="salud-respaldo"></div></div>
       <div class="bloque blanco"><h3 style="margin-top:0">Piezas y horarios</h3>
         <p style="font-size:15px">· <b>Edición diaria</b>: rutina «vera-diaria (nube)» a las 07:00 Barcelona → guarda la edición en Supabase y envía por Resend.<br>
@@ -633,11 +634,11 @@ async function qAll(build) { const out = []; for (let desde = 0; ; desde += 1000
 const HORA_BCN = (iso) => { const d = new Date(iso); const p = new Intl.DateTimeFormat("es-ES", { timeZone: "Europe/Madrid", hour: "numeric", hour12: false, weekday: "short" }).formatToParts(d); return { h: parseInt(p.find(x => x.type === "hour").value) % 24, wd: p.find(x => x.type === "weekday").value }; };
 async function cargar() {
   const d30 = dias(30), d14 = dias(14), d7 = dias(7);
-  const [sends, events, evws, subs, ediciones, encuestas, correcciones, hist, evAll, catalogo, sendsAll, eventsAll, salud] = await Promise.all([
+  let [sends, events, evws, subs, ediciones, encuestas, correcciones, hist, evAll, catalogo, sendsAll, eventsAll, salud] = await Promise.all([
     q(sb.from("sends").select("fecha,edicion,email,resend_id,ok").gte("fecha", d30).order("fecha")),
     q(sb.from("events").select("resend_id,fecha,estado").gte("fecha", d30)),
     q(sb.from("email_events").select("tipo,destinatario,item,fecha_edicion,dispositivo,ocurrio_at,url").gte("received_at", d30 + "T00:00:00Z")),
-    q(sb.from("subscribers").select("id,nombre,email,ciudad,region,subcategorias,activo,created_at").order("created_at")),
+    q(sb.from("subscribers").select("id,nombre,email,ciudad,region,zona,subcategorias,activo,created_at").order("created_at")),
     q(sb.from("ediciones").select("fecha,edicion,asunto,contenido").gte("fecha", d30).order("fecha", { ascending: false })),
     q(sb.from("encuestas").select("*").order("created_at", { ascending: false })),
     q(sb.from("correcciones").select("*").order("created_at", { ascending: false })),
@@ -648,12 +649,33 @@ async function cargar() {
     qAll(() => sb.from("events").select("resend_id,estado").order("resend_id")),
     sb.rpc("salud").then(r => { if (r.error) throw r.error; return r.data; }),
   ]);
+  // Clics automáticos (2026-11-23): los escáneres de seguridad de algunos correos abren TODOS los links al recibir el
+  // mensaje. Se marcan como automáticos los clics hechos dentro de los 2 minutos siguientes a una entrega a ese lector
+  // (los eventos de entrega no traen la fecha de edición, así que se compara por lector y hora), o en ráfagas de 3+
+  // clics del mismo lector en el mismo minuto. No cuentan en ninguna métrica de lectura.
+  const entregas = {}; for (const e of evAll) if (e.tipo === "email.delivered" && e.ocurrio_at) (entregas[e.destinatario] = entregas[e.destinatario] || []).push(Date.parse(e.ocurrio_at));
+  const rafaga = {}; for (const e of evAll) if (e.tipo === "email.clicked" && e.ocurrio_at) { const k = e.destinatario + "|" + e.ocurrio_at.slice(0, 16); rafaga[k] = (rafaga[k] || 0) + 1; }
+  const esBot = (e) => { if (e.tipo !== "email.clicked" || !e.ocurrio_at) return false; const tc = Date.parse(e.ocurrio_at);
+    return (entregas[e.destinatario] || []).some(t0 => tc - t0 >= 0 && tc - t0 < 120e3) || (rafaga[e.destinatario + "|" + e.ocurrio_at.slice(0, 16)] || 0) >= 3; };
+  const clicsBot = evAll.filter(esBot).length;
+  // Un mismo clic (lector + edición + noticia) repetido dentro de 10 minutos cuenta una sola vez: algunos correos
+  // pasan cada clic real por uno o dos revisores de enlaces que lo duplican.
+  const dedup = (arr) => { const visto = {}; return arr.filter(e => { if (e.tipo !== "email.clicked" || !e.ocurrio_at) return true;
+    const k = e.destinatario + "|" + e.fecha_edicion + "|" + e.item; const tc = Date.parse(e.ocurrio_at);
+    if (visto[k] !== undefined && tc - visto[k] < 600e3) return false; visto[k] = tc; return true; }); };
+  const ordenT = (a, b) => String(a.ocurrio_at).localeCompare(String(b.ocurrio_at));
+  const antes = evAll.filter(e => e.tipo === "email.clicked").length;
+  evAll = dedup(evAll.filter(e => !esBot(e)).sort(ordenT)); evws = dedup(evws.filter(e => !esBot(e)).sort(ordenT));
+  const clicsDup = antes - clicsBot - evAll.filter(e => e.tipo === "email.clicked").length;
   const clicsTodos = evAll.filter(e => e.tipo === "email.clicked" && e.item);
   const estados = Object.fromEntries(events.map(e => [e.resend_id, e.estado]));
   const nombres = Object.fromEntries(subs.map(s => [s.email, (s.nombre || s.email).split(" ")[0]]));
   const mejor = new Map();
   const key = (f, e) => f + "|" + e;
-  for (const s of sends) if (s.resend_id) { const k = key(s.fecha, s.email); mejor.set(k, Math.max(mejor.get(k) ?? 0, ORDEN[estados[s.resend_id]] ?? 1)); }
+  // Resend marca «clicked» aunque el clic sea de un escáner: solo cuenta como clic si hay un clic humano ese día
+  const clicHumano = new Set(evws.filter(e => e.tipo === "email.clicked").map(e => String(e.fecha_edicion) + "|" + e.destinatario));
+  const nivelEnvio = (s) => { const n = ORDEN[estados[s.resend_id]] ?? 1; return n === 4 && !clicHumano.has(s.fecha + "|" + s.email) ? 3 : n; };
+  for (const s of sends) if (s.resend_id) { const k = key(s.fecha, s.email); mejor.set(k, Math.max(mejor.get(k) ?? 0, nivelEnvio(s))); }
   for (const e of evws) { const niv = {"email.delivered":2,"email.opened":3,"email.clicked":4,"email.bounced":0}[e.tipo]; if (niv !== undefined && e.fecha_edicion) { const k = key(String(e.fecha_edicion), e.destinatario); mejor.set(k, Math.max(mejor.get(k) ?? 0, niv)); } }
   const fechas = [...new Set([...mejor.keys()].map(k => k.split("|")[0]))].sort();
   const filas = fechas.map(f => { const c = {env:0,entr:0,abre:0,clic:0}; for (const [k, niv] of mejor) { if (!k.startsWith(f + "|")) continue; c.env++; if (niv>=2) c.entr++; if (niv>=3) c.abre++; if (niv>=4) c.clic++; } return { fecha:f, ...c, op: c.entr ? Math.round(100*c.abre/c.entr) : 0, cl: c.entr ? Math.round(100*c.clic/c.entr) : 0 }; });
@@ -674,7 +696,8 @@ async function cargar() {
   $("kpis").innerHTML = [[activos,"lectores activos"],[nuevos,"nuevos lectores · 7 días"],[ed7.length,"ediciones · 7 días"],
     [(sum(f7,"entr") ? Math.round(100*sum(f7,"abre")/sum(f7,"entr")) : 0) + "%","apertura · 7 días"],
     [(sum(f7,"entr") ? Math.round(100*sum(f7,"clic")/sum(f7,"entr")) : 0) + "%","clics · 7 días"],
-    [confProm,"confianza editorial"]].map(([n,l]) => `<div class="kpi" title="${esc(KPI_AYUDA[l]||"")}"><div class="n">${esc(n)}</div><div class="l">${l}</div></div>`).join("");
+    [confProm,"confianza editorial"]].map(([n,l]) => `<div class="kpi" title="${esc(KPI_AYUDA[l]||"")}"><div class="n">${esc(n)}</div><div class="l">${l}</div></div>`).join("") +
+    (clicsBot + clicsDup ? `<div class="hint" style="grid-column:1/-1;text-transform:none;letter-spacing:0;margin-top:4px">Clics depurados: se excluyeron ${clicsBot} clics automáticos de escáneres de seguridad (en los 2 minutos siguientes a la entrega o 3+ en el mismo minuto) y ${clicsDup} repeticiones del mismo clic. Solo cuenta lectura real.</div>` : "");
   $("t-ediciones").innerHTML = `<tr><th>fecha</th><th class="num">env</th><th class="num">entr</th><th class="num">abre</th><th class="num">clic</th><th class="num">open %</th><th class="num">click %</th></tr>` +
     filas.slice().reverse().map(f => `<tr><td>${f.fecha}</td><td class="num">${f.env}</td><td class="num">${f.entr}</td><td class="num">${f.abre}</td><td class="num">${f.clic}</td><td class="num">${f.op}%</td><td class="num">${f.cl}%</td></tr>`).join("");
   const f14 = fechas.filter(f => f >= d14);
@@ -723,8 +746,13 @@ async function cargar() {
     const tot = Object.values(g).reduce((a,b)=>a+b,0);
     return `<div class="hint" style="margin-bottom:4px">${tot} clic${tot>1?"s":""} desde el inicio</div>` + Object.entries(g).sort((a,b) => b[1]-a[1]).map(([tema, n]) => `<span class="chip lila">${esc(tema)} ×${n}</span>`).join(""); };
   const cambios = {}; for (const h of hist) cambios[h.email] = (cambios[h.email]||0)+1;
-  $("t-lectores").innerHTML = `<tr><th>lector</th><th>ciudad · región</th><th>temas que eligió</th><th>a qué le hace clic</th><th>estado</th><th>alta</th></tr>` +
-    subs.map(s => `<tr><td><b>${esc((s.nombre||"").split(" ")[0])}</b><br><span class="hint" style="text-transform:none;letter-spacing:0">${esc(s.email)}</span></td><td>${esc(s.ciudad||"")}${s.region ? " · " + esc(s.region) : ""}</td><td class="wrap">${(s.subcategorias||[]).map(x => `<span class="chip">${esc(SUB_LABEL[x]||x)}</span>`).join("")}</td><td class="wrap">${gustosHtml(s.email)}</td><td>${s.activo ? "activo" : "<span class='err'>baja</span>"}${cambios[s.email] ? ` · ${cambios[s.email]} cambio(s)` : ""}</td><td>${s.created_at.slice(0,10)}</td></tr>`).join("");
+  const ZONA_TXT = (z) => ({"America/Santiago":"Chile","America/Punta_Arenas":"Magallanes","America/Vancouver":"Vancouver","Europe/Madrid":"España","Europe/Berlin":"Alemania","Europe/Paris":"Francia","Europe/Vienna":"Austria","Europe/London":"Reino Unido","Europe/Lisbon":"Portugal","America/New_York":"Costa este EE. UU.","America/Argentina/Buenos_Aires":"Argentina","America/Mexico_City":"México"})[z] || (z || "Madrid").split("/").pop().replace("_"," ");
+  const horaEn = (iso, zona) => new Intl.DateTimeFormat("es-ES", { timeZone: zona || "Europe/Madrid", hour: "2-digit", minute: "2-digit" }).format(new Date(iso));
+  const ultimoEnvio = {}; for (const x of sendsAll) if (x.ok && x.sent_at && (!ultimoEnvio[x.email] || x.sent_at > ultimoEnvio[x.email].sent_at)) ultimoEnvio[x.email] = x;
+  const llegada = (s) => { const u = ultimoEnvio[s.email]; const hh = u ? horaEn(u.sent_at, s.zona) : null; const tarde = hh && hh > "07:30";
+    return `${esc(ZONA_TXT(s.zona))}<br><span class="hint" style="text-transform:none;letter-spacing:0">${hh ? `último: <b style="color:${tarde ? "#b3261e" : "inherit"}">${hh}</b> · ${u.fecha.slice(5)}` : "sin envíos"}</span>`; };
+  $("t-lectores").innerHTML = `<tr><th>lector</th><th>ciudad · región</th><th>zona · llega a las</th><th>temas que eligió</th><th>a qué le hace clic</th><th>estado</th><th>alta</th></tr>` +
+    subs.map(s => `<tr><td><b>${esc((s.nombre||"").split(" ")[0])}</b><br><span class="hint" style="text-transform:none;letter-spacing:0">${esc(s.email)}</span></td><td>${esc(s.ciudad||"")}${s.region ? " · " + esc(s.region) : ""}</td><td>${llegada(s)}</td><td class="wrap">${(s.subcategorias||[]).map(x => `<span class="chip">${esc(SUB_LABEL[x]||x)}</span>`).join("")}</td><td class="wrap">${gustosHtml(s.email)}</td><td>${s.activo ? "activo" : "<span class='err'>baja</span>"}${cambios[s.email] ? ` · ${cambios[s.email]} cambio(s)` : ""}</td><td>${s.created_at.slice(0,10)}</td></tr>`).join("");
 
   // encuesta
   $("encuesta-titulo").textContent = `Respuestas (${encuestas.length})`;
@@ -865,11 +893,12 @@ async function cargar() {
   const sem = (estado) => ({ ok: "#9bd39b", ambar: "#fef79f", rojo: "#f3a6a6" })[estado];
   const tarjeta = (titulo, valor, estado, nota) => `<div class="kpi" style="background:${sem(estado)}" title="${esc(nota||"")}"><div class="n" style="font-size:24px">${valor}</div><div class="l">${titulo}</div>${nota ? `<div class="hint" style="margin-top:6px;text-transform:none;letter-spacing:0">${esc(nota)}</div>` : ""}</div>`;
   const h = salud.hoy || {}; const ue = salud.ultima_edicion || {}; const ahora = new Date();
+  const yaDebian = subs.filter(s => s.activo && horaEn(new Date().toISOString(), s.zona) >= "07:30").length;   // envío por zonas horarias (15 sep)
   const esperada = ahora.getUTCHours() >= 5 || ahora.getUTCHours() < 4;   // después de las 07:00 Barcelona
   const edHoy = ue.fecha === hoyStr;
   $("salud-kpis").innerHTML = [
     tarjeta("Edición de hoy", edHoy ? `nº ${ue.edicion}` : (esperada ? "no salió" : "aún no toca"), edHoy ? "ok" : (esperada ? "rojo" : "ambar"), edHoy ? `guardada a las ${horaLocal(ue.creada)}` : (esperada ? "la rutina de las 07:00 no guardó edición" : "sale a las 07:00")),
-    tarjeta("Envíos de hoy", `${h.ok||0} / ${salud.lectores_activos}`, (h.ok||0) >= salud.lectores_activos && (h.fallidos||0) === 0 ? "ok" : ((h.enviados||0) ? "ambar" : (esperada ? "rojo" : "ambar")), h.fallidos ? `${h.fallidos} fallidos` : (h.primer_envio ? `primer envío ${horaLocal(h.primer_envio)}` : "sin envíos")),
+    tarjeta("Envíos de hoy", `${h.ok||0} / ${salud.lectores_activos}`, (h.ok||0) >= yaDebian && (h.fallidos||0) === 0 ? "ok" : ((h.ok||0) < yaDebian ? "rojo" : "ambar"), h.fallidos ? `${h.fallidos} fallidos` : `${yaDebian} ya debían tenerla (pasadas las 07:30 de su zona)`),
     tarjeta("Último webhook", fechaHora(salud.ultimo_webhook), salud.ultimo_webhook && (Date.now() - new Date(salud.ultimo_webhook)) < 36*3600e3 ? "ok" : "ambar", "aperturas/clics que Resend nos avisa en tiempo real"),
     tarjeta("Rebotes · 7 días", salud.rebotes_7d, salud.rebotes_7d ? "ambar" : "ok", "correos que no pudieron entregarse"),
     tarjeta("Envíos fallidos · 7 días", (salud.envios_7d||{}).fallidos || 0, (salud.envios_7d||{}).fallidos ? "ambar" : "ok", `${(salud.envios_7d||{}).total || 0} envíos en la semana`),
@@ -880,6 +909,20 @@ async function cargar() {
   $("salud-limites").innerHTML = barra(correosHoy, 100, "Correos enviados hoy (Resend gratis: 100 al día, 3.000 al mes)", correosHoy > 80 ? "rojo" : correosHoy > 60 ? "ambar" : "ok") +
     barra(salud.db_mb, 500, "Base de datos (Supabase gratis: 500 MB)", salud.db_mb > 400 ? "rojo" : salud.db_mb > 300 ? "ambar" : "ok") +
     `<p class="hint" style="margin-top:8px">Con ${salud.lectores_activos} lectores se usan ~${salud.lectores_activos + 2} correos al día. El tope diario de Resend se toca cerca de los 80 lectores; el de Supabase queda lejos (${salud.db_mb} MB usados). Dominio holavera.news: renovación anual en Hostinger (comprado el 21 ago 2026).</p>`;
+  // Puntualidad por zona, últimos 7 días (envío entre 07:00 y 07:30 de la hora local del lector)
+  { const zonaDe = Object.fromEntries(subs.map(s => [s.email, s.zona || "Europe/Madrid"]));
+    const dias = [...new Set(sendsAll.map(x => x.fecha))].sort().slice(-7);
+    const grid = {}; let total = 0, aTiempo = 0;
+    for (const x of sendsAll) { if (!x.ok || !x.sent_at || !dias.includes(x.fecha)) continue; const z = zonaDe[x.email] || "Europe/Madrid"; const hh = horaEn(x.sent_at, z);
+      const ok = hh >= "07:00" && hh <= "07:30"; total++; aTiempo += ok;
+      const g = (grid[z] = grid[z] || {}); const c = (g[x.fecha] = g[x.fecha] || { n: 0, ok: 0, max: "00:00" }); c.n++; c.ok += ok; if (hh > c.max) c.max = hh; }
+    const zonas = Object.keys(grid).sort();
+    $("salud-puntual").innerHTML = total ? `<p style="margin:0 0 10px"><b>${Math.round(100 * aTiempo / total)} %</b> de los envíos de la última semana salió entre las 07:00 y las 07:30 de la hora de cada lector (${aTiempo} de ${total}), en ${zonas.length} zonas horarias.</p>` +
+      `<div class="scroll"><table class="datos"><tr><th>zona</th>${dias.map(d => `<th class="num">${d.slice(8)}/${d.slice(5,7)}</th>`).join("")}</tr>` +
+      zonas.map(z => `<tr><td>${esc(ZONA_TXT(z))}</td>${dias.map(d => { const c = grid[z][d]; if (!c) return `<td class="num hint">—</td>`;
+        const bien = c.ok === c.n; return `<td class="num" title="${c.ok} de ${c.n} a tiempo · último envío ${c.max}" style="background:${bien ? "#9bd39b" : "#f3a6a6"}">${bien ? "✓" : c.max}</td>`; }).join("")}</tr>`).join("") + `</table></div>` +
+      `<p class="hint" style="margin-top:8px">✓ = todos a tiempo · rojo = hora del último envío de ese día (llegó tarde). Hora de envío según la zona de cada lector.</p>`
+      : `<p>Sin envíos en los últimos 7 días.</p>`; }
   const ur = salud.ultimo_respaldo;
   $("salud-respaldo").innerHTML = (ur ? `<p><b>Último respaldo:</b> ${fechaHora(ur.cuando)} · ${ur.filas} filas · ${Math.round((ur.bytes||0)/1024)} KB · <a href="https://github.com/MarceloG10/vera/tree/main/respaldos" target="_blank" rel="noopener">ver en GitHub</a></p>` : `<p><b>Sin respaldos todavía.</b> El primero corre mañana a las 08:30.</p>`) +
     `<p class="hint">Supabase gratis no hace copias de seguridad; por eso cada día se vuelcan todas las tablas al repo privado. Si el último respaldo tiene más de 2 días, algo falló en GitHub Actions.</p>` +

@@ -1,6 +1,6 @@
 {
   "_doc": "Lista blanca de Vera. FUENTE DE VERDAD: tabla `medios` en Supabase (se edita desde el backoffice → Fuentes). Este archivo es una exportación diaria de respaldo; medios.py lo usa solo si la base no responde.",
-  "exportado": "2026-09-15",
+  "exportado": "2026-11-23",
   "medios": {
     "24Horas": {
       "dominios": [
@@ -671,6 +671,38 @@
       "score_estado": "provisional",
       "score_fecha": "2026-09-05",
       "activo": true
+    },
+    "CBC British Columbia": {
+      "dominios": [
+        "cbc.ca"
+      ],
+      "alias": [
+        "CBC",
+        "CBC News"
+      ],
+      "nivel": "publico",
+      "ambito": [
+        "general"
+      ],
+      "region": "Agencias e internacionales",
+      "score": 85,
+      "posicionamiento": "neutral",
+      "linea": "Radiodifusora pública canadiense (CBC/Radio-Canada), edición de Columbia Británica: mandato de servicio público, código periodístico (Journalistic Standards and Practices) y defensor del lector; se usa para la noticia local de Vancouver.",
+      "dimensiones": {
+        "calidad": 5,
+        "fuentes": 4,
+        "precision": 5,
+        "correcciones": 5,
+        "independencia": 4,
+        "transparencia": 4,
+        "carga_editorial": 4,
+        "sensacionalismo": 4
+      },
+      "nota": "Alta 2026-09-15 para la noticia local de Vancouver (lector Andrés Vila). Score provisional, misma banda que rbb24.",
+      "score_estado": "provisional",
+      "score_fecha": "2026-09-15",
+      "activo": true,
+      "modificado_por": "magarcesb@gmail.com"
     },
     "Centro Sismológico Nacional": {
       "dominios": [
